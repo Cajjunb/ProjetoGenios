@@ -1,0 +1,59 @@
+<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="1061" measuredH="874" mockupW="762" mockupH="779">
+  <controls>
+    <control controlID="3" controlTypeID="com.balsamiq.mockups::DataGrid" x="476" y="413" w="410" h="144" measuredW="372" measuredH="141" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Aluno%2C%20Local%2C%20Mat%E9ria%2C%20In%EDcio%2C%20Final%0AJoz%E9%20%2C%20Guar%E1%20%2C%20Matem%E1tica%2C%2016%3A00%2C%2017%3A00%0AJuquinha%2C%20Cruzeiro%2C%20Matem%E1tica%2C%2012%3A00%2C%2014%3A00%0AAstolfo%20%2C%20Lago%20Sul%2C%20F%EDsica%20%2C%2008%3A00%2C%2014%3A00%0AJoana%2C%20%20Planaltina%20de%20goias%2C%20Quimica%2C%20%2014%3A00%2C%2016%3A00</text>
+      </controlProperties>
+    </control>
+    <control controlID="5" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="299" y="95" w="762" h="779" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <borderStyle>square</borderStyle>
+        <text>A%20Web%20Page%0Ahttp%3A//aprendendodeverdade.com.br/Home</text>
+        <value>52</value>
+        <verticalScrollbar>true</verticalScrollbar>
+      </controlProperties>
+    </control>
+    <control controlID="6" controlTypeID="com.balsamiq.mockups::TabBar" x="381" y="264" w="599" h="575" measuredW="203" measuredH="100" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <selectedIndex>0</selectedIndex>
+        <text>Home%2C%20Perfil%2C%20LogOut</text>
+      </controlProperties>
+    </control>
+    <control controlID="7" controlTypeID="com.balsamiq.mockups::Canvas" x="386" y="743" w="591" h="81" measuredW="100" measuredH="70" zOrder="3" locked="false" isInGroup="-1"/>
+    <control controlID="8" controlTypeID="com.balsamiq.mockups::Icon" x="943" y="770" w="-1" h="-1" measuredW="24" measuredH="24" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>TwitterIcon%7Csmall</icon>
+      </controlProperties>
+    </control>
+    <control controlID="9" controlTypeID="com.balsamiq.mockups::Label" x="571" y="760" w="226" h="-1" measuredW="226" measuredH="21" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>G%EAnios%20Endere%E7o%20XXXXXXXXX-XXXX%20</text>
+      </controlProperties>
+    </control>
+    <control controlID="10" controlTypeID="com.balsamiq.mockups::Icon" x="913" y="770" w="-1" h="-1" measuredW="24" measuredH="24" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>FacebookIcon%7Csmall</icon>
+      </controlProperties>
+    </control>
+    <control controlID="11" controlTypeID="com.balsamiq.mockups::Label" x="586" y="792" w="171" h="-1" measuredW="171" measuredH="21" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Telefone%20XXXXXXXXX-XXXX</text>
+      </controlProperties>
+    </control>
+    <control controlID="12" controlTypeID="com.balsamiq.mockups::IconLabel" x="397" y="760" w="-1" h="-1" measuredW="102" measuredH="47" zOrder="8" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>../../Downloads/assets/icon_icone.png%7Cmedium</icon>
+        <text>Desenvolvido%20por</text>
+      </controlProperties>
+    </control>
+    <control controlID="13" controlTypeID="com.balsamiq.mockups::Label" x="829" y="304" w="-1" h="-1" measuredW="123" measuredH="17" zOrder="9" locked="false" isInGroup="-1">
+      <controlProperties>
+        <bold>true</bold>
+        <color>3355443</color>
+        <size>9</size>
+        <text>Bem%20Vindo%20Professor%20Fulano.</text>
+        <underline>true</underline>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>
