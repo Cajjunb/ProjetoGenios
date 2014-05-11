@@ -1,0 +1,42 @@
+timestamp: 2014-04-22T20:17:15.042000
+CREATE TABLE Usuario(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email CHAR(512),
+    senha CHAR(512)
+);
+faked!
+timestamp: 2014-04-22T20:17:15.049000
+CREATE TABLE Professor(
+    idUser INTEGER PRIMARY KEY AUTOINCREMENT,
+    Nome CHAR(512),
+    foto CHAR(512)
+);
+faked!
+timestamp: 2014-04-22T20:17:15.057000
+CREATE TABLE image(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title CHAR(512) UNIQUE,
+    file CHAR(512)
+);
+faked!
+timestamp: 2014-04-22T20:17:15.067000
+CREATE TABLE post(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    image_id INTEGER REFERENCES image (id) ON DELETE CASCADE,
+    author CHAR(512),
+    email CHAR(512),
+    body TEXT
+);
+faked!
+timestamp: 2014-04-22T20:17:15.076000
+CREATE TABLE Responsavel(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    Nome TEXT,
+    email TEXT,
+    foto CHAR(512)
+);
+faked!
+success!
+success!
+success!
+success!

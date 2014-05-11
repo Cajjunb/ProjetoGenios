@@ -1,0 +1,10 @@
+{{extend 'layout.html'}}
+
+{{ for image in images : }}
+    <li>
+        <h2>{{=image.title}}</h2>
+        {{=LI(A(image.title, _href=URL("show", args=image.id)))}}
+
+    </li>
+
+{{ pass }}
