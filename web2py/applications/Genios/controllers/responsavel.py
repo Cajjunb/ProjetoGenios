@@ -19,6 +19,8 @@ def alterar():
     # Session com a info do pai foi setada?
     if not session.idpai:
          redirect(URL('responsavel','index'))
+    #Pegando form do pai
+    formpai = SQLFORM(db.pai,session.idpai,showid=False,fields=['nome'],formstyle="divs")
     
     #SQL query INNER JOIN 
     filhosSet = db((session.idpai==db.pai_x_filho.fk_pai)& (db.filho.id==db.pai_x_filho.fk_filho))
@@ -31,4 +33,4 @@ def alterar():
         fotos.append(filhoObj.filho.foto)
         forms.append(SQLFORM(db.filho, filhoObj.filho , fields = ['foto','nome'], showid=False,formstyle="divs"))
         
-    return dict(filhos=filhosSet,forms=forms,fotos=fotos)
+    return dict(formpai=formpai,forms=forms,fotos=fotos)

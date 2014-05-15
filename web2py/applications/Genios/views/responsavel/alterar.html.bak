@@ -1,16 +1,30 @@
 {{extend 'layout.html'}}
+<head>
+    <link href="{{=URL('static', 'css/responsavel.css')}}" rel="stylesheet" type="text/css" />
+</head>
+<h1>
+    Perfil
+</h1>
 
-<link href="{{=URL('static', 'css/responsavel.css')}}" rel="stylesheet" type="text/css" />
-{{ i = 0 }}
-<div class="filhos">
-    {{ for form  in forms:}}
-        <div class="wrap-formulario">
-            <div class="wrap-foto">
-                <img width="200px" src="{{=URL('download',args=fotos[i])}}" />
+
+<div>
+    {{=formpai}}
+    
+    {{ i = 0 }}
+    <div class="filhos">
+        {{ for form  in forms:}}
+            <div class="wrap-formulario">
+                <div class="wrap-foto">
+                    <img width="200px" src="{{=URL('download',args=fotos[i])}}" />
+                </div>
+                {{=form}}
             </div>
-            {{=form}}
-        </div>
 
-        {{i += 1}}
-    {{pass}}
+            {{i += 1}}
+        {{pass}}
+    </div>
 </div>
+
+<button>
+    Vincular outro filho
+</button>
