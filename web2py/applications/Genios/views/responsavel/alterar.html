@@ -1,0 +1,15 @@
+{{extend 'layout.html'}}
+
+{{ for form in forms:}}
+
+    {{=form}}
+
+{{pass}}
+
+{{ for filho in filhos.select():}}
+    <div>
+        <p>
+            {{= filho.filho.nome}}
+        </p>
+    </div>
+{{pass}}

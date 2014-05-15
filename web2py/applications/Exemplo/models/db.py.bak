@@ -1,5 +1,5 @@
 # coding: utf8
-db = DAL("sqlite://storage.sqlite", migrate = False,fake_migrate_all=True);
+db = DAL("sqlite://storage.sqlite", migrate = True,fake_migrate_all=True);
 db.define_table('Usuario',Field('email'),Field('senha'), fake_migrate = True);
 db.define_table('Professor',Field('idUser','id'),Field('Nome'),Field('foto','upload'), fake_migrate = True);
 db.define_table('image', Field('title', unique=True),Field('file', 'upload'),format = '%(title)s',fake_migrate = True);

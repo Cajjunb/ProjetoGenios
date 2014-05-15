@@ -1,0 +1,12 @@
+{{extend 'layout.html'}}
+
+<form enctype="multipart/form-data" action="" method="post">
+    <selection name="fk_pai"></selection>
+    <selection name="fk_filho"></selection>
+    <input type="submit">
+    <input value="person" type="hidden" name="_paixfilho" />
+</form>
+
+<p>
+    session id = {{=session}}
+</p>

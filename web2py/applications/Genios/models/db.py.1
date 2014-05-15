@@ -1,0 +1,6 @@
+db = DAL('sqlite://storage.db') # Conecta com o banco
+
+
+db.define_table('pai',Field('nome'),Field('ativo','boolean'),Field('nome','text'),format = '%(title)s')
+db.define_table('pai_x_filho',Field('nome','text'),Field('serie','boolean'),Field('ativo','boolean'),format = '%(title)s')
+db.define_table('filho',Field('fk_pai', 'reference pai'),Field('ativo','boolean'),Field('nome','text'),format = '%(title)s')

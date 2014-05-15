@@ -6,274 +6,726 @@ CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 COLLATE utf8_gener
 USE `mydb` ;
 
 -- -----------------------------------------------------
--- Table `mydb`.`perfil`
+-- Table `mydb`.`tb_perfil`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`perfil` (
-  `idPerfil` INT(11) NOT NULL COMMENT 'id do Perfil de Usuario',
-  `Nome` TEXT NOT NULL COMMENT 'Nome do Perfil de Usuario',
-  UNIQUE INDEX `idPerfil` (`idPerfil` ASC),
-  INDEX `idPerfil` (),
-  PRIMARY KEY (`idPerfil`))
+CREATE TABLE IF NOT EXISTS `mydb`.`tb_perfil` (
+  `id_perfil` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id do Perfil de Usuario',
+  `nome` VARCHAR(20) NOT NULL COMMENT 'Nome do Perfil de Usuario',
+  `ativo` TINYINT UNSIGNED NOT NULL,
+  UNIQUE INDEX `idPerfil` (`id_perfil` ASC),
+  PRIMARY KEY (`id_perfil`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`usuario`
+-- Table `mydb`.`tb_usuario`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`usuario` (
-  `idUsuario` INT(11) NOT NULL COMMENT 'id do Usuario do Sistema',
-  `Email` TEXT NOT NULL COMMENT 'Email do Usuario',
-  `Senha` TEXT NOT NULL COMMENT 'Senha Do Usuario',
-  `idPerfil` INT NULL,
-  UNIQUE INDEX `idUsuario` (`idUsuario` ASC),
-  PRIMARY KEY (`idUsuario`),
-  INDEX `idPerfil_idx` (`idPerfil` ASC),
-  CONSTRAINT `idPerfil`
-    FOREIGN KEY (`idPerfil`)
-    REFERENCES `mydb`.`perfil` (`idPerfil`)
-    ON DELETE SET NULL
+CREATE TABLE IF NOT EXISTS `mydb`.`tb_usuario` (
+  `id_usuario` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'id do Usuario do Sistema',
+  `fk_id_perfil` INT(11) UNSIGNED NOT NULL,
+  `nome` VARCHAR(80) NOT NULL,
+  `email` VARCHAR(200) NOT NULL COMMENT 'Email do Usuario',
+  `senha` VARCHAR(128) NOT NULL COMMENT 'Senha Do Usuario',
+  `numero_filhos` INT UNSIGNED NULL,
+  `ano_escolar` INT NULL,
+  `colegio` VARCHAR(70) NULL,
+  `ativo` TINYINT UNSIGNED NOT NULL,
+  UNIQUE INDEX `idUsuario` (`id_usuario` ASC),
+  PRIMARY KEY (`id_usuario`),
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC),
+  INDEX `fk_tb_usuario_tb_perfil1_idx` (`fk_id_perfil` ASC),
+  CONSTRAINT `fk_tb_usuario_tb_perfil1`
+    FOREIGN KEY (`fk_id_perfil`)
+    REFERENCES `mydb`.`tb_perfil` (`id_perfil`)
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`regiao`
+-- Table `mydb`.`tb_operacao`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`regiao` (
-  `idRegiao` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS `mydb`.`tb_operacao` (
+  `id_operacao` INT(11) UNSIGNED NOT NULL,
   `nome` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`idRegiao`))
+  PRIMARY KEY (`id_operacao`))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`endereço`
+-- Table `mydb`.`tb_erro`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`endereço` (
-  `idRegiao` INT(11) NOT NULL COMMENT 'id Do Usuario do Sistema',
-  `CEP` INT(11) NOT NULL COMMENT 'CEP',
-  `Complemento` TEXT NOT NULL COMMENT 'Complemento do Endereço',
-  `Telefone` INT(11) NOT NULL COMMENT 'Telefone da Residência',
-  PRIMARY KEY (`idRegiao`),
-  INDEX `idUsuario` (`idRegiao` ASC),
-  CONSTRAINT `idUsuario`
-    FOREIGN KEY (`idRegiao`)
-    REFERENCES `mydb`.`regiao` (`idRegiao`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1;
-
-
--- -----------------------------------------------------
--- Table `mydb`.`responsavel`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`responsavel` (
-  `idUsuario` INT(11) NOT NULL COMMENT 'Id do Usuario do sistema',
-  `Nome` TEXT NOT NULL COMMENT 'Nome Do Responsável',
-  `idCelular` INT(11) NOT NULL COMMENT 'Id do Celular',
-  PRIMARY KEY (`idUsuario`),
-  INDEX `idUsuario` (`idUsuario` ASC),
-  CONSTRAINT `idUsuario`
-    FOREIGN KEY ()
-    REFERENCES `mydb`.`usuario` ()
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `CEP`
-    FOREIGN KEY ()
-    REFERENCES `mydb`.`endereço` ()
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1;
-
-
--- -----------------------------------------------------
--- Table `mydb`.`colegio`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`colegio` (
-  `idColegio` INT NOT NULL,
-  `Nome` VARCHAR(45) NULL,
-  PRIMARY KEY (`idColegio`),
-  INDEX `idColegio` (`idColegio` ASC))
+CREATE TABLE IF NOT EXISTS `mydb`.`tb_erro` (
+  `id_erro` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `excessao` TEXT NOT NULL,
+  `data` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_erro`))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`aluno`
+-- Table `mydb`.`tb_perfil_his`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`aluno` (
-  `idUsuario` INT(11) NOT NULL COMMENT 'id do Usuario do Sistema',
-  `Nome` TEXT NOT NULL COMMENT 'Nome do Aluno',
-  `AnoEscolar` YEAR NOT NULL COMMENT 'Ano Escolar do Aluno ',
-  `idColegio` INT(11) NOT NULL COMMENT 'id do Colegio',
-  PRIMARY KEY (`idUsuario`),
-  INDEX `idColegio_idx` (`idColegio` ASC),
-  CONSTRAINT `idUsuario`
-    FOREIGN KEY (`idUsuario`)
-    REFERENCES `mydb`.`responsavel` (`idUsuario`)
-    ON DELETE RESTRICT
-    ON UPDATE NO ACTION,
-  CONSTRAINT `idColegio`
-    FOREIGN KEY (`idColegio`)
-    REFERENCES `mydb`.`colegio` (`idColegio`)
-    ON DELETE NO ACTION
-    ON UPDATE CASCADE)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1;
-
-
--- -----------------------------------------------------
--- Table `mydb`.`materia`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`materia` (
-  `idMateria` INT(11) NOT NULL COMMENT 'id da Materia',
-  `Nome` TEXT NOT NULL COMMENT 'Nome da Materia',
-  PRIMARY KEY (`idMateria`),
-  INDEX `idMateria` (`idMateria` ASC))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1;
-
-
--- -----------------------------------------------------
--- Table `mydb`.`instituicao`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`instituicao` (
-  `idInstituicao` INT(11) NOT NULL COMMENT 'id da Instituicao de Ensino',
-  `Nome` TEXT NOT NULL COMMENT 'Nome da Instituicao de Ensino',
-  PRIMARY KEY (`idInstituicao`),
-  INDEX `idInstituicao` (`idInstituicao` ASC))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1;
-
-
--- -----------------------------------------------------
--- Table `mydb`.`professor`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`professor` (
-  `idUsuario` INT(11) NOT NULL COMMENT 'id do Usuario do sistema',
-  `Nome` TEXT NOT NULL COMMENT 'Nome do Professor',
-  `idInstituicao` INT(11) NOT NULL COMMENT 'id da Instituição de Ensino do Professor',
-  `Curso` TEXT NOT NULL COMMENT 'id do Curso do professor',
-  `idMateria` INT(11) NOT NULL COMMENT 'id da Materia que o professor leciona',
-  `HorasAula` INT(11) NOT NULL COMMENT 'Horas Aula acumulada',
-  `Celular` TEXT NOT NULL COMMENT 'id Do Celular do Professor',
-  PRIMARY KEY (`idUsuario`),
-  INDEX `idUsuario` (`idUsuario` ASC),
-  INDEX `idMateiria_idx` (`idMateria` ASC),
-  INDEX `idInstituicao_idx` (`idInstituicao` ASC),
-  CONSTRAINT `idUsuario`
-    FOREIGN KEY (`idUsuario`)
-    REFERENCES `mydb`.`usuario` (`idUsuario`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION,
-  CONSTRAINT `idMateiria`
-    FOREIGN KEY (`idMateria`)
-    REFERENCES `mydb`.`materia` (`idMateria`)
+CREATE TABLE IF NOT EXISTS `mydb`.`tb_perfil_his` (
+  `id_perfil_his` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_perfil` INT(11) UNSIGNED NOT NULL,
+  `nome` VARCHAR(20) NOT NULL,
+  `ativo` TINYINT UNSIGNED NOT NULL,
+  `fk_id_usuario_operacao` INT(11) UNSIGNED NOT NULL,
+  `fk_id_operacao` INT UNSIGNED NOT NULL,
+  `data` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_perfil_his`),
+  INDEX `fk_tb_perfil_his_tb_operacao1_idx` (`fk_id_operacao` ASC),
+  INDEX `fk_tb_perfil_his_tb_usuario1_idx` (`fk_id_usuario_operacao` ASC),
+  CONSTRAINT `fk_tb_perfil_his_tb_operacao1`
+    FOREIGN KEY (`fk_id_operacao`)
+    REFERENCES `mydb`.`tb_operacao` (`id_operacao`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `idInstituicao`
-    FOREIGN KEY (`idInstituicao`)
-    REFERENCES `mydb`.`instituicao` (`idInstituicao`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1;
-
-
--- -----------------------------------------------------
--- Table `mydb`.`horario`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`horario` (
-  `idHorario` INT NOT NULL,
-  `horaInicio` TIME NULL,
-  `horaFinal` TIME NULL,
-  PRIMARY KEY (`idHorario`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `mydb`.`aula`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`aula` (
-  `idResponsavel` INT(11) NOT NULL COMMENT 'id do Responsavel',
-  `idFilho` INT(11) NOT NULL COMMENT 'id do Filho',
-  `idMateria` INT(11) NOT NULL COMMENT 'id da Materia',
-  `idProfessor` INT(11) NOT NULL COMMENT 'id do Professor',
-  `Conteudo` INT(11) NOT NULL COMMENT 'Conteudo',
-  `idHorario` INT NOT NULL COMMENT 'Hora de Inicio da Aula',
-  PRIMARY KEY (`idResponsavel`, `idFilho`, `idMateria`),
-  INDEX `idAluno_idx` (`idFilho` ASC),
-  INDEX `idMateria_idx` (`idMateria` ASC),
-  INDEX `idProfessor_idx` (`idProfessor` ASC),
-  CONSTRAINT `idResponsavel`
-    FOREIGN KEY (`idResponsavel`)
-    REFERENCES `mydb`.`responsavel` (`idUsuario`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `idFilho`
-    FOREIGN KEY (`idFilho`)
-    REFERENCES `mydb`.`aluno` (`idUsuario`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION,
-  CONSTRAINT `idMateria`
-    FOREIGN KEY (`idMateria`)
-    REFERENCES `mydb`.`materia` (`idMateria`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `idProfessor`
-    FOREIGN KEY (`idProfessor`)
-    REFERENCES `mydb`.`professor` (`idUsuario`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `idHorario`
-    FOREIGN KEY ()
-    REFERENCES `mydb`.`horario` ()
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1;
-
-
--- -----------------------------------------------------
--- Table `mydb`.`lista_regiao`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`lista_regiao` (
-  `idUsuario` INT NOT NULL,
-  `idRegiao` INT NOT NULL,
-  INDEX `idUsuario` (`idUsuario` ASC),
-  CONSTRAINT `idRegiao`
-    FOREIGN KEY (`idRegiao`)
-    REFERENCES `mydb`.`regiao` (`idRegiao`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION,
-  CONSTRAINT `idUsuario`
-    FOREIGN KEY (`idUsuario`)
-    REFERENCES `mydb`.`usuario` (`idUsuario`)
+  CONSTRAINT `fk_tb_perfil_his_tb_usuario1`
+    FOREIGN KEY (`fk_id_usuario_operacao`)
+    REFERENCES `mydb`.`tb_usuario` (`id_usuario`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`lista_horário`
+-- Table `mydb`.`tb_usuario_his`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`lista_horário` (
-  `idUsuario` INT NOT NULL,
-  `idHorário` INT NOT NULL,
-  INDEX `idUsuario` (),
-  INDEX `idHorario_idx` (`idHorário` ASC),
-  INDEX `idUsuario_idx` (`idUsuario` ASC),
-  CONSTRAINT `idUsuario`
-    FOREIGN KEY (`idUsuario`)
-    REFERENCES `mydb`.`professor` (`idUsuario`)
+CREATE TABLE IF NOT EXISTS `mydb`.`tb_usuario_his` (
+  `id_usuario_his` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_usuario` INT UNSIGNED NOT NULL,
+  `fk_id_perfil` INT UNSIGNED NOT NULL,
+  `nome` VARCHAR(80) NOT NULL,
+  `email` VARCHAR(200) NOT NULL,
+  `senha` VARCHAR(128) NOT NULL,
+  `numero_filhos` INT NULL,
+  `ativo` TINYINT UNSIGNED NOT NULL,
+  `fk_id_usuario_operacao` INT(11) UNSIGNED NOT NULL,
+  `fk_id_operacao` INT UNSIGNED NOT NULL,
+  `data` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_usuario_his`),
+  UNIQUE INDEX `id_usuario_his_UNIQUE` (`id_usuario_his` ASC),
+  INDEX `fk_tb_usuario_his_tb_operacao1_idx` (`fk_id_operacao` ASC),
+  INDEX `fk_tb_usuario_his_tb_usuario1_idx` (`fk_id_usuario_operacao` ASC),
+  CONSTRAINT `fk_tb_usuario_his_tb_operacao1`
+    FOREIGN KEY (`fk_id_operacao`)
+    REFERENCES `mydb`.`tb_operacao` (`id_operacao`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `idHorario`
-    FOREIGN KEY (`idHorário`)
-    REFERENCES `mydb`.`horario` (`idHorario`)
+  CONSTRAINT `fk_tb_usuario_his_tb_usuario1`
+    FOREIGN KEY (`fk_id_usuario_operacao`)
+    REFERENCES `mydb`.`tb_usuario` (`id_usuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`tb_pais`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`tb_pais` (
+  `id_pais` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(50) NOT NULL,
+  `ativo` TINYINT UNSIGNED NOT NULL,
+  PRIMARY KEY (`id_pais`),
+  UNIQUE INDEX `id_pais_UNIQUE` (`id_pais` ASC))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`tb_pais_his`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`tb_pais_his` (
+  `id_pais_his` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_pais` INT UNSIGNED NOT NULL,
+  `nome` VARCHAR(50) NOT NULL,
+  `ativo` TINYINT UNSIGNED NOT NULL,
+  `fk_id_usuario_operacao` INT(11) UNSIGNED NOT NULL,
+  `fk_id_operacao` INT(11) UNSIGNED NOT NULL,
+  `data` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_pais_his`),
+  UNIQUE INDEX `id_pais_his_UNIQUE` (`id_pais_his` ASC),
+  INDEX `fk_tb_pais_his_tb_usuario1_idx` (`fk_id_usuario_operacao` ASC),
+  INDEX `fk_tb_pais_his_tb_operacao1_idx` (`fk_id_operacao` ASC),
+  CONSTRAINT `fk_tb_pais_his_tb_usuario1`
+    FOREIGN KEY (`fk_id_usuario_operacao`)
+    REFERENCES `mydb`.`tb_usuario` (`id_usuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_tb_pais_his_tb_operacao1`
+    FOREIGN KEY (`fk_id_operacao`)
+    REFERENCES `mydb`.`tb_operacao` (`id_operacao`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`tb_estado`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`tb_estado` (
+  `id_estado` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `fk_id_pais` INT UNSIGNED NOT NULL,
+  `nome` VARCHAR(50) NOT NULL,
+  `ativo` TINYINT UNSIGNED NOT NULL,
+  PRIMARY KEY (`id_estado`),
+  UNIQUE INDEX `id_estado_UNIQUE` (`id_estado` ASC),
+  INDEX `fk_tb_estado_tb_pais1_idx` (`fk_id_pais` ASC),
+  CONSTRAINT `fk_tb_estado_tb_pais1`
+    FOREIGN KEY (`fk_id_pais`)
+    REFERENCES `mydb`.`tb_pais` (`id_pais`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`tb_estado_his`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`tb_estado_his` (
+  `id_estado_his` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_estado` INT UNSIGNED NOT NULL,
+  `fk_id_pais` INT UNSIGNED NOT NULL,
+  `nome` VARCHAR(50) NOT NULL,
+  `ativo` TINYINT UNSIGNED NOT NULL,
+  `fk_id_usuario_operacao` INT(11) UNSIGNED NOT NULL,
+  `fk_id_operacao` INT(11) UNSIGNED NOT NULL,
+  `data` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_estado_his`),
+  UNIQUE INDEX `id_estado_his_UNIQUE` (`id_estado_his` ASC),
+  INDEX `fk_tb_estado_his_tb_usuario1_idx` (`fk_id_usuario_operacao` ASC),
+  INDEX `fk_tb_estado_his_tb_operacao1_idx` (`fk_id_operacao` ASC),
+  CONSTRAINT `fk_tb_estado_his_tb_usuario1`
+    FOREIGN KEY (`fk_id_usuario_operacao`)
+    REFERENCES `mydb`.`tb_usuario` (`id_usuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_tb_estado_his_tb_operacao1`
+    FOREIGN KEY (`fk_id_operacao`)
+    REFERENCES `mydb`.`tb_operacao` (`id_operacao`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`tb_cidade`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`tb_cidade` (
+  `id_cidade` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `fk_id_estado` INT UNSIGNED NOT NULL,
+  `nome` VARCHAR(80) NOT NULL,
+  `ativo` TINYINT UNSIGNED NOT NULL,
+  PRIMARY KEY (`id_cidade`),
+  UNIQUE INDEX `id_cidade_UNIQUE` (`id_cidade` ASC),
+  INDEX `fk_tb_cidade_tb_estado1_idx` (`fk_id_estado` ASC),
+  CONSTRAINT `fk_tb_cidade_tb_estado1`
+    FOREIGN KEY (`fk_id_estado`)
+    REFERENCES `mydb`.`tb_estado` (`id_estado`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`tb_cidade_his`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`tb_cidade_his` (
+  `id_cidade_his` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_cidade` INT UNSIGNED NOT NULL,
+  `fk_id_estado` INT UNSIGNED NOT NULL,
+  `nome` VARCHAR(80) NOT NULL,
+  `ativo` TINYINT UNSIGNED NOT NULL,
+  `fk_id_usuario_operacao` INT(11) UNSIGNED NOT NULL,
+  `fk_id_operacao` INT(11) UNSIGNED NOT NULL,
+  `data` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_cidade_his`),
+  UNIQUE INDEX `id_cidade_his_UNIQUE` (`id_cidade_his` ASC),
+  INDEX `fk_tb_cidade_his_tb_usuario1_idx` (`fk_id_usuario_operacao` ASC),
+  INDEX `fk_tb_cidade_his_tb_operacao1_idx` (`fk_id_operacao` ASC),
+  CONSTRAINT `fk_tb_cidade_his_tb_usuario1`
+    FOREIGN KEY (`fk_id_usuario_operacao`)
+    REFERENCES `mydb`.`tb_usuario` (`id_usuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_tb_cidade_his_tb_operacao1`
+    FOREIGN KEY (`fk_id_operacao`)
+    REFERENCES `mydb`.`tb_operacao` (`id_operacao`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`tb_endereco`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`tb_endereco` (
+  `id_endereco` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `fk_id_usuario` INT(11) UNSIGNED NOT NULL,
+  `fk_id_cidade` INT UNSIGNED NOT NULL,
+  `endereco` VARCHAR(250) NOT NULL,
+  `complemento` VARCHAR(100) NULL,
+  `CEP` INT UNSIGNED NOT NULL,
+  `ativo` TINYINT UNSIGNED NOT NULL,
+  PRIMARY KEY (`id_endereco`),
+  UNIQUE INDEX `id_endereco_UNIQUE` (`id_endereco` ASC),
+  INDEX `fk_tb_endereco_tb_usuario1_idx` (`fk_id_usuario` ASC),
+  INDEX `fk_tb_endereco_tb_cidade1_idx` (`fk_id_cidade` ASC),
+  CONSTRAINT `fk_tb_endereco_tb_usuario1`
+    FOREIGN KEY (`fk_id_usuario`)
+    REFERENCES `mydb`.`tb_usuario` (`id_usuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_tb_endereco_tb_cidade1`
+    FOREIGN KEY (`fk_id_cidade`)
+    REFERENCES `mydb`.`tb_cidade` (`id_cidade`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`tb_endereco_his`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`tb_endereco_his` (
+  `id_endereco_his` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_endereco` INT UNSIGNED NOT NULL,
+  `fk_id_usuario` INT UNSIGNED NOT NULL,
+  `fk_id_cidade` INT UNSIGNED NOT NULL,
+  `endereco` VARCHAR(250) NOT NULL,
+  `complemento` VARCHAR(100) NULL,
+  `CEP` INT UNSIGNED NOT NULL,
+  `ativo` TINYINT UNSIGNED NOT NULL,
+  `fk_id_usuario_operacao` INT(11) UNSIGNED NOT NULL,
+  `fk_id_operacao` INT(11) UNSIGNED NOT NULL,
+  `data` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_endereco_his`),
+  UNIQUE INDEX `id_endereco_his_UNIQUE` (`id_endereco_his` ASC),
+  INDEX `fk_tb_endereco_his_tb_usuario1_idx` (`fk_id_usuario_operacao` ASC),
+  INDEX `fk_tb_endereco_his_tb_operacao1_idx` (`fk_id_operacao` ASC),
+  CONSTRAINT `fk_tb_endereco_his_tb_usuario1`
+    FOREIGN KEY (`fk_id_usuario_operacao`)
+    REFERENCES `mydb`.`tb_usuario` (`id_usuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_tb_endereco_his_tb_operacao1`
+    FOREIGN KEY (`fk_id_operacao`)
+    REFERENCES `mydb`.`tb_operacao` (`id_operacao`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`tb_telefone`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`tb_telefone` (
+  `id_telefone` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `fk_id_usuario` INT(11) UNSIGNED NOT NULL,
+  `numero` INT UNSIGNED NOT NULL,
+  `ativo` TINYINT UNSIGNED NOT NULL,
+  PRIMARY KEY (`id_telefone`),
+  UNIQUE INDEX `id_telefone_UNIQUE` (`id_telefone` ASC),
+  INDEX `fk_tb_telefone_tb_usuario1_idx` (`fk_id_usuario` ASC),
+  CONSTRAINT `fk_tb_telefone_tb_usuario1`
+    FOREIGN KEY (`fk_id_usuario`)
+    REFERENCES `mydb`.`tb_usuario` (`id_usuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`tb_telefone_his`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`tb_telefone_his` (
+  `id_telefone_his` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_telefone` INT UNSIGNED NOT NULL,
+  `fk_id_usuario` INT UNSIGNED NOT NULL,
+  `numero` INT UNSIGNED NOT NULL,
+  `ativo` TINYINT UNSIGNED NOT NULL,
+  `fk_id_usuario_operacao` INT(11) UNSIGNED NOT NULL,
+  `fk_id_operacao` INT(11) UNSIGNED NOT NULL,
+  `data` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_telefone_his`),
+  UNIQUE INDEX `id_telefone_his_UNIQUE` (`id_telefone_his` ASC),
+  INDEX `fk_tb_telefone_his_tb_usuario1_idx` (`fk_id_usuario_operacao` ASC),
+  INDEX `fk_tb_telefone_his_tb_operacao1_idx` (`fk_id_operacao` ASC),
+  CONSTRAINT `fk_tb_telefone_his_tb_usuario1`
+    FOREIGN KEY (`fk_id_usuario_operacao`)
+    REFERENCES `mydb`.`tb_usuario` (`id_usuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_tb_telefone_his_tb_operacao1`
+    FOREIGN KEY (`fk_id_operacao`)
+    REFERENCES `mydb`.`tb_operacao` (`id_operacao`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`tb_curso`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`tb_curso` (
+  `id_curso` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(70) NOT NULL,
+  `ativo` TINYINT UNSIGNED NOT NULL,
+  PRIMARY KEY (`id_curso`),
+  UNIQUE INDEX `id_curso_UNIQUE` (`id_curso` ASC),
+  UNIQUE INDEX `nome_UNIQUE` (`nome` ASC))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`tb_curso_his`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`tb_curso_his` (
+  `id_curso_his` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_curso` INT UNSIGNED NOT NULL,
+  `nome` VARCHAR(70) NOT NULL,
+  `ativo` TINYINT UNSIGNED NOT NULL,
+  `fk_id_usuario_operacao` INT(11) UNSIGNED NOT NULL,
+  `fk_id_operacao` INT(11) UNSIGNED NOT NULL,
+  `data` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_curso_his`),
+  UNIQUE INDEX `id_curso_his_UNIQUE` (`id_curso_his` ASC),
+  INDEX `fk_tb_curso_his_tb_usuario1_idx` (`fk_id_usuario_operacao` ASC),
+  INDEX `fk_tb_curso_his_tb_operacao1_idx` (`fk_id_operacao` ASC),
+  CONSTRAINT `fk_tb_curso_his_tb_usuario1`
+    FOREIGN KEY (`fk_id_usuario_operacao`)
+    REFERENCES `mydb`.`tb_usuario` (`id_usuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_tb_curso_his_tb_operacao1`
+    FOREIGN KEY (`fk_id_operacao`)
+    REFERENCES `mydb`.`tb_operacao` (`id_operacao`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`ta_usuario_x_curso`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`ta_usuario_x_curso` (
+  `id_usuario` INT(11) UNSIGNED NOT NULL,
+  `id_curso` INT UNSIGNED NOT NULL,
+  `finalizado` TINYINT UNSIGNED NOT NULL COMMENT '0 - não\n1 - si' /* comment truncated */ /*
+*/,
+  `semestre` INT UNSIGNED NULL,
+  `ativo` TINYINT UNSIGNED NOT NULL,
+  PRIMARY KEY (`id_usuario`, `id_curso`),
+  INDEX `fk_tb_usuario_has_tb_curso_tb_curso1_idx` (`id_curso` ASC),
+  INDEX `fk_tb_usuario_has_tb_curso_tb_usuario1_idx` (`id_usuario` ASC),
+  CONSTRAINT `fk_tb_usuario_has_tb_curso_tb_usuario1`
+    FOREIGN KEY (`id_usuario`)
+    REFERENCES `mydb`.`tb_usuario` (`id_usuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_tb_usuario_has_tb_curso_tb_curso1`
+    FOREIGN KEY (`id_curso`)
+    REFERENCES `mydb`.`tb_curso` (`id_curso`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`ta_usuario_x_curso_his`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`ta_usuario_x_curso_his` (
+  `id_usuario_x_curso_his` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_usuario` INT UNSIGNED NOT NULL,
+  `id_curso` INT UNSIGNED NOT NULL,
+  `finalizado` TINYINT UNSIGNED NOT NULL,
+  `semestre` INT NULL,
+  `ativo` TINYINT UNSIGNED NOT NULL,
+  `fk_id_usuario_operacao` INT(11) UNSIGNED NOT NULL,
+  `fk_id_operacao` INT(11) UNSIGNED NOT NULL,
+  `data` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_usuario_x_curso_his`),
+  UNIQUE INDEX `id_usuario_x_curso_his_UNIQUE` (`id_usuario_x_curso_his` ASC),
+  INDEX `fk_ta_usuario_x_curso_his_tb_usuario1_idx` (`fk_id_usuario_operacao` ASC),
+  INDEX `fk_ta_usuario_x_curso_his_tb_operacao1_idx` (`fk_id_operacao` ASC),
+  CONSTRAINT `fk_ta_usuario_x_curso_his_tb_usuario1`
+    FOREIGN KEY (`fk_id_usuario_operacao`)
+    REFERENCES `mydb`.`tb_usuario` (`id_usuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ta_usuario_x_curso_his_tb_operacao1`
+    FOREIGN KEY (`fk_id_operacao`)
+    REFERENCES `mydb`.`tb_operacao` (`id_operacao`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`tb_materia`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`tb_materia` (
+  `id_materia` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(50) NOT NULL,
+  `ativo` TINYINT UNSIGNED NOT NULL,
+  PRIMARY KEY (`id_materia`),
+  UNIQUE INDEX `id_materia_UNIQUE` (`id_materia` ASC),
+  UNIQUE INDEX `nome_UNIQUE` (`nome` ASC))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`tb_materia_his`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`tb_materia_his` (
+  `id_materia_his` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_materia` INT UNSIGNED NOT NULL,
+  `nome` VARCHAR(50) NOT NULL,
+  `ativo` TINYINT UNSIGNED NOT NULL,
+  `fk_id_usuario_operacao` INT(11) UNSIGNED NOT NULL,
+  `fk_id_operacao` INT(11) UNSIGNED NOT NULL,
+  `data` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_materia_his`),
+  UNIQUE INDEX `id_material_his_UNIQUE` (`id_materia_his` ASC),
+  INDEX `fk_tb_materia_his_tb_usuario1_idx` (`fk_id_usuario_operacao` ASC),
+  INDEX `fk_tb_materia_his_tb_operacao1_idx` (`fk_id_operacao` ASC),
+  CONSTRAINT `fk_tb_materia_his_tb_usuario1`
+    FOREIGN KEY (`fk_id_usuario_operacao`)
+    REFERENCES `mydb`.`tb_usuario` (`id_usuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_tb_materia_his_tb_operacao1`
+    FOREIGN KEY (`fk_id_operacao`)
+    REFERENCES `mydb`.`tb_operacao` (`id_operacao`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`ta_usuario_x_materia`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`ta_usuario_x_materia` (
+  `id_usuario` INT(11) UNSIGNED NOT NULL,
+  `id_materia` INT UNSIGNED NOT NULL,
+  `ativo` TINYINT UNSIGNED NOT NULL,
+  PRIMARY KEY (`id_usuario`, `id_materia`),
+  INDEX `fk_tb_usuario_has_tb_materia_tb_materia1_idx` (`id_materia` ASC),
+  INDEX `fk_tb_usuario_has_tb_materia_tb_usuario1_idx` (`id_usuario` ASC),
+  CONSTRAINT `fk_tb_usuario_has_tb_materia_tb_usuario1`
+    FOREIGN KEY (`id_usuario`)
+    REFERENCES `mydb`.`tb_usuario` (`id_usuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_tb_usuario_has_tb_materia_tb_materia1`
+    FOREIGN KEY (`id_materia`)
+    REFERENCES `mydb`.`tb_materia` (`id_materia`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`ta_usuario_x_materia_his`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`ta_usuario_x_materia_his` (
+  `id_usuario_x_materia_his` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_usuario` INT UNSIGNED NOT NULL,
+  `id_materia` INT UNSIGNED NOT NULL,
+  `ativo` TINYINT UNSIGNED NOT NULL,
+  `fk_id_usuario_operacao` INT(11) UNSIGNED NOT NULL,
+  `fk_id_operacao` INT(11) UNSIGNED NOT NULL,
+  `data` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_usuario_x_materia_his`),
+  UNIQUE INDEX `id_usuario_x_materia_his_UNIQUE` (`id_usuario_x_materia_his` ASC),
+  INDEX `fk_ta_usuario_x_materia_his_tb_usuario1_idx` (`fk_id_usuario_operacao` ASC),
+  INDEX `fk_ta_usuario_x_materia_his_tb_operacao1_idx` (`fk_id_operacao` ASC),
+  CONSTRAINT `fk_ta_usuario_x_materia_his_tb_usuario1`
+    FOREIGN KEY (`fk_id_usuario_operacao`)
+    REFERENCES `mydb`.`tb_usuario` (`id_usuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ta_usuario_x_materia_his_tb_operacao1`
+    FOREIGN KEY (`fk_id_operacao`)
+    REFERENCES `mydb`.`tb_operacao` (`id_operacao`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`tb_horario_livre`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`tb_horario_livre` (
+  `id_horario_livre` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `fk_id_usuario` INT(11) UNSIGNED NOT NULL,
+  `horario_inicial` TIME NOT NULL,
+  `horario_final` TIME NOT NULL,
+  `data_horario_livre` DATE NOT NULL,
+  `ativo` TINYINT UNSIGNED NOT NULL,
+  PRIMARY KEY (`id_horario_livre`),
+  UNIQUE INDEX `id_horario_livre_UNIQUE` (`id_horario_livre` ASC),
+  INDEX `fk_tb_horario_livre_tb_usuario1_idx` (`fk_id_usuario` ASC),
+  CONSTRAINT `fk_tb_horario_livre_tb_usuario1`
+    FOREIGN KEY (`fk_id_usuario`)
+    REFERENCES `mydb`.`tb_usuario` (`id_usuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`tb_horario_livre_his`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`tb_horario_livre_his` (
+  `id_horario_livre_his` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_horario_livre` INT UNSIGNED NOT NULL,
+  `fk_id_usuario` INT UNSIGNED NOT NULL,
+  `horario_inicial` TIME NOT NULL,
+  `horario_final` TIME NOT NULL,
+  `data_horario_livre` DATE NOT NULL,
+  `ativo` TINYINT UNSIGNED NOT NULL,
+  `fk_id_operacao` INT(11) UNSIGNED NOT NULL,
+  `data` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_horario_livre_his`),
+  UNIQUE INDEX `id_horario_livre_his_UNIQUE` (`id_horario_livre_his` ASC),
+  INDEX `fk_tb_horario_livre_his_tb_usuario1_idx` (`fk_id_usuario` ASC),
+  INDEX `fk_tb_horario_livre_his_tb_operacao1_idx` (`fk_id_operacao` ASC),
+  CONSTRAINT `fk_tb_horario_livre_his_tb_usuario1`
+    FOREIGN KEY (`fk_id_usuario`)
+    REFERENCES `mydb`.`tb_usuario` (`id_usuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_tb_horario_livre_his_tb_operacao1`
+    FOREIGN KEY (`fk_id_operacao`)
+    REFERENCES `mydb`.`tb_operacao` (`id_operacao`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`tb_aula`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`tb_aula` (
+  `id_aula` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `fk_id_usuario_pai` INT(11) UNSIGNED NOT NULL,
+  `fk_id_usuario_aluno` INT(11) UNSIGNED NOT NULL,
+  `fk_id_usuario_professor` INT(11) UNSIGNED NOT NULL,
+  `horario_inicial` TIME NOT NULL,
+  `horario_final` TIME NOT NULL,
+  `data_aula` DATE NOT NULL,
+  `conteudo` TEXT NOT NULL,
+  `ativo` TINYINT UNSIGNED NOT NULL,
+  PRIMARY KEY (`id_aula`),
+  UNIQUE INDEX `id_aula_UNIQUE` (`id_aula` ASC),
+  INDEX `fk_tb_aula_tb_usuario1_idx` (`fk_id_usuario_pai` ASC),
+  INDEX `fk_tb_aula_tb_usuario2_idx` (`fk_id_usuario_aluno` ASC),
+  INDEX `fk_tb_aula_tb_usuario3_idx` (`fk_id_usuario_professor` ASC),
+  CONSTRAINT `fk_tb_aula_tb_usuario1`
+    FOREIGN KEY (`fk_id_usuario_pai`)
+    REFERENCES `mydb`.`tb_usuario` (`id_usuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_tb_aula_tb_usuario2`
+    FOREIGN KEY (`fk_id_usuario_aluno`)
+    REFERENCES `mydb`.`tb_usuario` (`id_usuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_tb_aula_tb_usuario3`
+    FOREIGN KEY (`fk_id_usuario_professor`)
+    REFERENCES `mydb`.`tb_usuario` (`id_usuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`ta_aula_x_materia`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`ta_aula_x_materia` (
+  `id_aula` INT UNSIGNED NOT NULL,
+  `id_materia` INT UNSIGNED NOT NULL,
+  `ativo` TINYINT UNSIGNED NOT NULL,
+  PRIMARY KEY (`id_aula`, `id_materia`),
+  INDEX `fk_tb_aula_has_tb_materia_tb_materia1_idx` (`id_materia` ASC),
+  INDEX `fk_tb_aula_has_tb_materia_tb_aula1_idx` (`id_aula` ASC),
+  CONSTRAINT `fk_tb_aula_has_tb_materia_tb_aula1`
+    FOREIGN KEY (`id_aula`)
+    REFERENCES `mydb`.`tb_aula` (`id_aula`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_tb_aula_has_tb_materia_tb_materia1`
+    FOREIGN KEY (`id_materia`)
+    REFERENCES `mydb`.`tb_materia` (`id_materia`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`tb_aula_his`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`tb_aula_his` (
+  `id_aula_his` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_aula` INT UNSIGNED NOT NULL,
+  `fk_id_usuario_pai` INT UNSIGNED NOT NULL,
+  `fk_id_usuario_aluno` INT UNSIGNED NOT NULL,
+  `fk_id_usuario_professor` INT UNSIGNED NOT NULL,
+  `horario_inicial` TIME NOT NULL,
+  `horario_final` TIME NOT NULL,
+  `data_aula` DATE NOT NULL,
+  `conteudo` TEXT NOT NULL,
+  `ativo` TINYINT UNSIGNED NOT NULL,
+  `fk_id_usuario` INT(11) UNSIGNED NOT NULL,
+  `fk_id_operacao` INT(11) UNSIGNED NOT NULL,
+  `data` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_aula_his`),
+  UNIQUE INDEX `id_aula_his_UNIQUE` (`id_aula_his` ASC),
+  INDEX `fk_tb_aula_his_tb_usuario1_idx` (`fk_id_usuario` ASC),
+  INDEX `fk_tb_aula_his_tb_operacao1_idx` (`fk_id_operacao` ASC),
+  CONSTRAINT `fk_tb_aula_his_tb_usuario1`
+    FOREIGN KEY (`fk_id_usuario`)
+    REFERENCES `mydb`.`tb_usuario` (`id_usuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_tb_aula_his_tb_operacao1`
+    FOREIGN KEY (`fk_id_operacao`)
+    REFERENCES `mydb`.`tb_operacao` (`id_operacao`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`ta_aula_x_materia_his`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`ta_aula_x_materia_his` (
+  `id_aula_x_materia_his` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_aula` INT UNSIGNED NOT NULL,
+  `id_material` INT UNSIGNED NOT NULL,
+  `ativo` TINYINT UNSIGNED NOT NULL,
+  `fk_id_usuario` INT(11) UNSIGNED NOT NULL,
+  `fk_id_operacao` INT(11) UNSIGNED NOT NULL,
+  `data` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_aula_x_materia_his`),
+  UNIQUE INDEX `id_aula_x_materia_his_UNIQUE` (`id_aula_x_materia_his` ASC),
+  INDEX `fk_ta_aula_x_materia_his_tb_usuario1_idx` (`fk_id_usuario` ASC),
+  INDEX `fk_ta_aula_x_materia_his_tb_operacao1_idx` (`fk_id_operacao` ASC),
+  CONSTRAINT `fk_ta_aula_x_materia_his_tb_usuario1`
+    FOREIGN KEY (`fk_id_usuario`)
+    REFERENCES `mydb`.`tb_usuario` (`id_usuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ta_aula_x_materia_his_tb_operacao1`
+    FOREIGN KEY (`fk_id_operacao`)
+    REFERENCES `mydb`.`tb_operacao` (`id_operacao`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

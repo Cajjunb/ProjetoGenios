@@ -40,3 +40,47 @@ success!
 success!
 success!
 success!
+timestamp: 2014-05-14T19:19:57.921000
+CREATE TABLE Usuario(
+    id INT AUTO_INCREMENT NOT NULL,
+    email VARCHAR(512),
+    senha VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2014-05-14T19:19:58.011000
+CREATE TABLE Professor(
+    idUser INT AUTO_INCREMENT NOT NULL,
+    Nome VARCHAR(512),
+    foto VARCHAR(512),
+    PRIMARY KEY (idUser)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2014-05-14T19:19:58.060000
+CREATE TABLE image(
+    id INT AUTO_INCREMENT NOT NULL,
+    title VARCHAR(512) UNIQUE,
+    file VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2014-05-14T19:19:58.096000
+CREATE TABLE post(
+    id INT AUTO_INCREMENT NOT NULL,
+    image_id INT, INDEX image_id__idx (image_id), FOREIGN KEY (image_id) REFERENCES image (id) ON DELETE CASCADE,
+    author VARCHAR(512),
+    email VARCHAR(512),
+    body LONGTEXT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2014-05-14T19:19:58.126000
+CREATE TABLE Responsavel(
+    id INT AUTO_INCREMENT NOT NULL,
+    Nome LONGTEXT,
+    email LONGTEXT,
+    foto VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+success!
