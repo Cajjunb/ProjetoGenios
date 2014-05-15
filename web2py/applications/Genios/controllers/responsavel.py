@@ -1,5 +1,7 @@
 # coding: utf8
 # try something like
+
+#Controller da pagina inicial do Responsavel
 def index():
     db.pai_x_filho.fk_filho.writable= False
     form2 = SQLFORM(db.pai_x_filho,fields=["fk_pai"])
@@ -11,15 +13,22 @@ def index():
         session.idpai= 0
     return dict(form=form2, session=session.idpai)
 
+
+#Controller da pagina de perfil do responsavel
 def alterar():
+    # Session com a info do pai foi setada?
     if not session.idpai:
          redirect(URL('responsavel','index'))
-    #formpai = SQLFORM(db.pai,session.idpai)
-    #formfilho = SQLFORM(db.filho)
+    
+    #SQL query INNER JOIN 
     filhosSet = db((session.idpai==db.pai_x_filho.fk_pai)& (db.filho.id==db.pai_x_filho.fk_filho))
+    #Inicia a Lista
     forms = list()
+    fotos = list()
+    #loop criando os formulários referentes aos filhos 
     for filhoObj in filhosSet.select():
-        forms.append(SQLFORM(db.filho, filhoObj.filho ,fields=['nome']))
-    if( not filhosSet):
-        filhos = {"ERRO","OPPS"}
-    return dict(filhos=filhosSet,forms=forms)
+        #Seta o formulario de acordo com a necessidade
+        fotos.append(filhoObj.filho.foto)
+        forms.append(SQLFORM(db.filho, filhoObj.filho , fields = ['foto','nome'], showid=False,formstyle="divs"))
+        
+    return dict(filhos=filhosSet,forms=forms,fotos=fotos)

@@ -1,15 +1,18 @@
 {{extend 'layout.html'}}
+<head>
+    <link href="{{=URL('static', 'css/responsavel.css')}}" rel="stylesheet" type="text/css" />
+</head>
 
-{{ for form in forms:}}
+{{ i = 0 }}
+<div class="filhos">
+    {{ for form  in forms:}}
+        <div class="wrap-formulario">
+            <div class="wrap-foto">
+                <img width="200px" src="{{=URL('download',args=fotos[i])}}" />
+            </div>
+            {{=form}}
+        </div>
 
-    {{=form}}
-
-{{pass}}
-
-{{ for filho in filhos.select():}}
-    <div>
-        <p>
-            {{= filho.filho.nome}}
-        </p>
-    </div>
-{{pass}}
+        {{i += 1}}
+    {{pass}}
+</div>

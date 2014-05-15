@@ -1,0 +1,20 @@
+.filhos{
+    border: 1px solid black;
+    border-radius: 10px;
+    padding:20px
+}
+
+
+.wrap-formulario{
+    overflow:hidden;
+}
+
+div .wrap-foto{
+    display: inline;
+    float: left;
+    margin-right: 20px;
+}
+
+.filhos form{
+    float: left;
+}
