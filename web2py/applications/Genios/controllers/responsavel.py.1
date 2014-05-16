@@ -1,25 +1,61 @@
 # coding: utf8
 # try something like
+# ENUMERATIONS
+ESCREVE_FILHO = 0
+ALTERA_FILHO  = 1
+DELETA_FILHO  = 2
+ALTERA_RESPONSAVEL = 3
+NULLOP = 4
+
+
+#Controller da pagina inicial do Responsavel
 def index():
     db.pai_x_filho.fk_filho.writable= False
-    form2 = SQLFORM(db.pai_x_filho,fields=["fk_pai"])
-    form = FORM(INPUT(_name="idpai",_type="text"),INPUT(_type='submit'), _action='', _method='post')
+    form2 = SQLFORM(db.pai_x_filho,fields=["fk_pai"],showid=False)
     if(form2.validate()):
         session.idpai=form2.vars.fk_pai
+        session.op = NULLOP
         redirect(URL('responsavel','alterar'))
     else:
         session.idpai= 0
     return dict(form=form2, session=session.idpai)
 
+
+#Controller da pagina de perfil do responsavel
 def alterar():
-    if not session.idpai:
+    # Session com a info do pai foi setada?
+    if not session.idpai : # Falta uma condicao aqui! if not session.op
          redirect(URL('responsavel','index'))
-    #formpai = SQLFORM(db.pai,session.idpai)
-    #formfilho = SQLFORM(db.filho)
+
+    #Pegando form do pai
+    formpai = SQLFORM(db.pai,session.idpai,showid=False,fields=['nome'],formstyle="divs")
+
+    #Processa as alteracoes
+    if session.op == ALTERA_FILHO and formpai.process().accepted:
+        response.flash = "Alteracao Concluida!"
+
+
+    #SQL query INNER JOIN
     filhosSet = db((session.idpai==db.pai_x_filho.fk_pai)& (db.filho.id==db.pai_x_filho.fk_filho))
+
+    #Inicia a Lista
     forms = list()
+    fotos = list()
+
+    #Get numero de registros
+    numFilhos = filhosSet.count()
+    
+    for i in range(0):
+
+
+    # i = 0
+    i = 0
+
+    #loop criando os formulários referentes aos filhos
     for filhoObj in filhosSet.select():
-        forms.append(SQLFORM(db.filho,filhoObj.filho))
-    if( not filhosSet):
-        filhos = {"ERRO","OPPS"}
-    return dict(filhos=filhosSet,form=forms)
+        #Seta o formulario de acordo com a necessidade
+        fotos.append(filhoObj.filho.foto)
+        forms.append(SQLFORM(db.filho, filhoObj.filho, hidden=i , fields = ['foto','nome'], showid=False,formstyle="divs"))
+        #Incrementa o i
+        i += 1
+    return dict(formpai=formpai,forms=forms,fotos=fotos)

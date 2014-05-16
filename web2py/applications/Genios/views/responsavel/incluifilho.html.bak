@@ -1,0 +1,13 @@
+{{extend 'layout.html'}}
+
+<div>
+    <h2>
+        {{=pai}}
+    </h2>
+    
+    <div class="formfilho">
+        {{=form}}
+    </div>
+</div>
+
+<a href="{{ =URL('responsavel','alterar') }}">Voltar</a>

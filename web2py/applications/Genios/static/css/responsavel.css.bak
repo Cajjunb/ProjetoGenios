@@ -1,12 +1,33 @@
-.filhos{
-    border: 1px solid black;
-    border-radius: 10px;
-    padding:20px
+.altera-wrap{
+    display: inline-block;
+}
+
+.altera-wrap h1{
+
+    display:inline;
+    
+}
+
+.altera-wrap .forms-wrap{
+
+    display:inline-block;
+    
 }
 
 
-.wrap-formulario{
+.filhos{
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 20px;
+    /* margin: 0 auto; */
+    display: inline-block;
+}
+
+
+.filhos .wrap-formulario{
     overflow:hidden;
+    margin: 0px 0px 20px 0px;
+
 }
 
 div .wrap-foto{
