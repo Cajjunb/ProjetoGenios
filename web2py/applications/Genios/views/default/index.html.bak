@@ -1,4 +1,1 @@
 {{extend 'layout.html'}}
-
-
-{{ =A( _href=(URL('responsavel','index')) }}
