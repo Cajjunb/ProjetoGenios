@@ -1,8 +1,0 @@
-{{extend 'layout.html'}}
-<h1>This is the images.html template</h1>
-
-{{ for (image in images): }}
-    <li><a>{{=image.title}}</a></li>
-
-{{ pass }}
-{{=BEAUTIFY(response._vars)}}

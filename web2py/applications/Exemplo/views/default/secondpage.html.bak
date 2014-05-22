@@ -1,9 +1,0 @@
-{{extend 'layout.html'}}
-<h1>{{T("This is the default/secondpage.html template")}}</h1>
-
-<p>
-    NOME:
-    {{ =session.nome or "anonymous" }}
-    <br>
-    =)
-</p>

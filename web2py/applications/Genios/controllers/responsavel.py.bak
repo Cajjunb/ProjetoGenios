@@ -34,3 +34,29 @@ def alterar():
         forms.append(SQLFORM(db.filho, filhoObj.filho , fields = ['foto','nome'], showid=False,formstyle="divs"))
         
     return dict(formpai=formpai,forms=forms,fotos=fotos)
+<<<<<<< master
+=======
+
+
+def incluifilho():
+    # Testa se a session foi setada
+    if not session.idpai:
+        redirect(URL("responsavel"))
+    
+    #Prepara para inserir no banco e seta a FK
+    formfilho = SQLFORM(db.filho,fields=['nome','foto'], showid=False, formstyle="divs")
+    formfilho.vars.fk_pai = session.idpai
+    
+    #Prepara para inserir o registro de relacionamento
+    formrel = SQLFORM(db.pai_x_filho)
+    formrel.vars.fk_pai = session.idpai
+    formrel.vars.fk_filho = formfilho.vars.id
+    
+    #processa o for
+    if formfilho.process().accepted:
+        response.flash = "Filho Vinculado"
+        formrel.process().accepted
+    #fim for
+    return dict(pai=session.idpai, form = formfilho)
+#fim do incluifilho
+>>>>>>> local

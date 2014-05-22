@@ -1,5 +1,0 @@
-{{extend 'layout.html'}}
-
-{{=form}}
-
-{{=BEAUTIFY(response._vars)}}
