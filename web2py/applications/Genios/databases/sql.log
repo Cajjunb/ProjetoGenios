@@ -959,3 +959,10 @@ CREATE TABLE tb_perfil(
     ativo INT,
     PRIMARY KEY (id)
 ) ENGINE=InnoDB CHARACTER SET utf8;
+timestamp: 2014-05-26T01:02:12.791000
+CREATE TABLE tb_perfil(
+    id_perfil INT AUTO_INCREMENT NOT NULL,
+    nome VARCHAR(512),
+    ativo CHAR(1),
+    PRIMARY KEY (id_perfil)
+) ENGINE=InnoDB CHARACTER SET utf8;

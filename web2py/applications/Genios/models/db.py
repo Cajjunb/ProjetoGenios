@@ -6,7 +6,10 @@ db.define_table('filho',
                 Field('fk_pai', 'reference pai'),
                 Field('foto','upload', uploadfield='foto_arquivo'),
                 Field('foto_arquivo','blob'),Field('ativo','boolean'),
-                Field('nome'),format = '%(nome)s')
+                Field('nome'),
+                Field('colegio'),
+                Field('ano','integer')
+                ,format = '%(nome)s')
 db.define_table('pai_x_filho',Field('fk_pai','reference tb_usuario'),Field('fk_filho','reference filho') )
 
 db.define_table('tb_perfil',

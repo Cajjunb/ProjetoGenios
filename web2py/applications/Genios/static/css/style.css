@@ -1,7 +1,7 @@
 @font-face{
 
 	font-family:"genios";
-	src:url("../fonts/Georgia.ttf");
+	src:url("../fonts/georgia.ttf");
 
 }
 
@@ -41,11 +41,14 @@
 }
 
 h1{
-    
+    /*
     font-size:50;
     background: #B0D360;
     color:#ffffff;
     padding: 0px 5px 0px 5px;
+    */
+    font-size: 55;
+    font-weight: 100;
 }
 
 label{
@@ -64,4 +67,51 @@ footer{
     width: 960px;
     height: 100px;
     margin: 0 auto;
+}
+
+/** #### BUTTONS ###### */
+
+.btn {
+   border-top: 1px solid #b0d360;
+   background: #b0d360;
+   background: -webkit-gradient(linear, left top, left bottom, from(#b0d360), to(#b0d360));
+   background: -webkit-linear-gradient(top, #b0d360, #b0d360);
+   background: -moz-linear-gradient(top, #b0d360, #b0d360);
+   background: -ms-linear-gradient(top, #b0d360, #b0d360);
+   background: -o-linear-gradient(top, #b0d360, #b0d360);
+   padding: 2px 4px;
+   -webkit-border-radius: 0px;
+   -moz-border-radius: 0px;
+   border-radius: 0px;
+   -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   box-shadow: rgba(0,0,0,1) 0 1px 0;
+   text-shadow: rgba(0,0,0,.4) 0 1px 0;
+   color: #4e7182;
+   font-size: 24px;
+   text-decoration: none;
+   vertical-align: middle;
+    background:none;
+    border:0;
+    margin:0;
+    padding:0;
+}
+.btn:hover {
+   border-top-color: #b0d360;
+   background: #b0d360;
+   color: #4e7182;
+   transition:1s;
+   }
+.btn:active {
+   border-top-color: #9cdcf8;
+   background: #9cdcf8;
+   }
+
+/** ##### Inputs #####*/
+
+textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+    background-color: #B0D360;
+    border: 0px;
+    border-radius: 0px;
+    
 }

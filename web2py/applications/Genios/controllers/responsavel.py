@@ -53,7 +53,7 @@ def alterar():
     for filhoObj in filhosSet.select():
         #Seta o formulario de acordo com a necessidade
         fotos.append(filhoObj.filho.foto)
-        forms.append(SQLFORM(db.filho, filhoObj.filho, fields = ['foto','nome'], showid=False,formstyle="divs"))
+        forms.append(SQLFORM(db.filho, filhoObj.filho, fields = ['foto','nome','colegio','ano'], showid=False,formstyle="divs"))
         #Incrementa o i
         i += 1
     #fimfor
