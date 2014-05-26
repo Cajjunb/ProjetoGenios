@@ -2,12 +2,15 @@
 
 <div>
     <h2>
-        {{=pai}}
     </h2>
     
     <div class="formfilho">
         {{=form}}
     </div>
+</div>
+
+<div>
+    {{=formrel}}
 </div>
 
 <a href="{{ =URL('responsavel','alterar') }}">Voltar</a>

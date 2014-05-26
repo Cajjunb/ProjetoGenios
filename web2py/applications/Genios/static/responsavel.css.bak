@@ -1,8 +1,15 @@
 .filhos{
     border: 1px solid black;
     border-radius: 10px;
-    
+    padding:20px
 }
 
-.wrap-filhos{
+.wrap-foto img{
+    height:200px
+}
+
+.formswrap label{
+    padding-left: 10px;
+    display:inline;
+
 }

@@ -874,3 +874,88 @@ success!
 success!
 success!
 success!
+success!
+success!
+success!
+success!
+timestamp: 2014-05-25T14:00:29.483000
+CREATE TABLE pai(
+    id INT AUTO_INCREMENT NOT NULL,
+    nome VARCHAR(512),
+    ativo CHAR(1),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2014-05-25T14:00:29.797000
+CREATE TABLE filho(
+    id INT AUTO_INCREMENT NOT NULL,
+    fk_pai INT, INDEX fk_pai__idx (fk_pai), FOREIGN KEY (fk_pai) REFERENCES pai (id) ON DELETE CASCADE,
+    foto VARCHAR(512),
+    foto_arquivo LONGBLOB,
+    ativo CHAR(1),
+    nome VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2014-05-25T14:00:29.959000
+CREATE TABLE pai_x_filho(
+    id INT AUTO_INCREMENT NOT NULL,
+    fk_pai INT, INDEX fk_pai__idx (fk_pai), FOREIGN KEY (fk_pai) REFERENCES pai (id) ON DELETE CASCADE,
+    fk_filho INT, INDEX fk_filho__idx (fk_filho), FOREIGN KEY (fk_filho) REFERENCES filho (id) ON DELETE CASCADE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2014-05-25T14:30:40.179000
+ALTER TABLE filho DROP COLUMN fk_pai;
+timestamp: 2014-05-25T14:32:29.724000
+ALTER TABLE filho DROP COLUMN fk_pai;
+timestamp: 2014-05-25T14:32:47.456000
+ALTER TABLE filho DROP COLUMN fk_pai;
+timestamp: 2014-05-25T15:04:09.302000
+CREATE TABLE perfil(
+    id INT AUTO_INCREMENT NOT NULL,
+    nome VARCHAR(512),
+    int CHAR(1),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+timestamp: 2014-05-25T15:06:26.302000
+CREATE TABLE perfil(
+    id INT AUTO_INCREMENT NOT NULL,
+    nome VARCHAR(512),
+    int INT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+timestamp: 2014-05-25T15:06:50.562000
+CREATE TABLE perfil(
+    id INT AUTO_INCREMENT NOT NULL,
+    nome VARCHAR(512),
+    ativo INT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2014-05-25T15:06:51.033000
+CREATE TABLE tb_usuario(
+    id INT AUTO_INCREMENT NOT NULL,
+    nome VARCHAR(512),
+    fk_id_perfil INT, INDEX fk_id_perfil__idx (fk_id_perfil), FOREIGN KEY (fk_id_perfil) REFERENCES perfil (id) ON DELETE CASCADE,
+    email VARCHAR(512),
+    senha VARCHAR(512),
+    numero_filhos INT,
+    ano_escolar INT,
+    ativo INT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+timestamp: 2014-05-25T15:12:07.703000
+CREATE TABLE tb_perfil(
+    id INT AUTO_INCREMENT NOT NULL,
+    nome VARCHAR(512),
+    ativo INT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+timestamp: 2014-05-25T16:27:52.440000
+CREATE TABLE tb_perfil(
+    id INT AUTO_INCREMENT NOT NULL,
+    nome VARCHAR(512),
+    ativo INT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;

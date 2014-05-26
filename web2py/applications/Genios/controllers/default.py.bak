@@ -2,3 +2,7 @@
 def index():
     message= "WHAAT?"
     return dict(message=message)
+
+@cache('download', time_expire=cache_expire)
+def download():
+    return response.render()

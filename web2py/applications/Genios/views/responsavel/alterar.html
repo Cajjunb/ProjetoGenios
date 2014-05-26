@@ -1,12 +1,15 @@
-{{extend "layout.html" }}
+{{extend "layoutgenios.html" }}
+{{
+    response.files.insert(0,URL('static','css/responsavel.css'))
+}}
 <head>
     <link href="{{=URL('static', 'css/responsavel.css')}}" rel="stylesheet" type="text/css" />
 </head>
 <div class="altera-wrap">
     <h1>
-        Perfil
+        PERFIL
     </h1>
-    <br>
+    <br><br>
     <div class="forms-wrap">
         {{=formpai}}
 
@@ -15,7 +18,7 @@
             {{ for form  in forms:}}
                 <div class="wrap-formulario">
                     <div class="wrap-foto">
-                        <img width="200px" src="{{=URL('download',args=fotos[i])}}" />
+                        <img style="height:200px;width:200px" src="{{ =URL('default','download',args=fotos[i]) }}" />
                     </div>
                     {{=form}}
                 </div>

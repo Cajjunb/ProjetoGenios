@@ -1,6 +1,22 @@
-db = DAL('sqlite://storage.db') # Conecta com o banco
+db = DAL('mysql://root:Ca_784595@localhost/mydb') # Conecta com o banco
 
 
-db.define_table('pai',Field('nome'),Field('ativo','boolean'),Field('nome','text'),format = '%(title)s')
-db.define_table('pai_x_filho',Field('nome','text'),Field('serie','boolean'),Field('ativo','boolean'),format = '%(title)s')
-db.define_table('filho',Field('fk_pai', 'reference pai'),Field('ativo','boolean'),Field('nome','text'),format = '%(title)s')
+db.define_table('pai',Field('nome'),Field('ativo','boolean'),Field('nome','text'),format = '%(nome)s')
+db.define_table('filho',
+                Field('fk_pai', 'reference pai'),
+                Field('foto','upload', uploadfield='foto_arquivo'),
+                Field('foto_arquivo','blob'),Field('ativo','boolean'),
+                Field('nome'),format = '%(nome)s')
+db.define_table('pai_x_filho',Field('fk_pai','reference pai'),Field('fk_filho','reference filho') )
+
+db.define_table('perfil',Field('nome'),Field('int','boolean'))
+
+
+db.define_table("tb_usuario",
+                Field('nome'),
+                Field('fk_id_perfil','reference perfil'),
+                Field('email'),
+                Field('senha','password'),
+                Field('numero_filhos','interger'),
+                Field('ano_escolar','interger'),
+                Field('ativo','interger'))

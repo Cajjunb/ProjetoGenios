@@ -4,6 +4,12 @@
     padding:20px
 }
 
-.wrap-filhos{
-    
+.wrap-foto {
+    height:200px
+}
+
+.formswrap label{
+    padding-left: 10px;
+    display:inline;
+
 }
