@@ -9,23 +9,37 @@
     }}
     
     {{include 'web2py_ajax.html'}}
+
+    <title>{{="Genios"}}</title>
+
+    {{block head}}
+    {{end}}
 </head>
 
 <div id="body">
     <div id="wrap">
         <header>
             <div class="logo"></div>
+            {{=MENU(response.menu, _class='menu_genios')}}
         </header>
         <div id="conteudo">
             {{include}}
         </div>
         <footer style="width:960px; height:100px">
-            <div id="footer-left">
-                <img/>
+            <div id="footer-left" class="span2">
+                {{=IMG( _src=(URL('static','images/cjr.png')))}}
+                Desenvolvido Por:              
             </div>
-            <div id="footer-center"></div>
-            <div id="footer-right">
-
+            <div id="footer-center" class="span8">
+                <p>
+                    Endereço: XXXXXXXXXXXXX - XXXXXXXXXXXXXX
+                </p>
+               <p>
+                   Telefone: XXXX-XXXX
+                </p>
+            </div>
+            <div id="footer-right" class="span2">
+                {{=IMG( _src=(URL('static','images/facebook.png')))}}
             </div>        
         </footer>
     </div>

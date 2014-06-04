@@ -29,8 +29,10 @@ def alterar():
          redirect(URL('responsavel','index'))
 
     #Pegando form do pai
-    formpai = SQLFORM(db.tb_usuario,session.idpai,showid=False,fields=['nome','email','senha'],formstyle="divs")
+    formpai = SQLFORM(db.tb_usuario,session.idpai,showid=False,fields=['nome','email','senha'],submit_button="Alterar",formstyle="divs")
 
+    fotopai = SQLFORM.factory(Field('foto','upload',default=formpai.vars.foto))
+    
     #Processa as alteracoes
     if session.op == ALTERA_FILHO and formpai.process().accepted:
         response.flash = "Alteracao Concluida!"
@@ -53,11 +55,14 @@ def alterar():
     for filhoObj in filhosSet.select():
         #Seta o formulario de acordo com a necessidade
         fotos.append(filhoObj.filho.foto)
-        forms.append(SQLFORM(db.filho, filhoObj.filho, fields = ['foto','nome','colegio','ano'], showid=False,formstyle="divs"))
+        forms.append(SQLFORM(db.filho, filhoObj.filho, fields = ['foto','nome','colegio','ano'],submit_button="Alterar", showid=False,formstyle="divs"))
         #Incrementa o i
         i += 1
     #fimfor
 
+    if formpai.process().accepted:
+        response.flash = "Cadastro Pai Alterado" ;
+    
     #Get numFilhos e inicilaiza o i
     numFilhos = i
     i = 0
@@ -68,7 +73,7 @@ def alterar():
             response.flash = "Cadastro Filho Alterado!"
     #fim for
 
-    return dict(formpai=formpai,forms=forms,fotos=fotos)
+    return dict(formpai=formpai,fotopai=fotopai,forms=forms,fotos=fotos)
 
 def incluifilho():
     # Testa se a session foi setada

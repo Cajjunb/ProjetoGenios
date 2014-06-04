@@ -1,5 +1,16 @@
 .altera-wrap{
-    display: inline-block;
+    display: table;
+    /* margin: 0 auto; */
+    /* display: block; */
+    margin-left: auto;
+    margin-right: auto;
+}
+.title-genios{
+    
+     background:url('../images/marca-texto_amarelolaranja-3.png');
+    background-size: cover;
+    background-size: 203 230px;
+    background-position: 0 148;
 }
 
 .altera-wrap h1{
@@ -14,9 +25,17 @@
     
 }
 
+.horizontal-center{
+    margin:0 auto;
+    text-align: center;
+    
+}
+
+.pai{
+    overflow: hidden;
+}
 
 .filhos{
-    border: 1px solid black;
     border-radius: 10px;
     padding: 20px;
     /* margin: 0 auto; */
@@ -38,4 +57,24 @@ div .wrap-foto{
 
 .filhos form{
     float: left;
+}
+
+
+.formpai{
+    float:left;
+}
+
+.foto-pai{
+    float:left;
+    margin-left: 40px;
+}
+
+.foto-pai form{
+    width: 230px;
+    margin-top:20px;
+}
+
+.linkAlterar button{
+    width: 450px;
+    height: 100;
 }

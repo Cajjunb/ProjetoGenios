@@ -966,3 +966,136 @@ CREATE TABLE tb_perfil(
     ativo CHAR(1),
     PRIMARY KEY (id_perfil)
 ) ENGINE=InnoDB CHARACTER SET utf8;
+timestamp: 2014-05-30T15:50:10.078000
+CREATE TABLE tb_perfil(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome CHAR(128),
+    ativo CHAR(1)
+);
+success!
+timestamp: 2014-05-30T15:50:10.292000
+CREATE TABLE tb_professor(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome CHAR(128),
+    email CHAR(128),
+    senha CHAR(512),
+    instEns CHAR(128),
+    curso CHAR(128),
+    semestre INTEGER,
+    ativo CHAR(1),
+    foto CHAR(512),
+    fk_id_perfil INTEGER REFERENCES tb_perfil (id) ON DELETE CASCADE
+);
+success!
+timestamp: 2014-05-30T15:50:10.412000
+CREATE TABLE tb_usuario(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome CHAR(128),
+    email CHAR(128),
+    senha CHAR(512),
+    numero_filhos INTEGER,
+    ano_escolar INTEGER,
+    colegio CHAR(128),
+    ativo CHAR(1),
+    fk_id_perfil INTEGER REFERENCES tb_perfil (id) ON DELETE CASCADE
+);
+success!
+timestamp: 2014-05-30T15:50:10.542000
+CREATE TABLE tb_operacao(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome CHAR(128)
+);
+success!
+timestamp: 2014-05-30T15:50:10.720000
+CREATE TABLE tb_erro(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    excessao TEXT
+);
+success!
+timestamp: 2014-05-30T15:50:10.838000
+CREATE TABLE tb_pais(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome CHAR(128),
+    ativo CHAR(1)
+);
+success!
+timestamp: 2014-05-30T15:50:10.974000
+CREATE TABLE tb_estado(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    fk_id_pais INTEGER REFERENCES tb_pais (id) ON DELETE CASCADE,
+    nome CHAR(128),
+    ativo CHAR(1)
+);
+success!
+timestamp: 2014-05-30T15:50:11.130000
+CREATE TABLE tb_cidade(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    fk_id_estado INTEGER REFERENCES tb_estado (id) ON DELETE CASCADE,
+    nome CHAR(128),
+    ativo CHAR(1)
+);
+success!
+timestamp: 2014-05-30T15:50:11.331000
+CREATE TABLE tb_endereco(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    fk_id_cidade INTEGER REFERENCES tb_cidade (id) ON DELETE CASCADE,
+    fk_id_usuario INTEGER REFERENCES tb_usuario (id) ON DELETE CASCADE,
+    endereco CHAR(200),
+    complemento CHAR(200),
+    cep CHAR(512),
+    ativo CHAR(1)
+);
+success!
+timestamp: 2014-05-30T15:50:11.463000
+CREATE TABLE tb_telefone(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    telefone INTEGER,
+    fk_id_professor INTEGER REFERENCES tb_professor (id) ON DELETE CASCADE,
+    ativo CHAR(1)
+);
+success!
+timestamp: 2014-05-30T15:50:11.595000
+CREATE TABLE tb_curso(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome CHAR(200),
+    ativo CHAR(1)
+);
+success!
+timestamp: 2014-05-30T15:50:11.859000
+CREATE TABLE ta_usuario_x_curso(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    fk_id_usuario INTEGER REFERENCES tb_usuario (id) ON DELETE CASCADE,
+    fk_id_curso INTEGER REFERENCES tb_curso (id) ON DELETE CASCADE,
+    semestre INTEGER,
+    ativo CHAR(1)
+);
+success!
+timestamp: 2014-05-30T15:50:12.016000
+CREATE TABLE tb_materia(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome CHAR(200),
+    ativo CHAR(1)
+);
+success!
+timestamp: 2014-05-30T15:50:12.167000
+CREATE TABLE ta_usuario_x_materia(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    fk_id_usuario INTEGER REFERENCES tb_usuario (id) ON DELETE CASCADE,
+    fk_id_materia INTEGER REFERENCES tb_materia (id) ON DELETE CASCADE,
+    ativo CHAR(1)
+);
+success!
+timestamp: 2014-05-30T15:50:12.298000
+CREATE TABLE tb_horario_livre(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    fk_id_usuario INTEGER REFERENCES tb_usuario (id) ON DELETE CASCADE,
+    horario_inicial TIME,
+    horario_final TIME,
+    data_horario_livre DATE,
+    ativo CHAR(1)
+);
+success!
+timestamp: 2014-05-30T17:49:47.808000
+ALTER TABLE tb_professor ADD foto_nome CHAR(512);
+success!
+success!
