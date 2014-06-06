@@ -5,7 +5,7 @@
     response.files.insert(1,URL('static','css/bootstrap.min.css'))
     response.files.insert(2,URL('static','css/style.css'))
     
-    
+   
     }}
     
     {{include 'web2py_ajax.html'}}
@@ -14,6 +14,7 @@
 
     {{block head}}
     {{end}}
+    
 </head>
 
 <div id="body">
@@ -23,12 +24,14 @@
             {{=MENU(response.menu, _class='menu_genios')}}
         </header>
         <div id="conteudo">
+            <span></span>
             {{include}}
+            <div class="push"></div>
         </div>
         <footer style="width:960px; height:100px">
             <div id="footer-left" class="span2">
-                Desenvolvido Por: 
-                {{=IMG( _src=(URL('static','images/cjr.png')))}}             
+                {{=IMG( _src=(URL('static','images/cjr.png')))}}
+                Desenvolvido Por:
             </div>
             <div id="footer-center" class="span8">
                 <p>

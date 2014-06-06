@@ -1,0 +1,16 @@
+{{extend 'layoutgenios.html'}}
+
+
+<div>
+    {{for regiao in lista:}}
+    
+        <div>
+            {{=regiao}}
+        </div>
+    
+    {{pass}}
+</div>
+
+<div>
+    {{=form}}
+</div>

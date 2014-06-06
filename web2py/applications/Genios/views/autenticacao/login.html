@@ -1,0 +1,11 @@
+{{extend 'layoutgenios.html'}}
+
+{{=form}}
+<!-- {{=A(T("Cadastrar"), _href=URL('genios','usuario','criarUsuario'), _style='margin-top: 1em;')}} -->
+{{=mensagemSistema}}
+
+
+<!-- p = perfil -->
+{{=A(T('Fazer cadastro'), _href=URL('genios', 'usuario','criarUsuario', vars=dict(p='responsavel')))}}
+
+<!-- {{=BEAUTIFY(response._vars)}}-->

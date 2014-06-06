@@ -57,7 +57,7 @@ label{
 
 #conteudo{
     padding: 20px;
-    background: #FFCB1F;
+    background: #FFF34F;
     padding-bottom: 40px;
     margin-bottom: -20px;
 }
@@ -129,15 +129,16 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
 .menu_genios li{
     width: 150px;
     text-align: center;
-    background: #FFCB20;
+    background: #FFF34F;
     border-radius: 20px;
     margin-bottom: -40px;
+    margin-right: 1px;
     line-height: 3;
     
 }
 
 .menu_genios li a{
-    background: #FFCB20;
+    background: #FFF34F;
     font-size: 20px;
      color: #ffffff; 
 }
@@ -150,6 +151,10 @@ footer{
     padding-top: 15px;
     background: #B0D360;
 
+}
+
+.push {
+    height: 4em;
 }
 
 

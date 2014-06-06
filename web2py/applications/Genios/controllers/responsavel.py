@@ -81,24 +81,26 @@ def incluifilho():
         redirect(URL("responsavel"))
 
     #Prepara para inserir no banco e seta a FK
-    formfilho = SQLFORM(db.filho,fields=['nome','foto'], showid=False, formstyle="divs")
+    formfilho = SQLFORM.factory(db.filho,db.pai_x_filho,fields=['nome','colegio','foto'], showid=False, formstyle="divs")
     formfilho.vars.fk_pai = session.idpai
 
-
     formrel = SQLFORM(db.pai_x_filho)
-
+    
     #processa o for
     if formfilho.process().accepted:
         #Prepara para inserir o registro de relacionamento
+        id_filho = db.filho.insert(**db.filho._filter_fields(formfilho.vars))
         response.flash = "Filho Vinculado"
-        formrel.vars.fk_pai = session.idpai
-        formrel.vars.fk_filho = formfilho.vars.id
+        
+        formfilho.vars.fk_pai = session.idpai
+        formfilho.vars.fk_filho = id_filho
 
-        if formrel.process().accepted:
-            response.flash = "Filho Vinculado, Form rel criado"
-        else:
-            response.flash =  formrel.vars.fk_filho
+        db.pai_x_filho.insert(**db.pai_x_filho._filter_fields(formfilho.vars))
+        
     #fim for
+    else:
+        response.flash = "Filho nao cadastradado"
+    
     return dict(pai=session.idpai, form = formfilho, formrel = formrel)
 
 

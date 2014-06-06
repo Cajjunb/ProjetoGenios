@@ -1,16 +1,26 @@
 {{extend 'layoutgenios.html'}}
-
-<div>
+<span class="col-md-4">
+    
+</span>
+<div class="col-md-4">
     <h2>
     </h2>
     
-    <div class="formfilho">
+    <div class="formfilho" style="display: table;
+/* margin: 0 auto; */
+/* display: block; */
+margin-left: auto;
+margin-right: auto;">
+        <h2>
+            Criar Filho
+        </h2>
         {{=form}}
+        
+        <button class="btn">
+        <a href="{{ =URL('responsavel','alterar') }}">Voltar</a>
+         </button>
     </div>
-</div>
+    </div>
 
-<div>
-    {{=formrel}}
-</div>
 
-<a href="{{ =URL('responsavel','alterar') }}">Voltar</a>
+<span class="col-md-4"></span>
