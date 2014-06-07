@@ -21,7 +21,9 @@ response.google_analytics_id = None
 #########################################################################
 
 response.menu = [
+    (T('Home'), False, URL('default', 'index'), []),
     (T('Responsavel'),False,URL('responsavel','index'), []),
     (T('Administrador'), False, URL('administrador', 'cadastrar_professor'), []),
-    (T('Home'), False, URL('default', 'index'), []),
+    (T('Cidades'), False, URL('administrador', 'cidades'), []),
+    
 ]

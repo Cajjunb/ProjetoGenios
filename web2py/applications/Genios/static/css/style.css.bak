@@ -17,11 +17,11 @@
 }
 * {
 	font-family: "genios";
-    color:#fff;
+    color:gray;
 }
 
 #body{
-    background: #FFCC5B;
+    background: #FFF34F;
 }
 
 #wrap{
@@ -30,7 +30,7 @@
 }
 
 .logo{
-    background: url("../images/titulo.png");
+    background: url("../images/titulo2.png");
     width: 250px;
     height: 160px;
     background-repeat: no-repeat;
@@ -57,7 +57,7 @@ label{
 
 #conteudo{
     padding: 20px;
-    background: #FFF34F;
+    background: #fff;
     padding-bottom: 40px;
     margin-bottom: -20px;
 }
@@ -107,6 +107,7 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
     color:rgb(108,109,112);
     border: 0px;
     border-radius: 0px;
+    background:#FFF34F;
     
 }
 
@@ -129,7 +130,7 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
 .menu_genios li{
     width: 150px;
     text-align: center;
-    background: #FFF34F;
+    background:#fff;
     border-radius: 20px;
     margin-bottom: -40px;
     margin-right: 1px;
@@ -138,9 +139,9 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
 }
 
 .menu_genios li a{
-    background: #FFF34F;
+    background: white;
+    color: gray;
     font-size: 20px;
-     color: #ffffff; 
 }
 
 /** #### Footer #####  **/
@@ -149,8 +150,14 @@ footer{
     width: 960px;
     height: 100px;
     padding-top: 15px;
-    background: #B0D360;
+    border: 1px solid gray;
+    background: white;
 
+
+}
+
+.push {
+    height: 4em;
 }
 
 

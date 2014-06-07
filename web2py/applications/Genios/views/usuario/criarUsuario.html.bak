@@ -1,4 +1,5 @@
 {{extend 'layoutgenios.html'}}
 
-
-{{=formulario}}
+<div class="">
+    {{=formulario}}
+</div>

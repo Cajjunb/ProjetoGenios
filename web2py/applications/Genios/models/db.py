@@ -75,7 +75,6 @@ db.define_table('tb_estado',
                 )
 
 db.define_table('tb_cidade',
-                Field('fk_id_estado','reference tb_estado'),
                 Field('id_cidade','id'),
                 Field('nome', length=128, default=''),
                 Field('ativo','boolean')

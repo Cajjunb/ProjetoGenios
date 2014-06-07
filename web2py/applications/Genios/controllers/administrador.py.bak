@@ -22,12 +22,20 @@ def cidades():
 
     setCidades =db().select(db.tb_cidade.ALL)
 
-    formCidade = SQLFORM(db.tb_cidade, fields=['nome'],show_id = False)
+    formCidade = SQLFORM(db.tb_cidade, fields=['nome'],showid = False)
 
-    lista = list()
+    lista = SQLFORM.grid(db.tb_cidade,fields=[db.tb_cidade.nome],
+                         searchable=True,
+                         sortable=False,
+                         deletable=False,
+                         editable=True,
+                         details=False,
+                         create=False,
+                         csv=False,
+                         formstyle="divs")
 
-    for forms in setCidades:
-        listaForms.append( SQLFORM.grid(db.tb_cidade,forms,fields=["nome"]))
+    #for forms in setCidades:
+        #lista.append( SQLFORM.grid(db.tb_cidade,searchable=True,sortable=False,deletable=False,editable=False,details=False,create=False,csv=False))
 
         
     if formCidade.process().accepted:
