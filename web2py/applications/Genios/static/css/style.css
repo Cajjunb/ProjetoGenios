@@ -67,6 +67,25 @@ footer{
     margin: 0 auto;
 }
 
+/** ##### FLASH ##### **/
+
+.flash{
+  width: 60%;
+line-height: 40px;
+/* height: 6px; */
+color: gray;
+border: 1px solid;
+/* border-radius: 20px; */
+background: white;
+font-size: 30px;
+overflow: hidden;
+margin: 0px 0px 0px 0px;
+text-align: center;
+margin: 20 auto 20 auto;
+
+}
+
+
 /** #### BUTTONS ###### */
 
 .btn {

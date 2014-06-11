@@ -20,8 +20,10 @@
     <div id="wrap">
         <header>
             <div class="logo"></div>
+            <div class="flash">{{=response.flash or ''}}</div>
             {{=MENU(response.menu, _class='menu_genios')}}
         </header>
+        
         <div id="conteudo">
             <span></span>
             {{include}}

@@ -67,6 +67,22 @@ footer{
     margin: 0 auto;
 }
 
+/** ##### FLASH ##### **/
+
+.flash{
+   width: 60%;
+    line-height: 40px;
+    /* height: 6px; */
+color: #827B25;
+font-size: 30px;
+overflow: hidden;
+margin: 0px 0px 0px 0px;
+text-align: center;
+margin: 0 auto;
+
+}
+
+
 /** #### BUTTONS ###### */
 
 .btn {
@@ -143,6 +159,15 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
     color: gray;
     font-size: 20px;
 }
+/* ###### tables ##### */
+
+#conteudo table{
+    margin:0 auto;
+    margin-top:15px;
+
+}
+
+
 
 /** #### Footer #####  **/
 

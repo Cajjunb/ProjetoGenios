@@ -22,6 +22,7 @@
             <div class="logo"></div>
             {{=MENU(response.menu, _class='menu_genios')}}
         </header>
+        <div class="flash">{{=response.flash or ''}}</div>
         <div id="conteudo">
             <span></span>
             {{include}}
@@ -29,7 +30,7 @@
         </div>
         <footer style="width:960px; height:100px">
             <div id="footer-left" class="span2">
-                {{=IMG( _src=(URL('static','images/cjr.png')))}}
+                {{=IMG( _src=(URL('static','images/logoCJR.png')))}}
                 Desenvolvido Por:
             </div>
             <div id="footer-center" class="span8">
