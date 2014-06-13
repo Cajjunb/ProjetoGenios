@@ -46,12 +46,12 @@ def criarUsuario():
     #return dict(form=form)
 
 
-    if form.process().accepted:
-        response.flash = "Usuário salvo com sucesso"
+    #if form.process().accepted:
+        #response.flash = "Usuário salvo com sucesso"
         #enviar email para confirmação
     
-    variaveis = request.vars
-    return dict(formulario = form, variaveis = variaveis)
+    response.flash = request.vars
+    return dict(formulario = form)
 
 
 def getFormularioUsuario(id_perfil):

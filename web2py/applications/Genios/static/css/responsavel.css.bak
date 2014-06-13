@@ -7,7 +7,7 @@
 }
 .title-genios{
     
-     background:url('../images/marca-texto_amarelolaranja-1.png');
+     background:url('../images/marca-texto_amarelolaranja-2.png');
     background-size: cover;
     background-size: 206 230px;
     background-position: 0 148;
@@ -38,6 +38,7 @@
 .filhos{
     border-radius: 10px;
     padding: 20px;
+border: 1px solid;
     /* margin: 0 auto; */
     display: inline-block;
 }

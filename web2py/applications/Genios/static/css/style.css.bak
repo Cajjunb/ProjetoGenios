@@ -70,15 +70,18 @@ footer{
 /** ##### FLASH ##### **/
 
 .flash{
-   width: 60%;
-    line-height: 40px;
-    /* height: 6px; */
-color: #827B25;
+  width: 60%;
+line-height: 40px;
+/* height: 6px; */
+color: gray;
+border: 1px solid;
+/* border-radius: 20px; */
+background: white;
 font-size: 30px;
 overflow: hidden;
 margin: 0px 0px 0px 0px;
 text-align: center;
-margin: 0 auto;
+margin: 20 auto 20 auto;
 
 }
 
@@ -208,4 +211,23 @@ footer #footer-right{
 footer #footer-right img{
     float:right;
 
+}
+
+.web2py_console{
+    display: inline-block;
+margin-left: 305;
+}
+
+.cidades h1{
+   margin-left: 200;
+margin-top: 30;
+margin-bottom: 50;
+
+}
+
+.cidades #w2p_query_panel select:focus,
+.cidades #w2p_query_panel select:active,
+.cidades #w2p_query_panel select{
+    display:none;
+    
 }

@@ -50,16 +50,16 @@ def criarUsuario():
         response.flash = "Usuário salvo com sucesso"
         #enviar email para confirmação
     
-    variaveis = request.vars
-    return dict(formulario = form, variaveis = variaveis)
+    response.flash = request.vars
+    return dict(formulario = form)
 
 
 def getFormularioUsuario(id_perfil):
 
     if id_perfil != False:
         #escondendo o campo de perfil de usuário
-        #db.tb_usuario.fk_id_perfil.writable = False
-        #db.tb_usuario.fk_id_perfil.readable = False
+        db.tb_usuario.fk_id_perfil.writable = False
+        db.tb_usuario.fk_id_perfil.readable = False
         #gerando o formulário
         form = SQLFORM(db.tb_usuario,hidden=dict(ativo=0,fk_id_perfil=id_perfil), submit_button='Salvar')
     else:

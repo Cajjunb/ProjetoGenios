@@ -93,6 +93,9 @@ def alterar():
 
     if formpai.process().accepted:
         response.flash = "Cadastro Pai Alterado" ;
+        
+    if formEndereco.process().accepted:
+        response.flash = "Endereço Alterado "
 
     #Get numFilhos e inicilaiza o i
     numFilhos = i
