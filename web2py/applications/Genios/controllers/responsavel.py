@@ -39,9 +39,9 @@ def alterar():
     except NameError:
         formpai = None
         forEndereco = None
-    
+
     if formpai is None or formEndereco is None:
-        
+
         #Pegando form do pai
         formpai = SQLFORM(db.tb_usuario,session.idpai,showid=False,
                           fields=['nome','email','senha'],
@@ -84,7 +84,7 @@ def alterar():
             fotos.append(filhoObj.tb_filho.foto)
             forms.append(SQLFORM(db.tb_filho, filhoObj.tb_filho,
                                  fields = ['foto','nome','colegio','ano','ativo'],
-                                 submit_button="Alterar", 
+                                 submit_button="Alterar",
                                  showid=False,
                                  formstyle="divs"))
             #Incrementa o i
@@ -117,7 +117,7 @@ def incluifilho():
                                 fields=['nome','colegio','foto'],
                                 showid=False,
                                 formstyle="divs")
-    
+
     formfilho.vars.fk_pai = session.idpai
     formfilho.vars.ativo = True
 
@@ -144,3 +144,9 @@ def incluifilho():
 
 def download():
     return response.render()
+
+def marcaraulas():
+    rows = db().select(db.tb_usuario.id_usuario == db.ta_usuario_x_materia.id_usuario and db.tb_materia.id_materia == db.ta_usuario_x_materia.id_materia)
+    
+    table = SQLTABLE(rows)
+    return dict(table=table)
