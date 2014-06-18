@@ -1,3 +1,2 @@
 {{extend 'layoutgenios.html'}}
 {{=grid}}
-{{=BEAUTIFY(response._vars)}}

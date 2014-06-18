@@ -146,7 +146,7 @@ def download():
     return response.render()
 
 def marcaraulas():
-    rows = db().select(db.tb_usuario.id_usuario == db.ta_usuario_x_materia.id_usuario and db.tb_materia.id_materia == db.ta_usuario_x_materia.id_materia)
+    rows = db(db.tb_usuario.id_usuario == db.ta_usuario_x_materia.id_usuario and db.tb_materia.id_materia == db.ta_usuario_x_materia.id_materia).select()
     
     table = SQLTABLE(rows)
     return dict(table=table)
