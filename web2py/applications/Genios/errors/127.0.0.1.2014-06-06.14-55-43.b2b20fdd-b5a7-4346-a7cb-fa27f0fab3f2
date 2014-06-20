@@ -1,0 +1,21 @@
+(dp1
+S'output'
+p2
+S'<class \'gluon.contrib.pymysql.err.InternalError\'> (1054, u"Unknown column \'tb_cidade.id\' in \'field list\'")'
+p3
+sS'layer'
+p4
+S'C:\\Users\\Leandro\\Documents\\CJR\\DIPRO\\PROJETOS\\G\xeanios\\genios\\ProjetoGenios\\web2py\\applications\\Genios\\controllers/administrador.py'
+p5
+sS'code'
+p6
+S'# coding: utf8\n# tente algo como\ndef index(): return dict(message="hello from administrador.py")\n\n#pagina para cadastrar professor\n\n\ndef cadastrar_professor():\n    response.flash="Cadastro de Professor"\n    form = db.teste = SQLFORM.factory(db.tb_professor, fields=[\'nome\',\'email\',\'senha\', \'instEns\', \'curso\', \'semestre\', \'ativo\'] )\n    if form.process().accepted:\n        id = db.tb_professor.insert(**db.tb_professor._filter_fields(form.vars))\n        form.vars.tb_professor=id\n        #id = db.tb_telefone.insert(numero = form.vars.numero ,fk_id_usuario= form.vars.tb_professor ,ativo= form.vars.ativo)\n        response.flash=\'Professor Cadastrado\'\n    return dict(form =form)\n\n\n\n\ndef cidades():\n\n    setCidades =db().select(db.tb_cidade.ALL)\n\n    formCidade = SQLFORM(db.tb_cidade, fields=[\'nome\'])\n\n    lista = list()\n\n    for forms in setCidades:\n        listaForms.append( SQLFORM(db.tb_cidade,forms,fields=["nome"]))\n\n    return dict(form = formCidade, lista =  lista)\n\nresponse._vars=response._caller(cidades)\n'
+p7
+sS'snapshot'
+p8
+(dp9
+sS'traceback'
+p10
+S'Traceback (most recent call last):\n  File "/home/mdipierro/make_web2py/web2py/gluon/restricted.py", line 220, in restricted\n  File "C:\\Users\\Leandro\\Documents\\CJR\\DIPRO\\PROJETOS\\G\xeanios\\genios\\ProjetoGenios\\web2py\\applications\\Genios\\controllers/administrador.py", line 34, in <module>\n  File "/home/mdipierro/make_web2py/web2py/gluon/globals.py", line 385, in <lambda>\n  File "C:\\Users\\Leandro\\Documents\\CJR\\DIPRO\\PROJETOS\\G\xeanios\\genios\\ProjetoGenios\\web2py\\applications\\Genios\\controllers/administrador.py", line 23, in cidades\n    setCidades =db().select(db.tb_cidade.ALL)\n  File "/home/mdipierro/make_web2py/web2py/gluon/dal.py", line 10525, in select\n  File "/home/mdipierro/make_web2py/web2py/gluon/dal.py", line 1882, in select\n  File "/home/mdipierro/make_web2py/web2py/gluon/dal.py", line 1847, in _select_aux\n  File "/home/mdipierro/make_web2py/web2py/gluon/dal.py", line 1969, in execute\n  File "/home/mdipierro/make_web2py/web2py/gluon/dal.py", line 1963, in log_execute\n  File "/home/mdipierro/make_web2py/web2py/gluon/contrib/pymysql/cursors.py", line 117, in execute\n  File "/home/mdipierro/make_web2py/web2py/gluon/contrib/pymysql/connections.py", line 202, in defaulterrorhandler\nInternalError: (1054, u"Unknown column \'tb_cidade.id\' in \'field list\'")\n'
+p11
+s.

@@ -45,15 +45,13 @@ def criarUsuario():
     #idPerfil[0] = 'readonly'
     #return dict(form=form)
 
-<<<<<<< HEAD
 
     #if form.process().accepted:
         #response.flash = "Usuário salvo com sucesso"
-=======
+
     form.vars.fk_id_perfil = id_perfil
     if form.process().accepted:
         response.flash = "Usuário salvo com sucesso"
->>>>>>> 1bc83efe70b737cc74f67d269dc4d86c5a626a55
         #enviar email para confirmação
     
     response.flash = request.vars

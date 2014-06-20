@@ -1,7 +1,1 @@
 {{extend 'layoutgenios.html'}}
-
-{{=form}}
-
-<p>
-    session id = {{=session}}
-</p>

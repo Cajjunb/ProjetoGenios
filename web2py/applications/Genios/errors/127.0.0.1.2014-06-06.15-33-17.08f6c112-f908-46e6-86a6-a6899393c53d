@@ -1,0 +1,390 @@
+(dp1
+S'output'
+p2
+S"<class 'gluon.contrib.pymysql.err.IntegrityError'> (1452, u'Cannot add or update a child row: a foreign key constraint fails (`mydb`.`tb_usuario`, CONSTRAINT `fk_tb_usuario_tb_perfil1` FOREIGN KEY (`fk_id_perfil`) REFERENCES `tb_perfil` (`id_perfil`) ON DELETE NO ACTION ON UPDATE NO ACTION)')"
+p3
+sS'layer'
+p4
+S'C:\\Users\\Leandro\\Documents\\CJR\\DIPRO\\PROJETOS\\G\xeanios\\genios\\ProjetoGenios\\web2py\\applications\\genios\\controllers/usuario.py'
+p5
+sS'code'
+p6
+S'# coding: utf8\n# tente algo como\ndef index(): return dict(message="hello from usuario.py")\n\ndef criarUsuario():\n\n    #recupera o perfil do usu\xc3\xa1rio\n    perfil = request.vars[\'p\']\n    id_perfil = False\n    #verifica se foi enviado um valor v\xc3\xa1lido\n    if perfil is not None :\n        if len(perfil)>0:\n            #diminui o tamanho da letra do perfil\n            perfil = perfil.lower()\n            #recuperando o id do perfil\n            myquery = (db.tb_perfil.nome == perfil)\n            myset = db(myquery)\n            rows = myset.select()\n\n            for r in rows:\n                id_perfil = r.id_perfil\n        else:\n            #mensagemSistema = "Perfil inv\xc3\xa1lido"\n            redirect(URL(\'autenticacao\', \'login\'))\n        #recupera o id do perfil\n        #id_perfil = db.executesql("SELECT id_perfil from tb_perfil WHERE nome = \\""+perfil+"\\"")\n\n        #if perfil != \'administrador\' and perfil != \'professor\' and perfil != \'responsavel\':\n            #perfil = False\n    else:\n        #mensagemSistema = "Informe um perfil"\n        redirect(URL(\'autenticacao\', \'login\'))\n\n    form = getFormularioUsuario(id_perfil)\n\n    form.add_button(\'Voltar\', URL(\'autenticacao\', \'login\'))\n    #idPerfil = form.elements(\'input\', _name=\'fk_id_perfil\')\n\n#    db.my_table.a_field.readable = False\n\n    #idPerfil[\'_writable\'] = False\n    #writable=True, readable=True,\n\n    #submit = form.element(\'input\',_type=\'submit\')\n    #idPerfil[0] = \'readonly\'\n    #return dict(form=form)\n\n\n    if form.process().accepted:\n        response.flash = "Usu\xc3\xa1rio salvo com sucesso"\n        #enviar email para confirma\xc3\xa7\xc3\xa3o\n    return dict(formulario = form)\n\n\ndef getFormularioUsuario(id_perfil):\n\n    if id_perfil != False:\n        #escondendo o campo de perfil de usu\xc3\xa1rio\n        db.tb_usuario.fk_id_perfil.writable = False\n        db.tb_usuario.fk_id_perfil.readable = False\n        #gerando o formul\xc3\xa1rio\n        form = SQLFORM(db.tb_usuario,hidden=dict(ativo=0,fk_id_perfil=id_perfil), submit_button=\'Salvar\')\n\n    else:\n        form = SQLFORM(db.tb_usuario,hidden=dict(ativo=0), submit_button=\'Salvar\');\n\n    return form\n\nresponse._vars=response._caller(criarUsuario)\n'
+p7
+sS'snapshot'
+p8
+(dp9
+S'exception'
+p10
+(dp11
+S'__module__'
+p12
+S"'gluon.contrib.pymysql.err'"
+p13
+sS'__getslice__'
+p14
+S"<method-wrapper '__getslice__' of IntegrityError object>"
+p15
+sS'__str__'
+p16
+S"<method-wrapper '__str__' of IntegrityError object>"
+p17
+sS'__reduce__'
+p18
+S'<built-in method __reduce__ of IntegrityError object>'
+p19
+sS'__dict__'
+p20
+S'{}'
+p21
+sS'__sizeof__'
+p22
+S'<built-in method __sizeof__ of IntegrityError object>'
+p23
+sS'__weakref__'
+p24
+S'None'
+p25
+sS'__init__'
+p26
+S"<method-wrapper '__init__' of IntegrityError object>"
+p27
+sS'__setattr__'
+p28
+S"<method-wrapper '__setattr__' of IntegrityError object>"
+p29
+sS'__reduce_ex__'
+p30
+S'<built-in method __reduce_ex__ of IntegrityError object>'
+p31
+sS'__new__'
+p32
+S'<built-in method __new__ of type object>'
+p33
+sS'__format__'
+p34
+S'<built-in method __format__ of IntegrityError object>'
+p35
+sS'__class__'
+p36
+S"<class 'gluon.contrib.pymysql.err.IntegrityError'>"
+p37
+sS'__doc__'
+p38
+S"'Exception raised when the relational integrity o... foreign key check fails, duplicate key,\\n    etc.'"
+p39
+sS'__getitem__'
+p40
+S"<method-wrapper '__getitem__' of IntegrityError object>"
+p41
+sS'__setstate__'
+p42
+S'<built-in method __setstate__ of IntegrityError object>'
+p43
+sS'__getattribute__'
+p44
+S"<method-wrapper '__getattribute__' of IntegrityError object>"
+p45
+sS'args'
+p46
+S"(1452, u'Cannot add or update a child row: a foreign ke...erfil`) ON DELETE NO ACTION ON UPDATE NO ACTION)')"
+p47
+sS'__subclasshook__'
+p48
+S'<built-in method __subclasshook__ of type object>'
+p49
+sS'__unicode__'
+p50
+S'<built-in method __unicode__ of IntegrityError object>'
+p51
+sS'__delattr__'
+p52
+S"<method-wrapper '__delattr__' of IntegrityError object>"
+p53
+sS'__repr__'
+p54
+S"<method-wrapper '__repr__' of IntegrityError object>"
+p55
+sS'__hash__'
+p56
+S"<method-wrapper '__hash__' of IntegrityError object>"
+p57
+ssS'evalue'
+p58
+S"(1452, u'Cannot add or update a child row: a foreign key constraint fails (`mydb`.`tb_usuario`, CONSTRAINT `fk_tb_usuario_tb_perfil1` FOREIGN KEY (`fk_id_perfil`) REFERENCES `tb_perfil` (`id_perfil`) ON DELETE NO ACTION ON UPDATE NO ACTION)')"
+p59
+sS'request'
+p60
+cgluon.html
+XML_unpickle
+p61
+(S's\x03j\x00\x00<div><table><tr><td style="font-weight:bold;vertical-align:top;">ajax</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">application</td><td style="vertical-align:top;">:</td><td><div>genios</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">args</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cid</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">client</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">controller</td><td style="vertical-align:top;">:</td><td><div>usuario</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cookies</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">session_id_admin</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-923b1c92-b33d-4ea6-bb9e-348848effb1e<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id_genios</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-0cad6233-22cc-48e9-a2b5-0591ce00c77b<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id_welcome</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-116805aa-9b87-4ad0-bf69-74a8c9df232a<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">env</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">CONTENT_LENGTH</td><td style="vertical-align:top;">:</td><td><div>1232</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">CONTENT_TYPE</td><td style="vertical-align:top;">:</td><td><div>multipart/form-data; boundary=----WebKitFormBoundaryY3bm7lGUfBuTBKRl</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_ACCEPT</td><td style="vertical-align:top;">:</td><td><div>text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_ACCEPT_ENCODING</td><td style="vertical-align:top;">:</td><td><div>gzip,deflate,sdch</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_ACCEPT_LANGUAGE</td><td style="vertical-align:top;">:</td><td><div>en-US,en;q=0.8,pt;q=0.6</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_CACHE_CONTROL</td><td style="vertical-align:top;">:</td><td><div>max-age=0</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_CONNECTION</td><td style="vertical-align:top;">:</td><td><div>keep-alive</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_CONTENT_LENGTH</td><td style="vertical-align:top;">:</td><td><div>1232</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_CONTENT_TYPE</td><td style="vertical-align:top;">:</td><td><div>multipart/form-data; boundary=----WebKitFormBoundaryY3bm7lGUfBuTBKRl</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_COOKIE</td><td style="vertical-align:top;">:</td><td><div>session_id_welcome=127.0.0.1-116805aa-9b87-4ad0-bf69-74a8c9df232a; session_id_admin=127.0.0.1-923b1c92-b33d-4ea6-bb9e-348848effb1e; session_id_genios=127.0.0.1-0cad6233-22cc-48e9-a2b5-0591ce00c77b</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_HOST</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1:8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_ORIGIN</td><td style="vertical-align:top;">:</td><td><div>http://127.0.0.1:8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_REFERER</td><td style="vertical-align:top;">:</td><td><div>http://127.0.0.1:8000/genios/usuario/criarUsuario?p=responsavel</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_USER_AGENT</td><td style="vertical-align:top;">:</td><td><div>Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.114 Safari/537.36</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">PATH_INFO</td><td style="vertical-align:top;">:</td><td><div>/genios/usuario/criarUsuario</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">QUERY_STRING</td><td style="vertical-align:top;">:</td><td><div>p=responsavel</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">REMOTE_ADDR</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">REMOTE_PORT</td><td style="vertical-align:top;">:</td><td><div>55930</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">REQUEST_METHOD</td><td style="vertical-align:top;">:</td><td><div>POST</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SCRIPT_NAME</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_NAME</td><td style="vertical-align:top;">:</td><td><div>PC_LEO</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_PORT</td><td style="vertical-align:top;">:</td><td><div>8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_PROTOCOL</td><td style="vertical-align:top;">:</td><td><div>HTTP/1.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_SOFTWARE</td><td style="vertical-align:top;">:</td><td><div>Rocket 1.2.6</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">app_folders</td><td style="vertical-align:top;">:</td><td><div>set([&#x27;C:\\\\Users\\\\Leandro\\\\Documents\\\\CJR\\\\DIPRO\\\\PROJETOS\\\\G\\xeanios\\\\genios\\\\ProjetoGenios\\\\web2py\\\\applications\\\\admin\\\\&#x27;, &#x27;C:\\\\Users\\\\Leandro\\\\Documents\\\\CJR\\\\DIPRO\\\\PROJETOS\\\\G\\xeanios\\\\genios\\\\ProjetoGenios\\\\web2py\\\\applications\\\\welcome\\\\&#x27;, &#x27;C:\\\\Users\\\\Leandro\\\\Documents\\\\CJR\\\\DIPRO\\\\PROJETOS\\\\G\\xeanios\\\\genios\\\\ProjetoGenios\\\\web2py\\\\applications\\\\Genios\\\\&#x27;, &#x27;C:\\\\Users\\\\Leandro\\\\Documents\\\\CJR\\\\DIPRO\\\\PROJETOS\\\\G\\xeanios\\\\genios\\\\ProjetoGenios\\\\web2py\\\\applications\\\\genios\\\\&#x27;])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">applications_parent</td><td style="vertical-align:top;">:</td><td><div>C:\\Users\\Leandro\\Documents\\CJR\\DIPRO\\PROJETOS\\G\xeanios\\genios\\ProjetoGenios\\web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cmd_args</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cmd_options</td><td style="vertical-align:top;">:</td><td><div>&lt;Values at 0x2e81e18: {&#x27;verbose&#x27;: False, &#x27;ip&#x27;: &#x27;127.0.0.1&#x27;, &#x27;debuglevel&#x27;: 30, &#x27;with_scheduler&#x27;: False, &#x27;ips&#x27;: [&#x27;172.30.36.253&#x27;, &#x27;192.168.129.236&#x27;, &#x27;fe80::d87f:bcf3:7142:73f4%12&#x27;, &#x27;fe80::2c01:c2a:dede:17a1%13&#x27;, &#x27;fe80::ec1f:2d88:f68:a805%21&#x27;, &#x27;192.168.56.1&#x27;], &#x27;shutdown_timeout&#x27;: 5, &#x27;taskbar&#x27;: False, &#x27;with_coverage&#x27;: False, &#x27;port&#x27;: 8000, &#x27;maxthreads&#x27;: None, &#x27;softcron&#x27;: False, &#x27;server_name&#x27;: &#x27;PC_LEO&#x27;, &#x27;bpython&#x27;: False, &#x27;nogui&#x27;: False, &#x27;pid_filename&#x27;: &#x27;httpserver.pid&#x27;, &#x27;extcron&#x27;: False, &#x27;runcron&#x27;: False, &#x27;run_system_tests&#x27;: False, &#x27;test&#x27;: None, &#x27;folder&#x27;: &#x27;C:\\\\Users\\\\Leandro\\\\Documents\\\\CJR\\\\DIPRO\\\\PROJETOS\\\\G\\xeanios\\\\genios\\\\ProjetoGenios\\\\web2py&#x27;, &#x27;config&#x27;: &#x27;&#x27;, &#x27;minthreads&#x27;: None, &#x27;shell&#x27;: None, &#x27;run&#x27;: &#x27;&#x27;, &#x27;log_filename&#x27;: &#x27;httpserver.log&#x27;, &#x27;profiler_dir&#x27;: None, &#x27;args&#x27;: [&#x27;&#x27;], &#x27;socket_timeout&#x27;: 5, &#x27;ssl_ca_certificate&#x27;: None, &#x27;scheduler&#x27;: None, &#x27;interfaces&#x27;: None, &#x27;ssl_private_key&#x27;: &#x27;&#x27;, &#x27;scheduler_groups&#x27;: None, &#x27;password&#x27;: &#x27;&lt;ask&gt;&#x27;, &#x27;request_queue_size&#x27;: 5, &#x27;ssl_certificate&#x27;: &#x27;&#x27;, &#x27;cronjob&#x27;: False, &#x27;numthreads&#x27;: None, &#x27;quiet&#x27;: False, &#x27;import_models&#x27;: False, &#x27;timeout&#x27;: 10, &#x27;plain&#x27;: False, &#x27;nobanner&#x27;: False}&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">content_length</td><td style="vertical-align:top;">:</td><td><div>1232</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">content_type</td><td style="vertical-align:top;">:</td><td><div>multipart/form-data; boundary=----WebKitFormBoundaryY3bm7lGUfBuTBKRl</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">db_sessions</td><td style="vertical-align:top;">:</td><td><div>set([])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">debugging</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">gluon_parent</td><td style="vertical-align:top;">:</td><td><div>C:\\Users\\Leandro\\Documents\\CJR\\DIPRO\\PROJETOS\\G\xeanios\\genios\\ProjetoGenios\\web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_accept</td><td style="vertical-align:top;">:</td><td><div>text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_accept_encoding</td><td style="vertical-align:top;">:</td><td><div>gzip,deflate,sdch</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_accept_language</td><td style="vertical-align:top;">:</td><td><div>en-US,en;q=0.8,pt;q=0.6</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_cache_control</td><td style="vertical-align:top;">:</td><td><div>max-age=0</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_connection</td><td style="vertical-align:top;">:</td><td><div>keep-alive</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_content_length</td><td style="vertical-align:top;">:</td><td><div>1232</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_content_type</td><td style="vertical-align:top;">:</td><td><div>multipart/form-data; boundary=----WebKitFormBoundaryY3bm7lGUfBuTBKRl</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_cookie</td><td style="vertical-align:top;">:</td><td><div>session_id_welcome=127.0.0.1-116805aa-9b87-4ad0-bf69-74a8c9df232a; session_id_admin=127.0.0.1-923b1c92-b33d-4ea6-bb9e-348848effb1e; session_id_genios=127.0.0.1-0cad6233-22cc-48e9-a2b5-0591ce00c77b</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_host</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1:8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_origin</td><td style="vertical-align:top;">:</td><td><div>http://127.0.0.1:8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_referer</td><td style="vertical-align:top;">:</td><td><div>http://127.0.0.1:8000/genios/usuario/criarUsuario?p=responsavel</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_user_agent</td><td style="vertical-align:top;">:</td><td><div>Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.114 Safari/537.36</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_jython</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_pypy</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_source</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">local_hosts</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>172.30.36.253</div></td></tr><tr><td><div>::ffff:127.0.0.1</div></td></tr><tr><td><div>::1</div></td></tr><tr><td><div>192.168.129.236</div></td></tr><tr><td><div>fe80::d87f:bcf3:7142:73f4%12</div></td></tr><tr><td><div>PC_LEO</div></td></tr><tr><td><div>fe80::2c01:c2a:dede:17a1%13</div></td></tr><tr><td><div>fe80::ec1f:2d88:f68:a805%21</div></td></tr><tr><td><div>127.0.0.1</div></td></tr><tr><td><div>192.168.56.1</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path_info</td><td style="vertical-align:top;">:</td><td><div>/genios/usuario/criarUsuario</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">query_string</td><td style="vertical-align:top;">:</td><td><div>p=responsavel</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">remote_addr</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">remote_port</td><td style="vertical-align:top;">:</td><td><div>55930</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">request_method</td><td style="vertical-align:top;">:</td><td><div>POST</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">request_uri</td><td style="vertical-align:top;">:</td><td><div>/genios/usuario/criarUsuario?p=responsavel</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">script_name</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_name</td><td style="vertical-align:top;">:</td><td><div>PC_LEO</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_port</td><td style="vertical-align:top;">:</td><td><div>8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_protocol</td><td style="vertical-align:top;">:</td><td><div>HTTP/1.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_software</td><td style="vertical-align:top;">:</td><td><div>Rocket 1.2.6</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">web2py_path</td><td style="vertical-align:top;">:</td><td><div>C:\\Users\\Leandro\\Documents\\CJR\\DIPRO\\PROJETOS\\G\xeanios\\genios\\ProjetoGenios\\web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">web2py_version</td><td style="vertical-align:top;">:</td><td><div>2.9.5-stable+timestamp.2014.03.20.22.57.13</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.errors</td><td style="vertical-align:top;">:</td><td><div>&lt;open file &#x27;&lt;stderr&gt;&#x27;, mode &#x27;w&#x27; at 0x004560D0&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.file_wrapper</td><td style="vertical-align:top;">:</td><td><div>&lt;class wsgiref.util.FileWrapper at 0x02E4A180&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.input</td><td style="vertical-align:top;">:</td><td><div>&lt;socket._fileobject object at 0x06A737F0&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.multiprocess</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.multithread</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.run_once</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.url_scheme</td><td style="vertical-align:top;">:</td><td><div>http</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.version</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>1</div></td></tr><tr><td><div>0</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_errors</td><td style="vertical-align:top;">:</td><td><div>&lt;open file &#x27;&lt;stderr&gt;&#x27;, mode &#x27;w&#x27; at 0x004560D0&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_file_wrapper</td><td style="vertical-align:top;">:</td><td><div>&lt;class wsgiref.util.FileWrapper at 0x02E4A180&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_input</td><td style="vertical-align:top;">:</td><td><div>&lt;socket._fileobject object at 0x06A737F0&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_multiprocess</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_multithread</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_run_once</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_url_scheme</td><td style="vertical-align:top;">:</td><td><div>http</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_version</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>1</div></td></tr><tr><td><div>0</div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">extension</td><td style="vertical-align:top;">:</td><td><div>html</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">folder</td><td style="vertical-align:top;">:</td><td><div>C:\\Users\\Leandro\\Documents\\CJR\\DIPRO\\PROJETOS\\G\xeanios\\genios\\ProjetoGenios\\web2py\\applications\\genios\\</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">function</td><td style="vertical-align:top;">:</td><td><div>criarUsuario</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">global_settings</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">app_folders</td><td style="vertical-align:top;">:</td><td><div>set([&#x27;C:\\\\Users\\\\Leandro\\\\Documents\\\\CJR\\\\DIPRO\\\\PROJETOS\\\\G\\xeanios\\\\genios\\\\ProjetoGenios\\\\web2py\\\\applications\\\\admin\\\\&#x27;, &#x27;C:\\\\Users\\\\Leandro\\\\Documents\\\\CJR\\\\DIPRO\\\\PROJETOS\\\\G\\xeanios\\\\genios\\\\ProjetoGenios\\\\web2py\\\\applications\\\\welcome\\\\&#x27;, &#x27;C:\\\\Users\\\\Leandro\\\\Documents\\\\CJR\\\\DIPRO\\\\PROJETOS\\\\G\\xeanios\\\\genios\\\\ProjetoGenios\\\\web2py\\\\applications\\\\Genios\\\\&#x27;, &#x27;C:\\\\Users\\\\Leandro\\\\Documents\\\\CJR\\\\DIPRO\\\\PROJETOS\\\\G\\xeanios\\\\genios\\\\ProjetoGenios\\\\web2py\\\\applications\\\\genios\\\\&#x27;])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">applications_parent</td><td style="vertical-align:top;">:</td><td><div>C:\\Users\\Leandro\\Documents\\CJR\\DIPRO\\PROJETOS\\G\xeanios\\genios\\ProjetoGenios\\web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cmd_args</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cmd_options</td><td style="vertical-align:top;">:</td><td><div>&lt;Values at 0x2e81e18: {&#x27;verbose&#x27;: False, &#x27;ip&#x27;: &#x27;127.0.0.1&#x27;, &#x27;debuglevel&#x27;: 30, &#x27;with_scheduler&#x27;: False, &#x27;ips&#x27;: [&#x27;172.30.36.253&#x27;, &#x27;192.168.129.236&#x27;, &#x27;fe80::d87f:bcf3:7142:73f4%12&#x27;, &#x27;fe80::2c01:c2a:dede:17a1%13&#x27;, &#x27;fe80::ec1f:2d88:f68:a805%21&#x27;, &#x27;192.168.56.1&#x27;], &#x27;shutdown_timeout&#x27;: 5, &#x27;taskbar&#x27;: False, &#x27;with_coverage&#x27;: False, &#x27;port&#x27;: 8000, &#x27;maxthreads&#x27;: None, &#x27;softcron&#x27;: False, &#x27;server_name&#x27;: &#x27;PC_LEO&#x27;, &#x27;bpython&#x27;: False, &#x27;nogui&#x27;: False, &#x27;pid_filename&#x27;: &#x27;httpserver.pid&#x27;, &#x27;extcron&#x27;: False, &#x27;runcron&#x27;: False, &#x27;run_system_tests&#x27;: False, &#x27;test&#x27;: None, &#x27;folder&#x27;: &#x27;C:\\\\Users\\\\Leandro\\\\Documents\\\\CJR\\\\DIPRO\\\\PROJETOS\\\\G\\xeanios\\\\genios\\\\ProjetoGenios\\\\web2py&#x27;, &#x27;config&#x27;: &#x27;&#x27;, &#x27;minthreads&#x27;: None, &#x27;shell&#x27;: None, &#x27;run&#x27;: &#x27;&#x27;, &#x27;log_filename&#x27;: &#x27;httpserver.log&#x27;, &#x27;profiler_dir&#x27;: None, &#x27;args&#x27;: [&#x27;&#x27;], &#x27;socket_timeout&#x27;: 5, &#x27;ssl_ca_certificate&#x27;: None, &#x27;scheduler&#x27;: None, &#x27;interfaces&#x27;: None, &#x27;ssl_private_key&#x27;: &#x27;&#x27;, &#x27;scheduler_groups&#x27;: None, &#x27;password&#x27;: &#x27;&lt;ask&gt;&#x27;, &#x27;request_queue_size&#x27;: 5, &#x27;ssl_certificate&#x27;: &#x27;&#x27;, &#x27;cronjob&#x27;: False, &#x27;numthreads&#x27;: None, &#x27;quiet&#x27;: False, &#x27;import_models&#x27;: False, &#x27;timeout&#x27;: 10, &#x27;plain&#x27;: False, &#x27;nobanner&#x27;: False}&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">db_sessions</td><td style="vertical-align:top;">:</td><td><div>set([])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">debugging</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">gluon_parent</td><td style="vertical-align:top;">:</td><td><div>C:\\Users\\Leandro\\Documents\\CJR\\DIPRO\\PROJETOS\\G\xeanios\\genios\\ProjetoGenios\\web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_jython</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_pypy</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_source</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">local_hosts</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>172.30.36.253</div></td></tr><tr><td><div>::ffff:127.0.0.1</div></td></tr><tr><td><div>::1</div></td></tr><tr><td><div>192.168.129.236</div></td></tr><tr><td><div>fe80::d87f:bcf3:7142:73f4%12</div></td></tr><tr><td><div>PC_LEO</div></td></tr><tr><td><div>fe80::2c01:c2a:dede:17a1%13</div></td></tr><tr><td><div>fe80::ec1f:2d88:f68:a805%21</div></td></tr><tr><td><div>127.0.0.1</div></td></tr><tr><td><div>192.168.56.1</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">web2py_version</td><td style="vertical-align:top;">:</td><td><div>2.9.5-stable+timestamp.2014.03.20.22.57.13</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_https</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_local</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_restful</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">now</td><td style="vertical-align:top;">:</td><td><div>datetime.datetime(2014, 6, 6, 15, 33, 17, 795000)</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">raw_args</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">raw_extension</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">url</td><td style="vertical-align:top;">:</td><td><div>/genios/usuario/criarUsuario</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">utcnow</td><td style="vertical-align:top;">:</td><td><div>datetime.datetime(2014, 6, 6, 18, 33, 17, 795000)</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">uuid</td><td style="vertical-align:top;">:</td><td><div>genios/127.0.0.1.2014-06-06.15-33-17.08f6c112-f908-46e6-86a6-a6899393c53d</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi</td><td style="vertical-align:top;">:</td><td><div>&lt;gluon.main.LazyWSGI object at 0x07FCF4B0&gt;</div></td></tr></table></div>'
+tRp62
+sS'frames'
+p63
+(lp64
+(dp65
+S'file'
+p66
+S'C:\\home\\mdipierro\\make_web2py\\web2py\\gluon\\restricted.py'
+p67
+sS'dump'
+p68
+(dp69
+sS'lnum'
+p70
+I220
+sS'lines'
+p71
+(dp72
+sS'call'
+p73
+S"(code='# coding: utf8\\n# tente algo como\\ndef index(): re...m\\n\\nresponse._vars=response._caller(criarUsuario)\\n', environment={'A': <class 'gluon.html.A'>, 'ANY_OF': <class 'gluon.validators.ANY_OF'>, 'Auth': <class 'gluon.tools.Auth'>, 'B': <class 'gluon.html.B'>, 'BEAUTIFY': <class 'gluon.html.BEAUTIFY'>, 'BODY': <class 'gluon.html.BODY'>, 'BR': <class 'gluon.html.BR'>, 'BUTTON': <class 'gluon.html.BUTTON'>, 'CAT': <class 'gluon.html.CAT'>, 'CENTER': <class 'gluon.html.CENTER'>, ...}, layer='C:\\\\Users\\\\Leandro\\\\Documents\\\\CJR\\\\DIPRO\\\\PROJETOS\\\\G\\xea...web2py\\\\applications\\\\genios\\\\controllers/usuario.py')"
+p74
+sS'func'
+p75
+S'restricted'
+p76
+sa(dp77
+g66
+S'C:\\Users\\Leandro\\Documents\\CJR\\DIPRO\\PROJETOS\\G\xeanios\\genios\\ProjetoGenios\\web2py\\applications\\genios\\controllers\\usuario.py'
+p78
+sg68
+(dp79
+sg70
+I69
+sg71
+(dp80
+I64
+S'    else:'
+p81
+sI65
+S"        form = SQLFORM(db.tb_usuario,hidden=dict(ativo=0), submit_button='Salvar');"
+p82
+sI66
+S''
+sI67
+S'    return form'
+p83
+sI58
+S'        #escondendo o campo de perfil de usu\xc3\xa1rio'
+p84
+sI59
+S'        db.tb_usuario.fk_id_perfil.writable = False'
+p85
+sI60
+S'        db.tb_usuario.fk_id_perfil.readable = False'
+p86
+sI61
+S'        #gerando o formul\xc3\xa1rio'
+p87
+sI62
+S"        form = SQLFORM(db.tb_usuario,hidden=dict(ativo=0,fk_id_perfil=id_perfil), submit_button='Salvar')"
+p88
+sI63
+S''
+ssg73
+S'()'
+p89
+sg75
+S'<module>'
+p90
+sa(dp91
+g66
+S'C:\\home\\mdipierro\\make_web2py\\web2py\\gluon\\globals.py'
+p92
+sg68
+(dp93
+sg70
+I385
+sg71
+(dp94
+sg73
+S'(f=<function criarUsuario>)'
+p95
+sg75
+S'<lambda>'
+p96
+sa(dp97
+g66
+S'C:\\Users\\Leandro\\Documents\\CJR\\DIPRO\\PROJETOS\\G\xeanios\\genios\\ProjetoGenios\\web2py\\applications\\genios\\controllers\\usuario.py'
+p98
+sg68
+(dp99
+S'form.process'
+p100
+S'<bound method SQLFORM.process of <gluon.sqlhtml.SQLFORM object>>'
+p101
+sS').accepted'
+p102
+S'undefined'
+p103
+sS'form'
+p104
+S'<gluon.sqlhtml.SQLFORM object>'
+p105
+ssg70
+I49
+sg71
+(dp106
+I44
+S"    #submit = form.element('input',_type='submit')"
+p107
+sI45
+S"    #idPerfil[0] = 'readonly'"
+p108
+sI46
+S'    #return dict(form=form)'
+p109
+sI47
+S''
+sI48
+S''
+sI49
+S'    if form.process().accepted:'
+p110
+sI50
+S'        response.flash = "Usu\xc3\xa1rio salvo com sucesso"'
+p111
+sI51
+S'        #enviar email para confirma\xc3\xa7\xc3\xa3o'
+p112
+sI52
+S'    return dict(formulario = form)'
+p113
+sI53
+S''
+ssg73
+S'()'
+p114
+sg75
+S'criarUsuario'
+p115
+sa(dp116
+g66
+S'C:\\home\\mdipierro\\make_web2py\\web2py\\gluon\\html.py'
+p117
+sg68
+(dp118
+sg70
+I2282
+sg71
+(dp119
+sg73
+S"(self=<gluon.sqlhtml.SQLFORM object>, **kwargs={'dbio': True})"
+p120
+sg75
+S'process'
+p121
+sa(dp122
+g66
+S'C:\\home\\mdipierro\\make_web2py\\web2py\\gluon\\html.py'
+p123
+sg68
+(dp124
+sg70
+I2219
+sg71
+(dp125
+sg73
+S"(self=<gluon.sqlhtml.SQLFORM object>, **kwargs={'dbio': True, 'request_vars': <Storage {'nome': 'leandro', 'ativo': ['on', '0'...formname': 'tb_usuario/create', 'foto_nome': ''}>, 'session': <Storage {'_formkey[tb_usuario/create]': ['e3e2f...4cb04f38-e74a-4005-95b1-81836f7f71b6'], 'op': 4}>})"
+p126
+sg75
+S'validate'
+p127
+sa(dp128
+g66
+S'C:\\home\\mdipierro\\make_web2py\\web2py\\gluon\\sqlhtml.py'
+p129
+sg68
+(dp130
+sg70
+I1592
+sg71
+(dp131
+sg73
+S"(self=<gluon.sqlhtml.SQLFORM object>, request_vars=<Storage {'nome': 'leandro', 'ativo': ['on', '0'...formname': 'tb_usuario/create', 'foto_nome': ''}>, session=<Storage {'_formkey[tb_usuario/create]': ['e3e2f...4cb04f38-e74a-4005-95b1-81836f7f71b6'], 'op': 4}>, formname='tb_usuario/create', keepvalues=False, onvalidation=None, dbio=True, hideerror=False, detect_record_change=False, **kwargs={})"
+p132
+sg75
+S'accepts'
+p133
+sa(dp134
+g66
+S'C:\\home\\mdipierro\\make_web2py\\web2py\\gluon\\dal.py'
+p135
+sg68
+(dp136
+sg70
+I9114
+sg71
+(dp137
+sg73
+S"(self=<Table tb_usuario (id_usuario,nome,fk_id_perfil,...,numero_filhos,ano_escolar,ativo,foto_nome,foto)>, **fields={'ano_escolar': None, 'ativo': True, 'email': 'leandro@leandro.org.br', 'foto_nome': '', 'nome': 'leandro', 'numero_filhos': None, 'senha': '123253'})"
+p138
+sg75
+S'insert'
+p139
+sa(dp140
+g66
+S'C:\\home\\mdipierro\\make_web2py\\web2py\\gluon\\dal.py'
+p141
+sg68
+(dp142
+sg70
+I1360
+sg71
+(dp143
+sg73
+S"(self=<gluon.dal.MySQLAdapter object>, table=<Table tb_usuario (id_usuario,nome,fk_id_perfil,...,numero_filhos,ano_escolar,ativo,foto_nome,foto)>, fields=[(<gluon.dal.Field object>, 'leandro'), (<gluon.dal.Field object>, None), (<gluon.dal.Field object>, None), (<gluon.dal.Field object>, '123253'), (<gluon.dal.Field object>, True), (<gluon.dal.Field object>, 'leandro@leandro.org.br'), (<gluon.dal.Field object>, '')])"
+p144
+sg75
+g139
+sasS'pyver'
+p145
+S'Python 2.7.6: C:\\Users\\Leandro\\Documents\\CJR\\DIPRO\\PROJETOS\\G\xeanios\\genios\\ProjetoGenios\\web2py\\web2py.exe (prefix: C:\\Python27)'
+p146
+sS'session'
+p147
+g61
+(S's7\x02\x00\x00<div><table><tr><td style="font-weight:bold;vertical-align:top;">idpai</td><td style="vertical-align:top;">:</td><td><div>1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">last_orderby</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">last_query</td><td style="vertical-align:top;">:</td><td><div>db.pai_x_filho.id&gt;0</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">op</td><td style="vertical-align:top;">:</td><td><div>4</div></td></tr></table></div>'
+tRp148
+sS'etype'
+p149
+S"<class 'gluon.contrib.pymysql.err.IntegrityError'>"
+p150
+sS'date'
+p151
+S'Fri Jun 06 15:33:17 2014'
+p152
+sS'response'
+p153
+g61
+(S'sp\x1b\x00\x00<div><table><tr><td style="font-weight:bold;vertical-align:top;">body</td><td style="vertical-align:top;">:</td><td><div>&lt;cStringIO.StringO object at 0x07FCFA80&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cookies</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">session_id_genios</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-0cad6233-22cc-48e9-a2b5-0591ce00c77b<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div>/</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">delimiters</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>{{</div></td></tr><tr><td><div>}}</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">files</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">flash</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">generic_patterns</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">google_analytics_id</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">headers</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">X-Powered-By</td><td style="vertical-align:top;">:</td><td><div>web2py</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">menu</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div><table><tr><td><div>Perfil</div></td></tr><tr><td><div>False</div></td></tr><tr><td><div>/genios/responsavel/index</div></td></tr><tr><td><div><table></table></div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">meta</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">author</td><td style="vertical-align:top;">:</td><td><div>Your Name &lt;you@example.com&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">generator</td><td style="vertical-align:top;">:</td><td><div>Web2py Web Framework</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">keywords</td><td style="vertical-align:top;">:</td><td><div>web2py, python, framework</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">models_to_run</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>^\\w+\\.py$</div></td></tr><tr><td><div>^usuario/\\w+\\.py$</div></td></tr><tr><td><div>^usuario/criarUsuario/\\w+\\.py$</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">postprocessing</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_client</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_cookie_compression_level</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_cookie_expires</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_cookie_key</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_data_name</td><td style="vertical-align:top;">:</td><td><div>session_data_genios</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_file</td><td style="vertical-align:top;">:</td><td><div>&lt;open file &#x27;C:\\\\Users\\\\Leandro\\\\Documents\\\\CJR\\\\DIPRO\\\\PROJETOS\\\\G\\xeanios\\\\genios\\\\ProjetoGenios\\\\web2py\\\\applications\\\\genios\\\\sessions\\\\127.0.0.1-0cad6233-22cc-48e9-a2b5-0591ce00c77b&#x27;, mode &#x27;rb+&#x27; at 0x07FFC6A8&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_filename</td><td style="vertical-align:top;">:</td><td><div>C:\\Users\\Leandro\\Documents\\CJR\\DIPRO\\PROJETOS\\G\xeanios\\genios\\ProjetoGenios\\web2py\\applications\\genios\\sessions\\127.0.0.1-0cad6233-22cc-48e9-a2b5-0591ce00c77b</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_hash</td><td style="vertical-align:top;">:</td><td><div>b1f3929aea241528edba93b4f950f965</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-0cad6233-22cc-48e9-a2b5-0591ce00c77b</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id_name</td><td style="vertical-align:top;">:</td><td><div>session_id_genios</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_locked</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_masterapp</td><td style="vertical-align:top;">:</td><td><div>genios</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_new</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_storage_type</td><td style="vertical-align:top;">:</td><td><div>file</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">status</td><td style="vertical-align:top;">:</td><td><div>200</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">subtitle</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">title</td><td style="vertical-align:top;">:</td><td><div>Genios</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">view</td><td style="vertical-align:top;">:</td><td><div>usuario/criarUsuario.html</div></td></tr></table></div>'
+tRp154
+sS'locals'
+p155
+(dp156
+S'fields'
+p157
+S"[(<gluon.dal.Field object>, 'leandro'), (<gluon.dal.Field object>, None), (<gluon.dal.Field object>, None), (<gluon.dal.Field object>, '123253'), (<gluon.dal.Field object>, True), (<gluon.dal.Field object>, 'leandro@leandro.org.br'), (<gluon.dal.Field object>, '')]"
+p158
+sS'self'
+p159
+S'<gluon.dal.MySQLAdapter object>'
+p160
+sS'e'
+S"IntegrityError(1452, u'Cannot add or update a ch...rfil`) ON DELETE NO ACTION ON UPDATE NO ACTION)')"
+p161
+sS'table'
+p162
+S'<Table tb_usuario (id_usuario,nome,fk_id_perfil,...,numero_filhos,ano_escolar,ativo,foto_nome,foto)>'
+p163
+sS'query'
+p164
+S'"INSERT INTO tb_usuario(nome,ano_escolar,numero_f...L,NULL,\'123253\',\'T\',\'leandro@leandro.org.br\',\'\');"'
+p165
+sssS'traceback'
+p166
+S'Traceback (most recent call last):\n  File "/home/mdipierro/make_web2py/web2py/gluon/restricted.py", line 220, in restricted\n  File "C:\\Users\\Leandro\\Documents\\CJR\\DIPRO\\PROJETOS\\G\xeanios\\genios\\ProjetoGenios\\web2py\\applications\\genios\\controllers/usuario.py", line 69, in <module>\n  File "/home/mdipierro/make_web2py/web2py/gluon/globals.py", line 385, in <lambda>\n  File "C:\\Users\\Leandro\\Documents\\CJR\\DIPRO\\PROJETOS\\G\xeanios\\genios\\ProjetoGenios\\web2py\\applications\\genios\\controllers/usuario.py", line 49, in criarUsuario\n    if form.process().accepted:\n  File "/home/mdipierro/make_web2py/web2py/gluon/html.py", line 2282, in process\n  File "/home/mdipierro/make_web2py/web2py/gluon/html.py", line 2219, in validate\n  File "/home/mdipierro/make_web2py/web2py/gluon/sqlhtml.py", line 1592, in accepts\n  File "/home/mdipierro/make_web2py/web2py/gluon/dal.py", line 9114, in insert\n  File "/home/mdipierro/make_web2py/web2py/gluon/dal.py", line 1360, in insert\nIntegrityError: (1452, u\'Cannot add or update a child row: a foreign key constraint fails (`mydb`.`tb_usuario`, CONSTRAINT `fk_tb_usuario_tb_perfil1` FOREIGN KEY (`fk_id_perfil`) REFERENCES `tb_perfil` (`id_perfil`) ON DELETE NO ACTION ON UPDATE NO ACTION)\')\n'
+p167
+s.

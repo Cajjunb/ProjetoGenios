@@ -2,7 +2,7 @@
 
 {{=form}}
 <!-- {{=A(T("Cadastrar"), _href=URL('genios','usuario','criarUsuario'), _style='margin-top: 1em;')}} -->
-{{=SystemMessage}}
+{{=mensagemSistema}}
 
 
 <!-- p = perfil -->

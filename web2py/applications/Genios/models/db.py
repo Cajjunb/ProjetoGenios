@@ -43,7 +43,7 @@ db.define_table('tb_usuario',
 	Field('nome','string',length=80,required=True),
 	Field('email','string',required=True,length=200),
 	Field('senha','password',required=True,length=128),
-    Field('ano_escolar','int'),
+    Field('ano_escolar','integer'),
 	Field('colegio','string',length=70),
     Field('ativo','boolean'),
     redefine=True,
@@ -108,13 +108,16 @@ db.define_table('ta_usuario_x_curso',
                 )
 
 db.define_table('tb_materia',
+                Field('id_materia','id'),
                 Field('nome', length=200, default=''),
                 Field('ativo','boolean')
                 )
 
+
 db.define_table('ta_usuario_x_materia',
-                Field('fk_id_usuario','reference tb_usuario'),
-                Field('fk_id_materia','reference tb_materia'),
+                Field('id','id'),
+                Field('id_usuario','reference tb_usuario'),
+                Field('id_materia','reference tb_materia'),
                 Field('ativo','boolean')
                 )
 
