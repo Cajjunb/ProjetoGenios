@@ -30,6 +30,7 @@ def cidades():
 
     formCidade = SQLFORM(db.tb_cidade, fields=['nome'],showid = False)
 
+    # Função Lambda para edição
     links = [lambda row: A('Editar',_href=URL("administrador","alterar_cidade",args=[row.id_cidade]))]
 
     lista = SQLFORM.grid(db.tb_cidade,fields=[db.tb_cidade.nome],headers = {'tb_cidade.nome':   'Região'},

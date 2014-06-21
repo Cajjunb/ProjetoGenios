@@ -21,6 +21,7 @@ def cadastrar_professor():
 
 def cidades():
 
+    
     setCidades =db().select(db.tb_cidade.ALL)
 
     #Esconde os campos das regiões
