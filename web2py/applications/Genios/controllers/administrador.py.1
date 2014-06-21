@@ -1,8 +1,15 @@
 # coding: utf8
 # tente algo como
+<<<<<<< HEAD
 def index(): return dict(message="hello from administrador.py")
 
 #pagina para cadastrar professor
+=======
+
+def index(): return dict(message="hello from administrador.py")
+
+    #pagina para cadastrar professor
+>>>>>>> 0ee7ccade193f762074b4b3abfcd01fda42cfae4
 
 
 def cadastrar_professor():
@@ -22,6 +29,7 @@ def cidades():
 
     setCidades =db().select(db.tb_cidade.ALL)
 
+<<<<<<< HEAD
     formCidade = SQLFORM(db.tb_cidade, fields=['nome'],showid = False)
 
     lista = SQLFORM.grid(db.tb_cidade,fields=[db.tb_cidade.nome],
@@ -33,10 +41,31 @@ def cidades():
                          create=False,
                          csv=False,
                          formstyle="table3cols")
+=======
+    #Esconde os campos das regiões
+    db.tb_cidade.id_cidade.readable = False
+    db.tb_cidade.ativo.readable = False
+
+    formCidade = SQLFORM(db.tb_cidade, fields=['nome'],showid = False)
+
+    links = [lambda row: A('Editar',_href=URL("administrador","alterar_cidade",args=[row.id]))]
+
+    lista = SQLFORM.grid(db.tb_cidade,fields=[db.tb_cidade.nome],headers = {'tb_cidade.nome':   'Região'},
+                             searchable=True,
+                             sortable=True,
+                             deletable=True,
+                             editable=True,
+                             details=False,
+                             create=False,
+                             links=links,
+                             csv=False,
+                             formstyle="table3cols")
+>>>>>>> 0ee7ccade193f762074b4b3abfcd01fda42cfae4
 
     #for forms in setCidades:
         #lista.append( SQLFORM.grid(db.tb_cidade,searchable=True,sortable=False,deletable=False,editable=False,details=False,create=False,csv=False))
 
+<<<<<<< HEAD
         
     if formCidade.process().accepted:
         response.flash = "Regiao criada"
@@ -56,3 +85,20 @@ def cadastrarmateria():
 
     
         return dict()
+=======
+    if request.
+
+    if formCidade.process().accepted:
+        response.flash = "Regiao criada"
+
+    return dict(form = formCidade, lista =  lista)
+
+
+
+def alterar_cidade():
+    form = SQLFORM(db.tb_cidade,request.id, fields=['nome'],showid=False)
+    if form.process().accepted:
+        response.flash ="Alterado"
+
+    return dict(form= form)
+>>>>>>> 0ee7ccade193f762074b4b3abfcd01fda42cfae4

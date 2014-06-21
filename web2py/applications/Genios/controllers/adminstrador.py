@@ -6,7 +6,14 @@ def index(): return dict(message="hello from adminstrador.py")
 
 def cadastrar_professor():
     response.flash="Cadastro de Professor"
-    form = db.teste = SQLFORM.factory(db.tb_professor, db.tb_telefone, fields=['nome','email','senha', 'telefone', 'instEns', 'curso', 'semestre', 'ativo'] )
+    form = db.teste = SQLFORM.factory(db.tb_professor,
+                                      db.tb_telefone,
+                                      fields=['nome','email','senha', 'telefone', 'instEns', 'curso', 'semestre', 'ativo'] )
+    
+    #Esconde os campos das regiões
+    form.vars.id_cidade.readable = False
+    form.vars.ativo.readable = False
+    
     if form.process().accepted:
         id = db.tb_professor.insert(**db.tb_professor._filter_fields(form.vars))
         form.vars.tb_professor=id

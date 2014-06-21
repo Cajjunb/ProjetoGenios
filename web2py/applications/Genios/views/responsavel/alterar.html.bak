@@ -16,7 +16,10 @@
     <div class="forms-wrap">
         <div class="altera pai">
             <div class="horizontal-center">
-                <div class="formpai">{{=formpai}}</div>
+                <div class="formpai">
+                    {{=formpai}}
+                    {{=formEndereco}}
+                </div>
                 <div class="foto-pai">
                     <img style="height:150px;width:150px" src="{{ =URL('default','download',args=fotopai) }}" />
                     {{=fotopai}}
@@ -25,6 +28,10 @@
         </div>
         {{ i = 0 }}
         <div class="filhos">
+            <h1>
+                Filhos
+            </h1>
+            <br><br>
             {{ for form  in forms:}}
                 <div class="wrap-formulario">
                     <div class="wrap-foto">

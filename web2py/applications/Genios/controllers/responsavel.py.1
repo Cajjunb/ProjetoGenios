@@ -13,20 +13,25 @@ def index():
     db.tb_pai_x_filho.fk_filho.writable= False
     form2 = SQLFORM(db.tb_pai_x_filho,fields=["fk_pai"],showid=False)
 
-    if(form2.validate()):
-        session.idpai=form2.vars.fk_pai
-        session.op = NULLOP
-        redirect(URL('responsavel','alterar'))
-    else:
-        session.idpai= 0
-    return dict(form=form2, session=session.idpai)
+    session.idpai = session.id_user
+
+    #if(form2.validate()):
+    #    session.idpai=form2.vars.fk_pai
+    #    session.op = NULLOP
+    #    redirect(URL('responsavel','alterar'))
+    #else:
+    #    session.idpai= 0
+    #return dict(form=form2, session=session.idpai)
+
+    response.flash= session.id_user
+    return dict()
 
 
 #Controller da pagina de perfil do responsavel
 def alterar():
     # Session com a info do pai foi setada?
-    if not session.idpai : # Falta uma condicao aqui! if not session.op
-         redirect(URL('responsavel','index'))
+    #if not session.id_user : # Falta uma condicao aqui! if not session.op
+         #redirect(URL('responsavel','index'))
 
 
     #Dando um Join tb_usuario e Tb_endereco
@@ -43,13 +48,13 @@ def alterar():
     if formpai is None or formEndereco is None:
 
         #Pegando form do pai
-        formpai = SQLFORM(db.tb_usuario,session.idpai,showid=False,
+        formpai = SQLFORM(db.tb_usuario,session.id_user,showid=False,
                           fields=['nome','email','senha'],
                           submit_button="Alterar",
                           formstyle="divs")
 
         #Pegando Registro do Endereco do pai
-        endereco = db.tb_endereco(db.tb_endereco.fk_id_usuario == session.idpai)
+        endereco = db.tb_endereco(db.tb_endereco.fk_id_usuario == session.id_user)
 
         #Criando SQLFORM para alterar o Endereco
         formEndereco = SQLFORM(db.tb_endereco,endereco,
@@ -66,7 +71,7 @@ def alterar():
 
 
         #SQL query INNER JOIN
-        filhosSet = db((session.idpai==db.tb_pai_x_filho.fk_pai)& (db.tb_filho.id==db.tb_pai_x_filho.fk_filho)&(db.tb_filho.ativo == True))
+        filhosSet = db((session.id_user==db.tb_pai_x_filho.fk_pai)& (db.tb_filho.id==db.tb_pai_x_filho.fk_filho)&(db.tb_filho.ativo == True))
 
         #Get numero de registros
         numFilhos = filhosSet.count()
@@ -94,6 +99,9 @@ def alterar():
     if formpai.process().accepted:
         response.flash = "Cadastro Pai Alterado" ;
 
+    if formEndereco.process().accepted:
+        response.flash = "Endereço Alterado "
+
     #Get numFilhos e inicilaiza o i
     numFilhos = i
     i = 0
@@ -109,9 +117,11 @@ def alterar():
 
 def incluifilho():
     # Testa se a session foi setada
-    if not session.idpai:
-        redirect(URL("responsavel"))
+    #if not session.id_user:
+    #    redirect(URL("responsavel"))
 
+     response.flash = session.id_user
+    
     #Prepara para inserir no banco e seta a FK
     formfilho = SQLFORM.factory(db.tb_filho,db.tb_pai_x_filho,
                                 fields=['nome','colegio','foto'],
@@ -130,20 +140,22 @@ def incluifilho():
         response.flash = "Filho Vinculado"
 
         #Prepopula o formulario
-        formfilho.vars.fk_pai = session.idpai
+        formfilho.vars.fk_pai = session.id_user
         formfilho.vars.fk_filho = id_filho
 
+       
         #Insere no Banco
         db.tb_pai_x_filho.insert(**db.tb_pai_x_filho._filter_fields(formfilho.vars))
 
     #fim for
 
 
-    return dict(pai=session.idpai, form = formfilho, formrel = formrel)
+    return dict(pai=session.id_user, form = formfilho, formrel = formrel)
 
 
 def download():
     return response.render()
+<<<<<<< HEAD
 
 def marcaraulas():
     query = db.tb_usuario.id_usuario == db.ta_usuario_x_materia.id_usuario and db.tb_materia.id_materia == db.ta_usuario_x_materia.id_materia
@@ -152,3 +164,5 @@ def marcaraulas():
     
        
     return dict(grid=grid)
+=======
+>>>>>>> 0ee7ccade193f762074b4b3abfcd01fda42cfae4

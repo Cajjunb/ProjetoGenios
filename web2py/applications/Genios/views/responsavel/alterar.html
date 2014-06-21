@@ -28,6 +28,10 @@
         </div>
         {{ i = 0 }}
         <div class="filhos">
+            <h1>
+                Filhos
+            </h1>
+            <br><br>
             {{ for form  in forms:}}
                 <div class="wrap-formulario">
                     <div class="wrap-foto">
@@ -41,7 +45,7 @@
         </div>
     </div>
     <br>
-    <a class="linkAlterar" href='{{=URL("responsavel","incluifilho",args=session.idpai)}}'>
+    <a class="linkAlterar" href='{{=URL("responsavel","incluifilho",args=session.id_user)}}'>
         <button>
              Vincular Outro filho
         </button>

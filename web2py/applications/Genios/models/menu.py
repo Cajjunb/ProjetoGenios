@@ -25,5 +25,5 @@ response.menu = [
     (T('Responsavel'),False,URL('responsavel','index'), []),
     (T('Administrador'), False, URL('administrador', 'cadastrar_professor'), []),
     (T('Cidades'), False, URL('administrador', 'cidades'), []),
-    
+    (T('Aulas'), False, URL('responsavel', 'marcaraulas'), []),
 ]

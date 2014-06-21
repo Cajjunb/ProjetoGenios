@@ -10,22 +10,32 @@ NULLOP = 4
 
 #Controller da pagina inicial do Responsavel
 def index():
+    if not session.id_user:
+        redirect(URL("default","index"))
+        response.flash = "Sessão Expirada, Logue-se novamente!"
+        
+        
     db.tb_pai_x_filho.fk_filho.writable= False
     form2 = SQLFORM(db.tb_pai_x_filho,fields=["fk_pai"],showid=False)
 
-    if(form2.validate()):
-        session.idpai=form2.vars.fk_pai
-        session.op = NULLOP
-        redirect(URL('responsavel','alterar'))
-    else:
-        session.idpai= 0
-    return dict(form=form2, session=session.idpai)
+    session.idpai = session.id_user
+
+    #if(form2.validate()):
+    #    session.idpai=form2.vars.fk_pai
+    #    session.op = NULLOP
+    #    redirect(URL('responsavel','alterar'))
+    #else:
+    #    session.idpai= 0
+    #return dict(form=form2, session=session.idpai)
+
+    response.flash= session.id_user
+    return dict()
 
 
 #Controller da pagina de perfil do responsavel
 def alterar():
     # Session com a info do pai foi setada?
-    if not session.idpai : # Falta uma condicao aqui! if not session.op
+    if not session.id_user : # Falta uma condicao aqui! if not session.op
          redirect(URL('responsavel','index'))
 
 
@@ -43,13 +53,13 @@ def alterar():
     if formpai is None or formEndereco is None:
 
         #Pegando form do pai
-        formpai = SQLFORM(db.tb_usuario,session.idpai,showid=False,
+        formpai = SQLFORM(db.tb_usuario,session.id_user,showid=False,
                           fields=['nome','email','senha'],
                           submit_button="Alterar",
                           formstyle="divs")
 
         #Pegando Registro do Endereco do pai
-        endereco = db.tb_endereco(db.tb_endereco.fk_id_usuario == session.idpai)
+        endereco = db.tb_endereco(db.tb_endereco.fk_id_usuario == session.id_user)
 
         #Criando SQLFORM para alterar o Endereco
         formEndereco = SQLFORM(db.tb_endereco,endereco,
@@ -66,7 +76,7 @@ def alterar():
 
 
         #SQL query INNER JOIN
-        filhosSet = db((session.idpai==db.tb_pai_x_filho.fk_pai)& (db.tb_filho.id==db.tb_pai_x_filho.fk_filho)&(db.tb_filho.ativo == True))
+        filhosSet = db((session.id_user==db.tb_pai_x_filho.fk_pai)& (db.tb_filho.id==db.tb_pai_x_filho.fk_filho)&(db.tb_filho.ativo == True))
 
         #Get numero de registros
         numFilhos = filhosSet.count()
@@ -94,6 +104,9 @@ def alterar():
     if formpai.process().accepted:
         response.flash = "Cadastro Pai Alterado" ;
 
+    if formEndereco.process().accepted:
+        response.flash = "Endereço Alterado "
+
     #Get numFilhos e inicilaiza o i
     numFilhos = i
     i = 0
@@ -103,15 +116,18 @@ def alterar():
         if forms[i].process().accepted:
             response.flash = "Cadastro Filho Alterado!"
     #fim for
-
+    
+    response.flash = session.id_user
 
     return dict(formpai=formpai,formEndereco = formEndereco,fotopai=fotopai,forms=forms,fotos=fotos)
 
 def incluifilho():
     # Testa se a session foi setada
-    if not session.idpai:
-        redirect(URL("responsavel"))
+    if not session.id_user:
+        redirect(URL("default","index"))
+        response.flash = "Sessão Expirada, Logue-se novamente!"
 
+        
     #Prepara para inserir no banco e seta a FK
     formfilho = SQLFORM.factory(db.tb_filho,db.tb_pai_x_filho,
                                 fields=['nome','colegio','foto'],
@@ -130,8 +146,9 @@ def incluifilho():
         response.flash = "Filho Vinculado"
 
         #Prepopula o formulario
-        formfilho.vars.fk_pai = session.idpai
+        formfilho.vars.fk_pai = session.id_user
         formfilho.vars.fk_filho = id_filho
+
 
         #Insere no Banco
         db.tb_pai_x_filho.insert(**db.tb_pai_x_filho._filter_fields(formfilho.vars))
@@ -139,7 +156,7 @@ def incluifilho():
     #fim for
 
 
-    return dict(pai=session.idpai, form = formfilho, formrel = formrel)
+    return dict(pai=session.id_user, form = formfilho, formrel = formrel)
 
 
 def download():
@@ -151,4 +168,10 @@ def marcaraulas():
     Fields = [db.tb_usuario.nome,db.tb_materia.nome,db.tb_usuario.id_usuario]
     grid = SQLFORM.grid(query=query, details=False, csv=False)
     
+<<<<<<< HEAD
     return dict(grid=grid)
+=======
+    table = SQLTABLE(rows)
+    
+    return dict(table=table)
+>>>>>>> 0ee7ccade193f762074b4b3abfcd01fda42cfae4

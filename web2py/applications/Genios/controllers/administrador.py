@@ -1,8 +1,9 @@
 # coding: utf8
 # tente algo como
+
 def index(): return dict(message="hello from administrador.py")
 
-#pagina para cadastrar professor
+    #pagina para cadastrar professor
 
 
 def cadastrar_professor():
@@ -20,30 +21,39 @@ def cadastrar_professor():
 
 def cidades():
 
+    
     setCidades =db().select(db.tb_cidade.ALL)
+
+    #Esconde os campos das regiões
+    db.tb_cidade.id_cidade.readable = False
+    db.tb_cidade.ativo.readable = False
 
     formCidade = SQLFORM(db.tb_cidade, fields=['nome'],showid = False)
 
-    lista = SQLFORM.grid(db.tb_cidade,fields=[db.tb_cidade.nome],
-                         searchable=True,
-                         sortable=False,
-                         deletable=False,
-                         editable=True,
-                         details=False,
-                         create=False,
-                         csv=False,
-                         formstyle="table3cols")
+    links = [lambda row: A('Editar',_href=URL("administrador","alterar_cidade",args=[row.id_cidade]))]
+
+    lista = SQLFORM.grid(db.tb_cidade,fields=[db.tb_cidade.nome],headers = {'tb_cidade.nome':   'Região'},
+                             searchable=True,
+                             sortable=True,
+                             deletable=True,
+                             editable=True,
+                             details=False,
+                             create=False,
+                             links=links,
+                             csv=False,
+                             formstyle="table3cols")
 
     #for forms in setCidades:
         #lista.append( SQLFORM.grid(db.tb_cidade,searchable=True,sortable=False,deletable=False,editable=False,details=False,create=False,csv=False))
 
-        
+
     if formCidade.process().accepted:
         response.flash = "Regiao criada"
-        
+
     return dict(form = formCidade, lista =  lista)
 
 
+<<<<<<< HEAD
 def cadastrarmateria():
     
    # if not session.perfil == 1:
@@ -51,3 +61,12 @@ def cadastrarmateria():
         
     grid = SQLFORM.smartgrid(db.tb_materia, csv=False,details=False,editable=True,create=True)
     return dict(grid=grid)
+=======
+
+def alterar_cidade():
+    form = SQLFORM(db.tb_cidade,request.args(0), fields=['nome'],showid=False)
+    if form.process().accepted:
+        response.flash ="Alterado"
+
+    return dict(form= form)
+>>>>>>> 0ee7ccade193f762074b4b3abfcd01fda42cfae4

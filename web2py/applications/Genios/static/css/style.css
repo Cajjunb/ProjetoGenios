@@ -212,3 +212,23 @@ footer #footer-right img{
     float:right;
 
 }
+
+.web2py_console{
+    display: inline-block;
+margin-left: 305;
+}
+
+.cidades h1{
+   margin-left: 200;
+margin-top: 30;
+margin-bottom: 50;
+
+}
+
+.cidades #w2p_query_panel select:focus,
+.cidades #w2p_query_panel select:active,
+.cidades #w2p_query_panel select{
+    display:none;
+    position:absolute
+    
+}

@@ -1,2 +1,8 @@
+<<<<<<< HEAD
 {{extend 'layoutgenios.html'}}
 {{=table}}
+=======
+{{extend 'layout.html'}}
+<h1>This is the responsavel/marcaraulas.html template</h1>
+{{=BEAUTIFY(response._vars)}}
+>>>>>>> 0ee7ccade193f762074b4b3abfcd01fda42cfae4

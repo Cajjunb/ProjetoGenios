@@ -1,7 +1,20 @@
 {{extend 'layoutgenios.html'}}
 
 
-<div>
+<div class="Cidades" >
+    <h1>
+        Gerenciador de Regiões
+    </h1>
+    <p style="display: inline-block;
+width: 300;
+margin: 0 auto;
+overflow: hidden;
+margin-left: 340px;">
+        As regiões do sistema são às áreas de atuação do professor. O professor só atuará na região que ele estiver
+         cadastrado.
+        
+    </p>
+    <br><br>
     {{for regiao in lista:}}
     
         <div>
@@ -10,7 +23,7 @@
     
     {{pass}}
 </div>
-
+<br>
 <div>
     {{=form}}
     
