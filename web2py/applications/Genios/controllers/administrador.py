@@ -42,3 +42,12 @@ def cidades():
         response.flash = "Regiao criada"
         
     return dict(form = formCidade, lista =  lista)
+
+
+def cadastrarmateria():
+    
+   # if not session.perfil == 1:
+    #    redirect(URL('autenticacao','login'))
+        
+    grid = SQLFORM.smartgrid(db.tb_materia, csv=False,details=False,editable=True,create=True)
+    return dict(grid=grid)

@@ -32,7 +32,7 @@ def cidades():
                          details=False,
                          create=False,
                          csv=False,
-                         formstyle="divs")
+                         formstyle="table3cols")
 
     #for forms in setCidades:
         #lista.append( SQLFORM.grid(db.tb_cidade,searchable=True,sortable=False,deletable=False,editable=False,details=False,create=False,csv=False))
@@ -42,3 +42,12 @@ def cidades():
         response.flash = "Regiao criada"
         
     return dict(form = formCidade, lista =  lista)
+
+
+def cadastrarmateria():
+    
+   # if not session.perfil == 1:
+    #    redirect(URL('autenticacao','login'))
+        
+    grid = SQLFORM.smartgrid(db.tb_usuario, csv=False,details=False,editable=True,create=True)
+    return dict(grid=grid)

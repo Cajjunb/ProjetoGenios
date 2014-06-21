@@ -146,7 +146,9 @@ def download():
     return response.render()
 
 def marcaraulas():
-    rows = db(db.tb_usuario.id_usuario == db.ta_usuario_x_materia.id_usuario and db.tb_materia.id_materia == db.ta_usuario_x_materia.id_materia).select()
+    query = db.tb_usuario.id_usuario == db.ta_usuario_x_materia.id_usuario and db.tb_materia.id_materia == db.ta_usuario_x_materia.id_materia
+    query2= db.tb_usuario
+    Fields = [db.tb_usuario.nome,db.tb_materia.nome,db.tb_usuario.id_usuario]
+    grid = SQLFORM.grid(query=query, details=False, csv=False)
     
-    table = SQLTABLE(rows)
-    return dict(table=table)
+    return dict(grid=grid)
