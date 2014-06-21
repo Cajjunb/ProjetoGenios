@@ -155,3 +155,14 @@ def incluifilho():
 
 def download():
     return response.render()
+<<<<<<< HEAD
+
+def marcaraulas():
+    query = db.tb_usuario.id_usuario == db.ta_usuario_x_materia.id_usuario and db.tb_materia.id_materia == db.ta_usuario_x_materia.id_materia
+    Fields = [db.tb_usuario.id_usuario]
+    grid = SQLFORM.grid(query=query, details=False, csv=False, fields=Fields)
+    
+       
+    return dict(grid=grid)
+=======
+>>>>>>> 0ee7ccade193f762074b4b3abfcd01fda42cfae4

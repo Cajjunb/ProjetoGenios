@@ -14,9 +14,15 @@
 '@markmin\x01An error occured, please [[reload %s]] the page': 'An error occured, please [[reload %s]] the page',
 'Administrative interface': 'Interface administrativa',
 'Ajax Recipes': 'Receitas de Ajax',
+<<<<<<< HEAD
+'Alterar': 'Alterar',
+'Ano Escolar': 'Ano Escolar',
+=======
+>>>>>>> 0ee7ccade193f762074b4b3abfcd01fda42cfae4
 'appadmin is disabled because insecure channel': 'Administração desativada devido ao canal inseguro',
 'Are you sure you want to delete this object?': 'Você está certo que deseja remover este objeto?',
 'Available Databases and Tables': 'Bancos de dados e tabelas disponíveis',
+'Back': 'Back',
 'Buy this book': 'Compre o livro',
 'cache': 'cache',
 'Cache': 'Cache',
@@ -28,6 +34,13 @@
 'Clear DISK': 'Limpar DISCO',
 'Clear RAM': 'Limpar memória RAM',
 'Client IP': 'IP do cliente',
+<<<<<<< HEAD
+'Close': 'Close',
+'Colegio': 'Colegio',
+'Comma-separated export including columns not shown; fields from other tables are exported as raw values for faster export': 'Comma-separated export including columns not shown; fields from other tables are exported as raw values for faster export',
+'Comma-separated export of visible columns. Fields from other tables are exported as they appear on-screen but this may be slow for many rows': 'Comma-separated export of visible columns. Fields from other tables are exported as they appear on-screen but this may be slow for many rows',
+=======
+>>>>>>> 0ee7ccade193f762074b4b3abfcd01fda42cfae4
 'Community': 'Comunidade',
 'Components and Plugins': 'Componentes e Plugins',
 'Controller': 'Controlador',
@@ -58,12 +71,14 @@
 'Edit current record': 'Editar o registro atual',
 'edit profile': 'editar perfil',
 'Edit This App': 'Editar esta aplicação',
+'Email': 'Email',
 'Email and SMS': 'Email e SMS',
 'Errors': 'Erros',
 'Enter an integer between %(min)g and %(max)g': 'Enter an integer between %(min)g and %(max)g',
 'export as csv file': 'exportar como um arquivo csv',
 'FAQ': 'FAQ',
 'First name': 'Nome',
+'Fk Id Perfil': 'Fk Id Perfil',
 'Forms and Validators': 'Formulários e Validadores',
 'Free Applications': 'Aplicações gratuitas',
 'Group ID': 'ID do Grupo',
@@ -71,11 +86,21 @@
 'Hello World': 'Olá Mundo',
 'Home': 'Home',
 'How did you get here?': 'Como cheguei aqui?',
+<<<<<<< HEAD
+'HTML': 'HTML',
+'HTML export of visible columns': 'HTML export of visible columns',
+'Id': 'Id',
+'Id Cidade': 'Id Cidade',
+'Id Materia': 'Id Materia',
+'Id Usuario': 'Id Usuario',
+=======
+>>>>>>> 0ee7ccade193f762074b4b3abfcd01fda42cfae4
 'import': 'importar',
 'Import/Export': 'Importar/Exportar',
 'Index': 'Início',
 'insert new': 'inserir novo',
 'insert new %s': 'inserir novo %s',
+'Inst Ensino': 'Inst Ensino',
 'Internal State': 'Estado Interno',
 'Introduction': 'Introdução',
 'Invalid email': 'Email inválido',
@@ -134,6 +159,11 @@
 'Registration identifier': 'Registration identifier',
 'Rows in Table': 'Linhas na tabela',
 'Rows selected': 'Linhas selecionadas',
+<<<<<<< HEAD
+'Salvar': 'Salvar',
+'Search': 'Search',
+=======
+>>>>>>> 0ee7ccade193f762074b4b3abfcd01fda42cfae4
 'Semantic': 'Semântico',
 'Services': 'Serviço',
 'Size of cache:': 'Tamanho do cache:',
@@ -162,6 +192,7 @@
 'User Voice': 'User Voice',
 'Videos': 'Videos',
 'View': 'Visualização',
+'View %(entity)s': 'View %(entity)s',
 'Web2py': 'Web2py',
 'Welcome': 'Bem-vindo',
 'Welcome %s': 'Bem-vindo %s',

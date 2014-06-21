@@ -1,0 +1,3 @@
+{{extend 'layoutgenios.html'}}
+<h2>Materias</h2>
+{{=grid}}

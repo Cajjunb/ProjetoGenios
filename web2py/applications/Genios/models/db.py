@@ -1,4 +1,4 @@
-db = DAL('mysql://root:Ca_784595@localhost/mydb',migrate=False,lazy_tables=True) # Conecta com o banco
+db = DAL('mysql://admin:admin@localhost/mydb',migrate=False,lazy_tables=True) # Conecta com o banco
 
 from gluon.tools import Auth, Crud, Service, PluginManager, prettydate
 auth = Auth(db)
