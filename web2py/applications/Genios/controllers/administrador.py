@@ -53,15 +53,6 @@ def cidades():
     return dict(form = formCidade, lista =  lista)
 
 
-<<<<<<< HEAD
-def cadastrarmateria():
-    
-   # if not session.perfil == 1:
-    #    redirect(URL('autenticacao','login'))
-        
-    grid = SQLFORM.smartgrid(db.tb_materia, csv=False,details=False,editable=True,create=True)
-    return dict(grid=grid)
-=======
 
 def alterar_cidade():
     form = SQLFORM(db.tb_cidade,request.args(0), fields=['nome'],showid=False)
@@ -69,4 +60,3 @@ def alterar_cidade():
         response.flash ="Alterado"
 
     return dict(form= form)
->>>>>>> 0ee7ccade193f762074b4b3abfcd01fda42cfae4

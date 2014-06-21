@@ -113,12 +113,6 @@ db.define_table('tb_materia',
                 Field('ativo','boolean')
                 )
 
-db.define_table('ta_usuario_x_materia',
-                Field('id_usuario','reference tb_usuario'),
-                Field('id_materia','reference tb_materia'),
-                Field('ativo','boolean')
-                )
-
 
 db.define_table('ta_usuario_x_materia',
                 Field('id','id'),

@@ -1,15 +1,9 @@
 # coding: utf8
 # tente algo como
-<<<<<<< HEAD
-def index(): return dict(message="hello from administrador.py")
-
-#pagina para cadastrar professor
-=======
 
 def index(): return dict(message="hello from administrador.py")
 
     #pagina para cadastrar professor
->>>>>>> 0ee7ccade193f762074b4b3abfcd01fda42cfae4
 
 
 def cadastrar_professor():
@@ -27,31 +21,45 @@ def cadastrar_professor():
 
 def cidades():
 
+
     setCidades =db().select(db.tb_cidade.ALL)
 
-<<<<<<< HEAD
-    formCidade = SQLFORM(db.tb_cidade, fields=['nome'],showid = False)
-
-    lista = SQLFORM.grid(db.tb_cidade,fields=[db.tb_cidade.nome],
-                         searchable=True,
-                         sortable=False,
-                         deletable=False,
-                         editable=True,
-                         details=False,
-                         create=False,
-                         csv=False,
-                         formstyle="table3cols")
-=======
     #Esconde os campos das regiões
     db.tb_cidade.id_cidade.readable = False
     db.tb_cidade.ativo.readable = False
 
     formCidade = SQLFORM(db.tb_cidade, fields=['nome'],showid = False)
 
-    links = [lambda row: A('Editar',_href=URL("administrador","alterar_cidade",args=[row.id]))]
+   
+
+    #for forms in setCidades:
+        #lista.append( SQLFORM.grid(db.tb_cidade,searchable=True,sortable=False,deletable=False,editable=False,details=False,create=False,csv=False))
+
+
+    if formCidade.process().accepted:
+        response.flash = "Regiao criada"
+
+    return dict(form = formCidade, lista =  lista)
+
+
+
+def cadastrarmateria():
+
+   # if not session.perfil == 1:
+    #    redirect(URL('autenticacao','login'))
+
+     setCidades =db().select(db.tb_cidade.ALL)
+
+    #Esconde os campos das regiões
+    db.tb_cidade.id_cidade.readable = False
+    db.tb_cidade.ativo.readable = False
+
+    formCidade = SQLFORM(db.tb_cidade, fields=['nome'],showid = False)
+
+    links = [lambda row: A('Editar',_href=URL("administrador","alterar_cidade",args=[row.id_cidade]))]
 
     lista = SQLFORM.grid(db.tb_cidade,fields=[db.tb_cidade.nome],headers = {'tb_cidade.nome':   'Região'},
-                             searchable=True,
+                             searchable=False,
                              sortable=True,
                              deletable=True,
                              editable=True,
@@ -60,45 +68,12 @@ def cidades():
                              links=links,
                              csv=False,
                              formstyle="table3cols")
->>>>>>> 0ee7ccade193f762074b4b3abfcd01fda42cfae4
-
-    #for forms in setCidades:
-        #lista.append( SQLFORM.grid(db.tb_cidade,searchable=True,sortable=False,deletable=False,editable=False,details=False,create=False,csv=False))
-
-<<<<<<< HEAD
-        
-    if formCidade.process().accepted:
-        response.flash = "Regiao criada"
-        
-    return dict(form = formCidade, lista =  lista)
-
-
-def cadastrarmateria():
-    
-    if not session.perfil == 1:
-        redirect(URL('autenticacao','login'))
-    
-    form = SQLFORM(db.tb_materia,fields=['nome'], hidden=dict(ativo=1), submit_button = 'Salvar')
-    
-    
-    
-
-    
-        return dict()
-=======
-    if request.
-
-    if formCidade.process().accepted:
-        response.flash = "Regiao criada"
-
-    return dict(form = formCidade, lista =  lista)
-
+    return dict(lista=lista)
 
 
 def alterar_cidade():
-    form = SQLFORM(db.tb_cidade,request.id, fields=['nome'],showid=False)
+    form = SQLFORM(db.tb_cidade,request.args(0), fields=['nome'],showid=False)
     if form.process().accepted:
         response.flash ="Alterado"
 
     return dict(form= form)
->>>>>>> 0ee7ccade193f762074b4b3abfcd01fda42cfae4
