@@ -21,7 +21,7 @@ def cadastrar_professor():
 
 def cidades():
 
-    
+
     setCidades =db().select(db.tb_cidade.ALL)
 
     #Esconde os campos das regiões
@@ -56,6 +56,41 @@ def cidades():
 
 def alterar_cidade():
     form = SQLFORM(db.tb_cidade,request.args(0), fields=['nome'],showid=False)
+    if form.process().accepted:
+        response.flash ="Alterado"
+
+    return dict(form= form)
+
+
+def cadastrarmateria():
+
+    #Esconde os campos das regiões
+    db.tb_materia.id_materia.readable = False
+    db.tb_materia.ativo.readable = False
+
+    formMateria = SQLFORM(db.tb_materia, fields=['nome'],showid = False)
+    links = [lambda row: A('Editar',_href=URL("administrador","alterar_materia",args=[row.id_materia])),(, lambda row: response.flash = "Tem certeza que deseja excluir esse registro?")]
+
+    lista = SQLFORM.grid(db.tb_materia,fields=[db.tb_materia.nome],headers = {'tb_materia.nome':   'Materia'},
+                             searchable=False,
+                             sortable=True,
+                             deletable=True,
+                             editable=True,
+                             details=False,
+                             create=False,
+                             links=links,
+                             csv=False,
+                             formstyle="table3cols")
+
+    if formMateria.process().accepted:
+        response.flash = "Matéria criada"
+
+    teste = T('teste')
+
+    return dict(formMateria=formMateria, lista=lista)
+
+def alterar_materia():
+    form = SQLFORM(db.tb_materia,request.args(0), fields=['nome'],showid=False)
     if form.process().accepted:
         response.flash ="Alterado"
 

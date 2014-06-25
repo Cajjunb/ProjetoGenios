@@ -30,7 +30,18 @@ def cidades():
 
     formCidade = SQLFORM(db.tb_cidade, fields=['nome'],showid = False)
 
-   
+    links = [lambda row: A('Editar',_href=URL("administrador","alterar_cidade",args=[row.id_cidade]))]
+
+    lista = SQLFORM.grid(db.tb_cidade,fields=[db.tb_cidade.nome],headers = {'tb_cidade.nome':   'Região'},
+                             searchable=True,
+                             sortable=True,
+                             deletable=True,
+                             editable=True,
+                             details=False,
+                             create=False,
+                             links=links,
+                             csv=False,
+                             formstyle="table3cols")
 
     #for forms in setCidades:
         #lista.append( SQLFORM.grid(db.tb_cidade,searchable=True,sortable=False,deletable=False,editable=False,details=False,create=False,csv=False))
@@ -43,22 +54,24 @@ def cidades():
 
 
 
+def alterar_cidade():
+    form = SQLFORM(db.tb_cidade,request.args(0), fields=['nome'],showid=False)
+    if form.process().accepted:
+        response.flash ="Alterado"
+
+    return dict(form= form)
+
+
 def cadastrarmateria():
 
-   # if not session.perfil == 1:
-    #    redirect(URL('autenticacao','login'))
-
-     setCidades =db().select(db.tb_cidade.ALL)
-
     #Esconde os campos das regiões
-    db.tb_cidade.id_cidade.readable = False
-    db.tb_cidade.ativo.readable = False
+    db.tb_materia.id_materia.readable = False
+    db.tb_materia.ativo.readable = False
 
-    formCidade = SQLFORM(db.tb_cidade, fields=['nome'],showid = False)
+    formMateria = SQLFORM(db.tb_materia, fields=['nome'],showid = False)
+    links = [lambda row: A('Editar',_href=URL("administrador","alterar_materia",args=[row.id_materia]))]
 
-    links = [lambda row: A('Editar',_href=URL("administrador","alterar_cidade",args=[row.id_cidade]))]
-
-    lista = SQLFORM.grid(db.tb_cidade,fields=[db.tb_cidade.nome],headers = {'tb_cidade.nome':   'Região'},
+    lista = SQLFORM.grid(db.tb_materia,fields=[db.tb_materia.nome],headers = {'tb_materia.nome':   'Materia'},
                              searchable=False,
                              sortable=True,
                              deletable=True,
@@ -68,11 +81,16 @@ def cadastrarmateria():
                              links=links,
                              csv=False,
                              formstyle="table3cols")
-    return dict(lista=lista)
 
+    if formMateria.process().accepted:
+        response.flash = "Matéria criada"
 
-def alterar_cidade():
-    form = SQLFORM(db.tb_cidade,request.args(0), fields=['nome'],showid=False)
+    teste = T('teste')
+
+    return dict(formMateria=formMateria, lista=lista)
+
+def alterar_materia():
+    form = SQLFORM(db.tb_materia,request.args(0), fields=['nome'],showid=False)
     if form.process().accepted:
         response.flash ="Alterado"
 
