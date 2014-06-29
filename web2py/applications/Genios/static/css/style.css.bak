@@ -54,6 +54,12 @@ label{
 
 }
 
+.info-table{
+    width: 100%;
+    text-align: center;
+
+}
+
 
 #conteudo{
     padding: 20px;
@@ -229,5 +235,6 @@ margin-bottom: 50;
 .cidades #w2p_query_panel select:active,
 .cidades #w2p_query_panel select{
     display:none;
+    position:absolute
     
 }

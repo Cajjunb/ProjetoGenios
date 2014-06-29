@@ -54,6 +54,12 @@ label{
 
 }
 
+.info-table table{
+    width: 100%;
+    text-align: center;
+
+}
+
 
 #conteudo{
     padding: 20px;

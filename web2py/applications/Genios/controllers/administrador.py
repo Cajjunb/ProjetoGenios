@@ -38,6 +38,7 @@ def cidades():
                              deletable=True,
                              editable=True,
                              details=False,
+                             _class="info-table",
                              create=False,
                              links=links,
                              csv=False,
@@ -69,7 +70,7 @@ def cadastrarmateria():
     db.tb_materia.ativo.readable = False
 
     formMateria = SQLFORM(db.tb_materia, fields=['nome'],showid = False)
-    links = [lambda row: A('Editar',_href=URL("administrador","alterar_materia",args=[row.id_materia])),(, lambda row: response.flash = "Tem certeza que deseja excluir esse registro?")]
+    links = [lambda row: A('Editar',_href=URL("administrador","alterar_materia",args=[row.id_materia]))]#, lambda rowExcluir: response.flash = "Tem certeza que deseja excluir esse registro?"]
 
     lista = SQLFORM.grid(db.tb_materia,fields=[db.tb_materia.nome],headers = {'tb_materia.nome':   'Materia'},
                              searchable=False,
@@ -80,6 +81,7 @@ def cadastrarmateria():
                              create=False,
                              links=links,
                              csv=False,
+                             _class="info-table",
                              formstyle="table3cols")
 
     if formMateria.process().accepted:

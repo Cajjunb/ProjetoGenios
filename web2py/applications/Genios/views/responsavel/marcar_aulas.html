@@ -1,2 +1,10 @@
 {{extend 'layoutgenios.html'}}
-{{=table}}
+<h1>
+    Aulas
+</h1>
+
+{{ for item in grid:}}
+
+   {{=item}}
+
+{{pass}}
