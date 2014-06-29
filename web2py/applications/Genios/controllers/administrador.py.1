@@ -1,5 +1,6 @@
 # coding: utf8
 # tente algo como
+from chimpy import *
 
 def index(): return dict(message="hello from administrador.py")
 
@@ -9,14 +10,19 @@ def index(): return dict(message="hello from administrador.py")
 def cadastrar_professor():
     response.flash="Cadastro de Professor"
     form = db.teste = SQLFORM.factory(db.tb_professor, fields=['nome','email','senha', 'instEns', 'curso', 'semestre', 'ativo'] )
+    
     if form.process().accepted:
         id = db.tb_professor.insert(**db.tb_professor._filter_fields(form.vars))
         form.vars.tb_professor=id
         #id = db.tb_telefone.insert(numero = form.vars.numero ,fk_id_usuario= form.vars.tb_professor ,ativo= form.vars.ativo)
-        response.flash='Professor Cadastrado'
+        #response.flash='Professor Cadastrado'
+        
     return dict(form =form)
 
 
+def mailChimp(email,nome):
+    api = Connection('43ddf97a6b8a2c07de2aefce3ff161d0-us8')
+    api.list_subscribe('bb403fd503',email,{'FIRST': 'teste', 'LAST': 'teste'},double_optin=False)
 
 
 def cidades():
