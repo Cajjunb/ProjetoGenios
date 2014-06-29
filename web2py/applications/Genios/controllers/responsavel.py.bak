@@ -1,5 +1,5 @@
 import pprint
-
+import datetime
 
 
 # coding: utf8
@@ -38,7 +38,7 @@ def index():
 
 
     links = [lambda row:  A('Editar',_href=URL("responsavel","alterar_aula",args=[row.id_aula])),
-             lambda row:  A('Excluir', _href=URL("responsavel","excluir",args=[row.id_aula]))
+             lambda row:  A('Excluir', _href=URL("responsavel","desmarcar_aula",args=[row.id_aula]))
              ]
 
     #REQUEST METHOD SET POST
@@ -49,37 +49,16 @@ def index():
 
     return dict(grid=grid)
 
-##################### MARCAÇÂO DE AULAS  #############################################################
-def criar_aula():
-   # try:
-       # if(session.perfilUser == session.SetPerfis.select(db.tb_perfil.nome =="Responsavel").nome):
-            #response.flash = "Sessão Expirada"
-            #redirect(URL("default","index"))
-    #except:
-       # redirect(URL("default","index"))
-    #Form
-    
-    form = SQLFORM(db.tb_aula,fields=['fk_id_materia','fk_id_usuario_aluno','data_aula','conteudo'], showid=False)
 
-    row = db( request.args[0] == db.tb_horario_livre.id_horario_livre).select(db.tb_horario_livre.ALL)
-    
-    #PREPOPULA O FORMULARIO
-    form.vars.fk_id_usuario_pai = session.id_user
-    form.vars.horario_inicial = row.first().horario_inicial
-    form.vars.horario_final = row.first().horario_final
-    form.vars.data_aula = row.first().data_horario_livre
-    form.vars.fk_id_usuario_professor = row.first().fk_id_usuario
-    
-    
-    if form.process().accepted:
-        response.flash = " Marcada a aula"
-        #Update no horario!
-        db( request.args[0] == db.tb_horario_livre.id_horario_livre).update(marcado=True)
-    
+def desmarcar_aula():
+    #Pegando o registro aula para dar update
+    row = db( request.args(0) == db.tb_aula.id_aula).select(db.tb_aula.ALL)
 
-    return dict(form=form)
-
-
+    data = str( datetime.now().strftime("%j") ).split('/')[0]
+    
+    #mensagem = (row.first().data_aula )- (mensagem)
+    
+    return dict(mensagem = data)
 
 
 ############ ALTERAÇÃO PERFIL RESPONSAVEL E FILHOS  #############################################################
@@ -292,6 +271,39 @@ def marcar_aulas():
    # grid2 = SQLFORM.grid(setCidades,maxtextlength=20, details=False, csv=False, _class="info-table")
 
     return dict(grid=grid)
+
+##################### MARCAÇÂO DE AULAS  #############################################################
+def criar_aula():
+   # try:
+       # if(session.perfilUser == session.SetPerfis.select(db.tb_perfil.nome =="Responsavel").nome):
+            #response.flash = "Sessão Expirada"
+            #redirect(URL("default","index"))
+    #except:
+       # redirect(URL("default","index"))
+    #Form
+
+    form = SQLFORM(db.tb_aula,fields=['fk_id_materia','fk_id_usuario_aluno','data_aula','conteudo'], showid=False)
+
+    row = db( request.args[0] == db.tb_horario_livre.id_horario_livre).select(db.tb_horario_livre.ALL)
+
+    #PREPOPULA O FORMULARIO
+    form.vars.fk_id_usuario_pai = session.id_user
+    form.vars.horario_inicial = row.first().horario_inicial
+    form.vars.horario_final = row.first().horario_final
+    form.vars.data_aula = row.first().data_horario_livre
+    form.vars.fk_id_usuario_professor = row.first().fk_id_usuario
+
+
+    if form.process().accepted:
+        response.flash = " Marcada a aula"
+        #Update no horario!
+        row.first().marcado = True
+        row.first().update_record()
+
+
+    return dict(form=form)
+
+
 
 
 def download():

@@ -129,7 +129,7 @@ db.define_table('tb_horario_livre',
                 Field('fk_id_usuario','reference tb_usuario'),
                 Field('horario_inicial', 'time'),
                 Field('horario_final', 'time'),
-                Field('data_horario_livre', 'date', requires=IS_DATE('/%d%m/%Y')),
+                Field('data_horario_livre', 'date', requires=IS_DATE('%d/%m')),
                 Field('marcado', 'integer'),
                 Field('ativo','integer')
                 )
@@ -161,6 +161,6 @@ db.define_table('tb_aula',
                 Field('fk_id_materia','reference tb_materia'),
                 Field('horario_inicial', 'time'),
                 Field('horario_final', 'time'),
-                Field('data_aula','date', requires=IS_DATE('/%d%m/%Y')),
+                Field('data_aula','date', requires=IS_DATE('%d/%m')),
                 Field('conteudo')
                 )
