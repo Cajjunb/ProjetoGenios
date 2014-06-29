@@ -1,3 +1,4 @@
-{{extend 'layout.html'}}
+{{extend 'layoutgenios.html'}}
 <h2>Cadastrar Professor</h2>
 {{=form}}
+{{=response.toolbar()}}

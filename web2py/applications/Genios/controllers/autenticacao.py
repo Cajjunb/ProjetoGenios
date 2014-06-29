@@ -2,15 +2,9 @@
 
 def index():
     #Redireciona para a pagina inicial do usuario
-    
-    response.flash = session.perfilUser
+    switch(session.perfilUser)
 
-    if session.perfilUser == "Professor":
-        case_1()
-    elif session.perfiUser == "Responsavel":
-        case_2()
-    elif session.perfiUser == "Administrador":
-        case_3()    
+
 
 
     return dict(message="hello from autenticacao.py")
@@ -41,17 +35,15 @@ def login():
             perfil_current_user = db(db.tb_perfil.id_perfil == row('tb_usuario.fk_id_perfil')).select()
             session.perfilUser = perfil_current_user[0].nome
             #Armazena os Perfiis dos Usuarios
-            session.setPerfis = db().select(db.tb_perfil.ALL).as_list()
-            session.listPerfis = db().select(db.tb_perfil.ALL).as_list()
+            session.SetPerfis = db().select(db.tb_perfil.ALL)
             
             session.id_user = row('tb_usuario.id_usuario')
                        
+            
             response.flash =  session.SetPerfis[0](db.tb_perfil.nome)
             session.idpai = session.id_user
             
             index()
-            
-            
             
 
         else:
@@ -77,8 +69,8 @@ def case_2():
 def case_3():
     redirect(URL("professor","index"))
 def case_default():
-    redirect(URL('responsavel','index'))
+    redirect(URL('responsavel','alterar'))
 
 
 #Dicionario do Switchs
-switch_dict = {'Responsavel' : case_1, "Administrador" : case_2, 'Professor' : case_3}
+switch_dict = {'Responsavel' : case_1, "Professor" : case_2, 3 : case_3}

@@ -1,6 +1,0 @@
-{{extend 'layout.html'}}
-<h2>
-    Alteração de Aula
-</h2>
-
-{{=form}}

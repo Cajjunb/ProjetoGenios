@@ -1,5 +1,6 @@
 # coding: utf8
 # tente algo como
+from chimpy import *
 
 def index(): return dict(message="hello from administrador.py")
 
@@ -9,16 +10,24 @@ def index(): return dict(message="hello from administrador.py")
 def cadastrar_professor():
     response.flash="Cadastro de Professor"
     form = db.teste = SQLFORM.factory(db.tb_professor, fields=['nome','email','senha', 'instEns', 'curso', 'semestre', 'ativo'] )
+    
     if form.process().accepted:
         id = db.tb_professor.insert(**db.tb_professor._filter_fields(form.vars))
         form.vars.tb_professor=id
         #id = db.tb_telefone.insert(numero = form.vars.numero ,fk_id_usuario= form.vars.tb_professor ,ativo= form.vars.ativo)
-        response.flash='Professor Cadastrado'
+        #response.flash='Professor Cadastrado'
+        try:
+            mailChimp(form.vars.email,form.vars.nome)
+        except:
+            response.flash("Usuário já cadastrado!")
     return dict(form =form)
 
 
+def mailChimp(email,nome):
+    api = Connection('43ddf97a6b8a2c07de2aefce3ff161d0-us8')
+    api.list_subscribe('bb403fd503',email,{'FIRST': nome, 'LAST': 'teste'},double_optin=False)
 
-
+    return
 def cidades():
 
 
@@ -38,7 +47,6 @@ def cidades():
                              deletable=True,
                              editable=True,
                              details=False,
-                             _class="info-table",
                              create=False,
                              links=links,
                              csv=False,
@@ -70,7 +78,7 @@ def cadastrarmateria():
     db.tb_materia.ativo.readable = False
 
     formMateria = SQLFORM(db.tb_materia, fields=['nome'],showid = False)
-    links = [lambda row: A('Editar',_href=URL("administrador","alterar_materia",args=[row.id_materia]))]#, lambda rowExcluir: response.flash = "Tem certeza que deseja excluir esse registro?"]
+    links = [lambda row: A('Editar',_href=URL("administrador","alterar_materia",args=[row.id_materia]))]
 
     lista = SQLFORM.grid(db.tb_materia,fields=[db.tb_materia.nome],headers = {'tb_materia.nome':   'Materia'},
                              searchable=False,
@@ -81,7 +89,6 @@ def cadastrarmateria():
                              create=False,
                              links=links,
                              csv=False,
-                             _class="info-table",
                              formstyle="table3cols")
 
     if formMateria.process().accepted:
