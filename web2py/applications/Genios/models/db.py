@@ -47,6 +47,8 @@ db.define_table('tb_usuario',
     Field('ano_escolar','integer'),
 	Field('colegio','string',length=70),
     Field('ativo','boolean'),
+    Field('foto_nome', 'upload', uploadfield='foto'),
+    Field('foto', 'blob'),
     redefine=True,
     format = '%(nome)s')
 

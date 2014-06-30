@@ -161,6 +161,6 @@ db.define_table('tb_aula',
                 Field('fk_id_materia','reference tb_materia'),
                 Field('horario_inicial', 'time'),
                 Field('horario_final', 'time'),
-                Field('data_aula','date', requires=IS_DATE('/%d%m/%Y')),
+                Field('data_aula','date', requires=IS_DATE('%d/%m')),
                 Field('conteudo')
                 )

@@ -3,7 +3,7 @@
 
 #IMPORTS
 from gluon.custom_import import track_changes; track_changes(True)
-from  applications.Genios.modules.chimpy import *
+from chimpy
 #IMPORTS
 
 
@@ -66,10 +66,10 @@ def criarUsuario():
     form.vars.fk_id_perfil = id_perfil
     if form.process().accepted:
         response.flash = "Usuário salvo com sucesso"
-        mailChimp(form.vars.email, form.vars.nome)
-
+        mailchimp(form.vars.email, form.vars.nome)
+        
         #enviar email para confirmação
-
+    
     response.flash = request.vars
     return dict(formulario = form)
 

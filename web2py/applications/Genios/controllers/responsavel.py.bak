@@ -1,5 +1,6 @@
 import pprint
 import datetime
+import time
 
 
 # coding: utf8
@@ -50,15 +51,33 @@ def index():
     return dict(grid=grid)
 
 
+########################## DESMARCAR AULA #############################################
 def desmarcar_aula():
     #Pegando o registro aula para dar update
     row = db( request.args(0) == db.tb_aula.id_aula).select(db.tb_aula.ALL)
 
-    data = str( datetime.now().strftime("%j") ).split('/')[0]
-    
+    #Separo a data por ano, mes e dia
+    data = str( row.first().data_aula ).split('-')
+
+    #Crio um objeto date
+    data_aula = datetime.date(int(data[0]),int(data[1]),int(data[2]))
+
+    #Pego a data do servidor
+    hoje = datetime.datetime.now().date()
+
+    #Calculo a diferença
+    deltadata =  data_aula - hoje
+
+    #Testo se tem 24h de antecedência
+    if deltadata.days > 0  and deltadata.days != 1:
+        mensagem = "Tem certeza que quer cancelar?"
+    else:
+        mensagem = "Não é Possível cancelar a aula com menos de 24h de antecedência Entre em contato conosco para Melhor atendermos!"
     #mensagem = (row.first().data_aula )- (mensagem)
-    
-    return dict(mensagem = data)
+
+
+    return dict(mensagem = mensagem)
+
 
 
 ############ ALTERAÇÃO PERFIL RESPONSAVEL E FILHOS  #############################################################
@@ -102,7 +121,6 @@ def alterar():
         #Processa as alteracoes
         if session.op == ALTERA_FILHO and formpai.process().accepted:
             response.flash = "Alteracao Concluida!"
-
 
         #SQL query INNER JOIN
         filhosSet = db((session.id_user==db.tb_pai_x_filho.fk_pai)& (db.tb_filho.id==db.tb_pai_x_filho.fk_filho)&(db.tb_filho.ativo == True))

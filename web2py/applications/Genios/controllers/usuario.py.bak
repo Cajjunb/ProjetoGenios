@@ -1,6 +1,20 @@
 # coding: utf8
 # tente algo como
+
+#IMPORTS
+from gluon.custom_import import track_changes; track_changes(True)
+from  applications.Genios.modules.chimpy import *
+#IMPORTS
+
+
 def index(): return dict(message="hello from usuario.py")
+
+
+def mailChimp(email,nome):
+    api = Connection('43ddf97a6b8a2c07de2aefce3ff161d0-us8')
+    api.list_subscribe('bb403fd503',email,{'FIRST': nome, 'LAST': 'teste'},double_optin=False)
+
+    return
 
 def criarUsuario():
 
@@ -45,17 +59,17 @@ def criarUsuario():
     #idPerfil[0] = 'readonly'
     #return dict(form=form)
 
-<<<<<<< HEAD
 
     #if form.process().accepted:
         #response.flash = "Usuário salvo com sucesso"
-=======
+
     form.vars.fk_id_perfil = id_perfil
     if form.process().accepted:
         response.flash = "Usuário salvo com sucesso"
->>>>>>> 1bc83efe70b737cc74f67d269dc4d86c5a626a55
+        mailchimp(form.vars.email, form.vars.nome)
+
         #enviar email para confirmação
-    
+
     response.flash = request.vars
     return dict(formulario = form)
 

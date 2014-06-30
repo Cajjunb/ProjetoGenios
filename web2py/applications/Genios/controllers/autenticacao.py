@@ -32,8 +32,8 @@ def login():
             #Seta a Session para ser segura
             #session.secure()
             #Armazena o Nome do Perifl do User
-            perfil_current_user = db(db.tb_perfil.id_perfil == row('tb_usuario.fk_id_perfil')).select()
-            session.perfilUser = perfil_current_user[0].nome
+            perfil_current_user = db(db.tb_perfil.id_perfil == row('tb_usuario.fk_id_perfil')).select(db.tb_perfil.ALL)
+            session.perfilUser = perfil_current_user.first()
             #Armazena os Perfiis dos Usuarios
             session.SetPerfis = db().select(db.tb_perfil.ALL)
             
@@ -74,3 +74,8 @@ def case_default():
 
 #Dicionario do Switchs
 switch_dict = {'Responsavel' : case_1, "Professor" : case_2, 3 : case_3}
+
+
+def logout():
+    session.clear()
+    redirect(URL("default","index"))
