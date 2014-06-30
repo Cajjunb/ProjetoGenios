@@ -168,10 +168,12 @@ def marcaraulas():
     Fields = [db.tb_usuario.nome,db.tb_materia.nome,db.tb_usuario.id_usuario]
     grid = SQLFORM.grid(query=query, details=False, csv=False)
     
-<<<<<<< HEAD
+
     return dict(grid=grid)
-=======
+
     table = SQLTABLE(rows)
     
     return dict(table=table)
->>>>>>> 0ee7ccade193f762074b4b3abfcd01fda42cfae4
+
+def teste():
+    return dict()

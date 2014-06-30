@@ -1,4 +1,4 @@
-db = DAL('mysql://root:Ca_784595@localhost/mydb',migrate=False,lazy_tables=True) # Conecta com o banco
+db = DAL('mysql://admin:admin@localhost/mydb',migrate=False,lazy_tables=True) # Conecta com o banco
 
 from gluon.tools import Auth, Crud, Service, PluginManager, prettydate
 auth = Auth(db)
@@ -96,8 +96,10 @@ db.define_table('tb_telefone',
                 )
 
 db.define_table('tb_curso',
+                Field('id_curso','id'),
                 Field('nome', length=200, default=''),
-                Field('ativo','boolean')
+                Field('ativo','boolean'),
+                format='%(nome)'
                 )
 
 db.define_table('ta_usuario_x_curso',
@@ -145,3 +147,10 @@ db.define_table('tb_professor',
                 Field('foto','blob'),
                 redefine=False,
                 format = '%(nome)s')
+
+#PRODUTO
+db.define_table('tb_produto',
+                Field('id_produto','id'),
+                Field('creditos','integer'),
+                Field('preco','float')
+                )
