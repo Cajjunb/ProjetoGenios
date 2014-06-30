@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # this file is released under public domain and you can use without limitations
-
+import sys
 #########################################################################
 ## Customize your APP title, subtitle and menus here
 #########################################################################
@@ -20,10 +20,30 @@ response.google_analytics_id = None
 ## this is the main application menu add/remove items as required
 #########################################################################
 
-response.menu = [
-    (T('Home'), False, URL('default', 'index'), []),
-    (T('Responsavel'),False,URL('responsavel','index'), []),
-    (T('Administrador'), False, URL('administrador', 'cadastrar_professor'), []),
-    (T('Cidades'), False, URL('administrador', 'cidades'), []),
-    (T('Aulas'), False, URL('responsavel', 'marcaraulas'), []),
-]
+#TESTA SE O PERFIL É O CORRETO E CRIA O MENU CORRETO
+try:
+    if filter( lambda a: a.id_perfil == session.perfilUser.id_perfil and  a.nome == "Responsavel", session.SetPerfis):
+        response.menu = [
+            (T('Home'), False, URL('responsavel', 'index'), []),
+            (T('Perfil'),False,URL('responsavel','alterar'), []),
+            (T('Aulas'), False, URL('responsavel', 'marcar_aulas'), []),
+            (T('Logout'), False, URL('autenticacao', 'logout'), [])
+
+        ]
+    elif filter( lambda a: a.id_perfil == session.perfilUser.id_perfil and  a.nome == "Professor", session.SetPerfis):
+        response.menu = [
+            (T('Home'), False, URL('professor', 'index'), []),
+            (T('Responsavel'),False,URL('professor','alterar')),
+            (T('Logout'), False, URL('autenticacao', 'logout'), [])
+        ]
+    elif filter( lambda a: a.id_perfil == session.perfilUser.id_perfil and  a.nome == "Administrador", session.SetPerfis):
+        response.menu = [
+            (T('Home'), False, URL('administrador', 'index'), []),
+            (T('Cadastro de Professores'),False,URL('administradorl','cadastrar_professor'), []),
+            (T('Regiões'), False, URL('administrador', 'cidades'), []),
+            (T('Matérias'), False, URL('administrador', 'cadastrarmateria'), []),
+            (T('Logout'), False, URL('autenticacao', 'logout'), [])
+
+        ]
+except:
+    response.flash = "Faça o Login!"

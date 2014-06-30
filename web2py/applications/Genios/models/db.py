@@ -1,4 +1,4 @@
-db = DAL('mysql://admin:admin@localhost/mydb',migrate=False,lazy_tables=True) # Conecta com o banco
+db = DAL('mysql://root:Ca_784595@localhost/mydb',migrate=False,lazy_tables=True) # Conecta com o banco
 
 from gluon.tools import Auth, Crud, Service, PluginManager, prettydate
 auth = Auth(db)
@@ -11,7 +11,8 @@ db.define_table('tb_filho',
                 Field('foto_arquivo','blob'),Field('ativo','boolean'),
                 Field('nome',requires=IS_NOT_EMPTY()),
                 Field('colegio',requires=IS_NOT_EMPTY()),
-                Field('ano','integer'))
+                Field('ano','integer'),
+                format='%(nome)s')
 
 db.define_table('tb_pai_x_filho',Field('fk_pai','reference tb_usuario'),Field('fk_filho','reference tb_filho') )
 
@@ -46,6 +47,8 @@ db.define_table('tb_usuario',
     Field('ano_escolar','integer'),
 	Field('colegio','string',length=70),
     Field('ativo','boolean'),
+    Field('foto_nome', 'upload', uploadfield='foto'),
+    Field('foto', 'blob'),
     redefine=True,
     format = '%(nome)s')
 
@@ -112,7 +115,8 @@ db.define_table('ta_usuario_x_curso',
 db.define_table('tb_materia',
                 Field('id_materia','id'),
                 Field('nome', length=200, default=''),
-                Field('ativo','boolean')
+                Field('ativo','boolean'),
+                format='%(nome)s'
                 )
 
 
@@ -125,11 +129,13 @@ db.define_table('ta_usuario_x_materia',
 
 # HORARIO
 db.define_table('tb_horario_livre',
+                Field('id_horario_livre','id'),
                 Field('fk_id_usuario','reference tb_usuario'),
                 Field('horario_inicial', 'time'),
                 Field('horario_final', 'time'),
-                Field('data_horario_livre', 'date', requires=IS_DATE('%m/%d/%Y')),
-                Field('ativo','boolean')
+                Field('data_horario_livre', 'date', requires=IS_DATE('%d/%m')),
+                Field('marcado', 'integer'),
+                Field('ativo','integer')
                 )
 
 # PROFESSOR
@@ -147,6 +153,18 @@ db.define_table('tb_professor',
                 Field('foto','blob'),
                 redefine=False,
                 format = '%(nome)s')
+
+# AULAS
+db.define_table('tb_aula',
+                Field('id_aula','id'),
+                Field('fk_id_usuario_pai','reference tb_usuario'),
+                Field('fk_id_usuario_aluno','reference tb_filho'),
+                Field('fk_id_usuario_professor','reference tb_usuario'),
+                Field('fk_id_materia','reference tb_materia'),
+                Field('horario_inicial', 'time'),
+                Field('horario_final', 'time'),
+                Field('data_aula','date', requires=IS_DATE('%d/%m')),
+                Field('conteudo')
 
 #PRODUTO
 db.define_table('tb_produto',

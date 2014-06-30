@@ -1,0 +1,8 @@
+{{extend 'layoutgenios.html'}}
+
+<div>
+    <h2>
+        {{ =mensagem  }}
+        {{ =mensagem3 }}        
+    </h2>
+</div>
