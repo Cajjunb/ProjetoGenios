@@ -103,8 +103,8 @@ db.define_table('tb_curso',
                 )
 
 db.define_table('ta_usuario_x_curso',
-                Field('fk_id_usuario','reference tb_usuario'),
-                Field('fk_id_curso','reference tb_curso'),
+                Field('id_usuario','reference tb_usuario'),
+                Field('id_curso','reference tb_curso'),
                 Field('semestre', 'integer'),
                 Field('ativo','boolean')
                 )

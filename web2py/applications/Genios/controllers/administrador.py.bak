@@ -9,16 +9,18 @@ def index(): return dict(message="hello from administrador.py")
 
 def cadastrar_professor():
     response.flash="Cadastro de Professor"
-    form = db.teste = SQLFORM.factory(db.tb_usuario,db.ta_usuario_x_curso,fields=['nome','email','senha','ano_escolar','colegio','fk_id_curso','semestre'])
+    form = db.teste = SQLFORM.factory(db.tb_usuario,db.ta_usuario_x_curso,fields=['nome','email','senha','ano_escolar','colegio','id_curso','semestre'])
     form.vars.fk_id_perfil= 4
     
     
     if form.process().accepted:
-        id = db.tb_professor.insert(**db.tb_professor._filter_fields(form.vars))
+        id = db.tb_usuario.insert(**db.tb_usuario._filter_fields(form.vars))
+        db.ta_usuario_x_curso.insert(id_usuario=id, id_curso = form.vars.id_curso)
+
         response.flash=(form.vars)
         form.vars.fk_id_usuario = id
-        form.vars.ativo=true
-        form.vars.tb_professor=id
+        form.vars.ativo=True
+        #form.vars.tb_professor=id
         #id = db.tb_telefone.insert(numero = form.vars.numero ,fk_id_usuario= form.vars.tb_professor ,ativo= form.vars.ativo)
         response.flash='Professor Cadastrado'
         try:
