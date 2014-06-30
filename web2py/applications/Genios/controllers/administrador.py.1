@@ -9,22 +9,28 @@ def index(): return dict(message="hello from administrador.py")
 
 def cadastrar_professor():
     response.flash="Cadastro de Professor"
-    form = db.teste = SQLFORM.factory(db.tb_professor, fields=['nome','email','senha', 'instEns', 'curso', 'semestre', 'ativo'] )
-    
-    if form.process().accepted:
-        id = db.tb_professor.insert(**db.tb_professor._filter_fields(form.vars))
-        form.vars.tb_professor=id
+    form = db.teste = SQLFORM.factory(db.tb_usuario,db.ta_usuario_x_curso,fields=['nome','email','senha','ano_escolar','colegio','fk_id_curso','semestre'])
+    form.vars.fk_id_perfil= db(db.tb_perfil.nome =='Responsavel').select(db.tb_perfil.id_perfil).first().id_perfil
+   # response.flash = (form.vars.fk_id_perfil)
+    #if form.process().accepted:
+     #   id = db.tb_professor.insert(**db.tb_professor._filter_fields(form.vars))
+      #  form.vars.fk_id_usuario = id
+       # form.vars.ativo=true
+       # form.vars.tb_professor=id
         #id = db.tb_telefone.insert(numero = form.vars.numero ,fk_id_usuario= form.vars.tb_professor ,ativo= form.vars.ativo)
         #response.flash='Professor Cadastrado'
-        
+    #try:
+            #mailChimp(form.vars.email,form.vars.nome)
+    #except:
+    #    response.flash=("Usuário já cadastrado!")
     return dict(form =form)
 
 
 def mailChimp(email,nome):
     api = Connection('43ddf97a6b8a2c07de2aefce3ff161d0-us8')
-    api.list_subscribe('bb403fd503',email,{'FIRST': 'teste', 'LAST': 'teste'},double_optin=False)
+    api.list_subscribe('bb403fd503',email,{'FIRST': nome, 'LAST': 'teste'},double_optin=False)
 
-
+    return
 def cidades():
 
 
@@ -101,3 +107,19 @@ def alterar_materia():
         response.flash ="Alterado"
 
     return dict(form= form)
+
+def cadastro_produto():
+    form = SQLFORM(db.tb_produto,request.args(0),showid=False)
+    if form.process().accepted:
+        response.flash = "Produto cadastrado com sucesso!"
+
+    grid = SQLFORM.grid(db.tb_produto,fields=[db.tb_produto.creditos,db.tb_produto.preco],headers = {'tb_produto.creditos':   'Creditos'},
+                             searchable=False,
+                             sortable=True,
+                             deletable=True,
+                             editable=True,
+                             details=False,
+                             create=False,
+                             csv=False,
+                             formstyle="table3cols")
+    return dict(form=form, grid=grid)

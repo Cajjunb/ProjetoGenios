@@ -1,4 +1,4 @@
-db = DAL('mysql://root:Ca_784595@localhost/mydb',migrate=False,lazy_tables=True) # Conecta com o banco
+db = DAL('mysql://admin:admin@localhost/mydb',migrate=False,lazy_tables=True) # Conecta com o banco
 
 from gluon.tools import Auth, Crud, Service, PluginManager, prettydate
 auth = Auth(db)
@@ -6,17 +6,14 @@ crud, service, plugins = Crud(db), Service(), PluginManager()
 
 
 
-db.define_table('pai',Field('nome'),Field('ativo','boolean'),Field('nome','text'),format = '%(nome)s')
-
-db.define_table('filho',
-                Field('fk_pai', 'reference pai'),
+db.define_table('tb_filho',
                 Field('foto','upload', uploadfield='foto_arquivo'),
                 Field('foto_arquivo','blob'),Field('ativo','boolean'),
                 Field('nome',requires=IS_NOT_EMPTY()),
                 Field('colegio',requires=IS_NOT_EMPTY()),
                 Field('ano','integer'))
 
-db.define_table('pai_x_filho',Field('fk_pai','reference tb_usuario'),Field('fk_filho','reference filho') )
+db.define_table('tb_pai_x_filho',Field('fk_pai','reference tb_usuario'),Field('fk_filho','reference tb_filho') )
 
 db.define_table('tb_perfil',
                 Field('id_perfil','id'),
@@ -46,8 +43,11 @@ db.define_table('tb_usuario',
 	Field('nome','string',length=80,required=True),
 	Field('email','string',required=True,length=200),
 	Field('senha','password',required=True,length=128),
-	Field('numero_filhos','int'),Field('ano_escolar','int'),
-	Field('colegio','string',length=70))
+    Field('ano_escolar','integer'),
+	Field('colegio','string',length=70),
+    Field('ativo','boolean'),
+    redefine=True,
+    format = '%(nome)s')
 
 
 
@@ -72,13 +72,14 @@ db.define_table('tb_estado',
                 )
 
 db.define_table('tb_cidade',
-                Field('fk_id_estado','reference tb_estado'),
                 Field('id_cidade','id'),
                 Field('nome', length=128, default=''),
-                Field('ativo','boolean')
+                Field('ativo','boolean'),
+                format= '%(nome)s'
                 )
 
 db.define_table('tb_endereco',
+                Field('id_endereco','id'),
                 Field('fk_id_cidade','reference tb_cidade'),
                 Field('fk_id_usuario','reference tb_usuario'),
                 Field('endereco', length=200, default=''),
@@ -107,13 +108,16 @@ db.define_table('ta_usuario_x_curso',
                 )
 
 db.define_table('tb_materia',
+                Field('id_materia','id'),
                 Field('nome', length=200, default=''),
                 Field('ativo','boolean')
                 )
 
+
 db.define_table('ta_usuario_x_materia',
-                Field('fk_id_usuario','reference tb_usuario'),
-                Field('fk_id_materia','reference tb_materia'),
+                Field('id','id'),
+                Field('id_usuario','reference tb_usuario'),
+                Field('id_materia','reference tb_materia'),
                 Field('ativo','boolean')
                 )
 
@@ -141,3 +145,9 @@ db.define_table('tb_professor',
                 Field('foto','blob'),
                 redefine=False,
                 format = '%(nome)s')
+
+#PRODUTO
+db.define_table('tb_produto',
+                Field('id_produto','id')
+                Field('creditos','integer')
+                )

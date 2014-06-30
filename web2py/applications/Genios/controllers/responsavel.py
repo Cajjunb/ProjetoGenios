@@ -326,3 +326,12 @@ def criar_aula():
 
 def download():
     return response.render()
+
+
+def download2():
+    table = SQLTABLE(rows)
+
+    return dict(table=table)
+
+def teste():
+    return dict(paypal_id='leandroferreira@cjr.org.br')

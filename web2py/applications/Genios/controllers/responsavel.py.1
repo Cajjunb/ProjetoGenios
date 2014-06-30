@@ -61,22 +61,22 @@ def desmarcar_aula():
 
     #Crio um objeto date
     data_aula = datetime.date(int(data[0]),int(data[1]),int(data[2]))
-    
+
     #Pego a data do servidor
     hoje = datetime.datetime.now().date()
-  
+
     #Calculo a diferença
-    deltadata =  data_aula - hoje 
-    
+    deltadata =  data_aula - hoje
+
     #Testo se tem 24h de antecedência
-    if deltadata > 0  and deltadata != 1:
+    if deltadata.days > 0  and deltadata.days != 1:
         mensagem = "Tem certeza que quer cancelar?"
-    else
-        mensagem = "Não é Possível cancelar a aula com menos de 24h de antecedência <br> Entre em contato conosco para Melhor atendermos!"
+    else:
+        mensagem = "Não é Possível cancelar a aula com menos de 24h de antecedência Entre em contato conosco para Melhor atendermos!"
     #mensagem = (row.first().data_aula )- (mensagem)
 
 
-    return dict(mensagem = mensagem, mensagem2 = mensagem2, mensagem3 = data_aula)
+    return dict(mensagem = mensagem)
 
 
 
@@ -326,3 +326,13 @@ def criar_aula():
 
 def download():
     return response.render()
+
+
+def download2():
+    table = SQLTABLE(rows)
+    
+    return dict(table=table)
+
+def teste():
+    return dict(paypal_id='leandroferreira@cjr.org.br')
+>>>>>>> e749fafae097723e68ade844e3ca31c0e16eedf3
