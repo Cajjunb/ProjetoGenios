@@ -2,7 +2,6 @@ import pprint
 import datetime
 import time
 
-
 # coding: utf8
 # try something like
 # ENUMERATIONS
@@ -17,12 +16,11 @@ NULLOP = 4
 
 def index():
 
-    if not session.id_user:
-        redirect(URL("default","index"))
-        response.flash = "Sessão Expirada, Logue-se novamente!"
-
+    #Faz a autenticacao
+    teste_autenticacao()
+    
     query = db.tb_usuario.id_usuario == db.ta_usuario_x_materia.id_usuario and db.tb_materia.id_materia == db.ta_usuario_x_materia.id_materia
-    query2= db.tb_aula.fk_id_usuario_pai == session.id_user
+    query2= db.tb_aula.fk_id_usuario_pai == session.id_user and db.tb_aula.ativo == True
 
     #Headers para o GRID
     headers = {'tb_aula.fk_id_usuario_aluno':"Aluno",'tb_aula.fk_id_materia':"Materia",'tb_aula.conteudo':"Conteúdo",'tb_aula.data_aula':"Data"
@@ -38,9 +36,11 @@ def index():
     lengths={'tb_aula.fk_id_usuario_aluno':20,'tb_aula.fk_id_materia':30,'tb_aula.conteudo':30,'tb_aula.data_aula':20}
 
 
-    links = [lambda row:  A('Editar',_href=URL("responsavel","alterar_aula",args=[row.id_aula])),
-             lambda row:  A('Excluir', _href=URL("responsavel","desmarcar_aula",args=[row.id_aula]))
+    links = [lambda row:  A('Editar',_href=URL("responsavel","alterar_aula",args=[row]) ),
+             lambda row:   A('Excluir', _href=URL("responsavel","desmarcar_aula",args=[row.id_aula]))
              ]
+
+    link = [lambda row: operator.setitem(row.id_aula, ['id_aula'], request.post_vars)]
 
     #REQUEST METHOD SET POST
     request.env.request_method = 'POST'
@@ -53,6 +53,9 @@ def index():
 
 ########################## DESMARCAR AULA #############################################
 def desmarcar_aula():
+    #Faz a autenticacao 
+    teste_autenticacao()
+    
     #Pegando o registro aula para dar update
     row = db( request.args(0) == db.tb_aula.id_aula).select(db.tb_aula.ALL)
 
@@ -79,12 +82,21 @@ def desmarcar_aula():
     return dict(mensagem = mensagem)
 
 
+################### ALTERAÇÃO DE AULAS #########################################################################
+#def alterar_aula():
+
+'''    professores = db( db.tb_aula.id_aula == request.args(0) and
+       (db.tb_aula.hora_inicial >=  db.tb_horario_livre.hora_inicial & db.tb_aula.hora_final <= db.tb_horario_livre.hora_final )
+       ).select(db.tb_aula.hora_inicial, db.tb_aula.hora_final)
+'''
+#    return dict(professores = profesores)
+
 
 ############ ALTERAÇÃO PERFIL RESPONSAVEL E FILHOS  #############################################################
 def alterar():
-    # Session com a info do pai foi setada?
-    if not session.id_user : # Falta uma condicao aqui! if not session.op
-         redirect(URL('responsavel','index'))
+    
+    #Faz a autenticacao
+    teste_autenticacao()
 
 
     #Dando um Join tb_usuario e Tb_endereco
@@ -211,9 +223,8 @@ def incluifilho():
 #############MARCAÇÃO DE AULAS  #############################################################
 def marcar_aulas():
 
-    if not session.id_user:
-        redirect(URL("default","index"))
-        response.flash = "Sessão Expirada, Logue-se novamente!"
+    #Faz a autenticacao
+    teste_autenticacao()
 
     #Testa se o Endereço esta na session
     try:
@@ -292,14 +303,10 @@ def marcar_aulas():
 
 ##################### MARCAÇÂO DE AULAS  #############################################################
 def criar_aula():
-   # try:
-       # if(session.perfilUser == session.SetPerfis.select(db.tb_perfil.nome =="Responsavel").nome):
-            #response.flash = "Sessão Expirada"
-            #redirect(URL("default","index"))
-    #except:
-       # redirect(URL("default","index"))
+    #Faz a autenticacao
+    teste_autenticacao()
+    
     #Form
-
     form = SQLFORM(db.tb_aula,fields=['fk_id_materia','fk_id_usuario_aluno','data_aula','conteudo'], showid=False)
 
     row = db( request.args[0] == db.tb_horario_livre.id_horario_livre).select(db.tb_horario_livre.ALL)
@@ -310,7 +317,7 @@ def criar_aula():
     form.vars.horario_final = row.first().horario_final
     form.vars.data_aula = row.first().data_horario_livre
     form.vars.fk_id_usuario_professor = row.first().fk_id_usuario
-
+    form.vars.fk_id_cidade = session.cidadeUsuario
 
     if form.process().accepted:
         response.flash = " Marcada a aula"
@@ -335,4 +342,19 @@ def download2():
 
 def teste():
     return dict(paypal_id='leandroferreira@cjr.org.br')
->>>>>>> e749fafae097723e68ade844e3ca31c0e16eedf3
+
+############################# AUTENTICACAO USUARIO ##################################################
+def teste_autenticacao():
+    try:
+        if filter( lambda a: a.id_perfil == session.perfilUser.id_perfil and  a.nome == "Responsavel", session.SetPerfis):
+            if not session.id_user:
+                response.flash = "Sessão Expirada, Logue-se novamente!"
+                redirect(URL("default","index"))
+            else:
+                return True
+        else:
+            response.flash = "Voce não tem permissão para acessar essa area!"
+            redirect(URL("default"))
+    except:
+        response.flash = "Erro na sua autenticação! Logue-se novamente!"
+        redirect(URL("default"))

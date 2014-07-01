@@ -1,14 +1,12 @@
 # coding: utf8
-
+#
 def index():
     #Redireciona para a pagina inicial do usuario
     switch(session.perfilUser)
 
-
-
-
     return dict(message="hello from autenticacao.py")
 
+############## FUNCIONALIDADE DE LOGIN######################################
 def login():
 
     form=FORM('Login:', INPUT(_name='email'), 'Senha', INPUT(_name="senha",_type="password"), INPUT(_type='submit'))
@@ -75,7 +73,7 @@ def case_default():
 #Dicionario do Switchs
 switch_dict = {'Responsavel' : case_1, "Professor" : case_2, 3 : case_3}
 
-
+############## FUNCIONALIDADE DE LOGOUT######################################
 def logout():
     session.clear()
     redirect(URL("default","index"))

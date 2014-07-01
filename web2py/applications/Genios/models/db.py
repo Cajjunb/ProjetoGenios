@@ -47,12 +47,12 @@ db.define_table('tb_usuario',
     Field('ano_escolar','integer'),
 	Field('colegio','string',length=70),
     Field('ativo','boolean'),
-    Field('foto_nome', 'upload', uploadfield='foto'),
-    Field('foto', 'blob'),
     redefine=True,
     format = '%(nome)s')
 
 
+#    Field('foto_nome', 'upload', uploadfield='foto'),
+#    Field('foto', 'blob'),
 
 db.define_table('tb_operacao',
                 Field('nome', length=128, default=''),
@@ -161,11 +161,13 @@ db.define_table('tb_aula',
                 Field('fk_id_usuario_aluno','reference tb_filho'),
                 Field('fk_id_usuario_professor','reference tb_usuario'),
                 Field('fk_id_materia','reference tb_materia'),
+                Field('fk_id_horario_livre','reference tb_horario_livre'),
                 Field('horario_inicial', 'time'),
                 Field('horario_final', 'time'),
                 Field('data_aula','date', requires=IS_DATE('%d/%m')),
-                Field('conteudo')
-
+                Field('conteudo'),
+                Field('ativo',"boolean")
+                )
 #PRODUTO
 db.define_table('tb_produto',
                 Field('id_produto','id'),

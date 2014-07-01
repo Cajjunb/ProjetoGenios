@@ -1,39 +1,101 @@
 # coding: utf8
 # tente algo como
-from chimpy import *
+from  applications.Genios.modules.chimpy import *
+import sys
+import datetime
+import time
 
-def index(): return dict(message="hello from administrador.py")
+def index():
+    query =( db.tb_usuario.id_usuario > 0 and db.tb_usuario.ativo == True)
+    #try:
+    #    cache.ram
+    #except:
+    #    cache.ram = SQLFORM.grid(query)
+    #Pega as aulas marcadas
+    query2 = db.tb_aula
 
-    #pagina para cadastrar professor
+    aulas = db(db.tb_aula).select(db.tb_aula.id_aula,db.tb_aula.fk_id_horario_livre,db.tb_aula.data_aula)
+
+    hoje = datetime.datetime.now().date()
+
+    aulas_desatualizadas = filter( lambda a: a.data_aula >= hoje  ,aulas)
+
+    '''grid = SQLFORM.grid(query2,
+                        sortable=True,
+                        deletable=True,
+                        editable=True,
+                        details=False,
+                        _class="info-table",
+                        create=False,
+                        csv=False,
+                        formstyle="table3cols")
+'''
+    response.flash = aulas_desatualizadas
+    
+    return dict(mensagem=aulas_desatualizadas)
 
 
+def desmarca_aulas():
+    query =( db.tb_usuario.id_usuario > 0 and db.tb_usuario.ativo == True)
+    #try:
+    #    cache.ram
+    #except:
+    #    cache.ram = SQLFORM.grid(query)
+    #Pega as aulas marcadas
+    query2 = db.tb_aula
+
+    aulas = db(db.tb_aula).select(db.tb_aula.id_aula,db.tb_aula.fk_id_horario_livre,db.tb_aula.data_aula)
+
+    hoje = datetime.datetime.now().date()
+
+    aulas_desatualizadas = filter( lambda a: a.data_aula >= hoje  ,aulas)
+
+    '''grid = SQLFORM.grid(query2,
+                        sortable=True,
+                        deletable=True,
+                        editable=True,
+                        details=False,
+                        _class="info-table",
+                        create=False,
+                        csv=False,
+                        formstyle="table3cols")
+'''
+    response.flash = aulas_desatualizadas
+    
+    return dict(mensagem=aulas_desatualizadas)
+
+
+
+#pagina para cadastrar professor
 def cadastrar_professor():
     response.flash="Cadastro de Professor"
-    form = db.teste = SQLFORM.factory(db.tb_usuario,db.ta_usuario_x_curso,fields=['nome','email','senha','ano_escolar','colegio','fk_id_curso','semestre'])
-    form.vars.fk_id_perfil= db(db.tb_perfil.nome =='Responsavel').select(db.tb_perfil.id_perfil).first().id_perfil
-   # response.flash = (form.vars.fk_id_perfil)
-    #if form.process().accepted:
-     #   id = db.tb_professor.insert(**db.tb_professor._filter_fields(form.vars))
-      #  form.vars.fk_id_usuario = id
-       # form.vars.ativo=true
-       # form.vars.tb_professor=id
+    form = db.teste = SQLFORM.factory(db.tb_usuario,db.ta_usuario_x_curso,fields=['nome','fk_id_perfil','email','senha','ano_escolar','colegio','fk_id_curso','semestre'])
+    #form.vars.fk_id_perfil= 4
+
+
+    if form.process().accepted:
+        id = db.tb_professor.insert(**db.tb_professor._filter_fields(form.vars))
+        response.flash=(form.vars)
+        form.vars.fk_id_usuario = id
+        form.vars.ativo=true
+        form.vars.tb_professor=id
         #id = db.tb_telefone.insert(numero = form.vars.numero ,fk_id_usuario= form.vars.tb_professor ,ativo= form.vars.ativo)
-        #response.flash='Professor Cadastrado'
-    #try:
-            #mailChimp(form.vars.email,form.vars.nome)
-    #except:
-    #    response.flash=("Usuário já cadastrado!")
+        response.flash='Professor Cadastrado'
+        try:
+            mailChimp(form.vars.email,form.vars.nome)
+        except:
+            response.flash=("Usuário já cadastrado!")
+
     return dict(form =form)
 
 
 def mailChimp(email,nome):
     api = Connection('43ddf97a6b8a2c07de2aefce3ff161d0-us8')
-    api.list_subscribe('bb403fd503',email,{'FIRST': nome, 'LAST': 'teste'},double_optin=False)
+    api.list_subscribe('bb403fd503',email,{'FIRST': nome, 'LAST': ''},double_optin=False)
 
     return
 def cidades():
-
-
+    
     setCidades =db().select(db.tb_cidade.ALL)
 
     #Esconde os campos das regiões
