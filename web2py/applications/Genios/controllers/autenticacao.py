@@ -1,5 +1,8 @@
 # coding: utf8
 #
+from gluon.contrib.memdb import MEMDB
+#session.connect(request,response,db=MEMDB(cache.memcache))
+
 def index():
     #Redireciona para a pagina inicial do usuario
     switch(session.perfilUser)

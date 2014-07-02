@@ -1,3 +1,10 @@
-{{extend 'layout.html'}}
-
-{{=BEAUTIFY(response._vars)}}
+{{extend 'layoutgenios.html'}}
+<table>
+    <tbody>
+        {{ for aula in grid:}}
+            <tr>
+                <td>{{=aula}}</td>
+            </tr>
+        {{pass}}
+    </tbody>
+</table>

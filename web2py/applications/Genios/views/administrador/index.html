@@ -1,3 +1,10 @@
 {{extend 'layoutgenios.html'}}
-
-{{=BEAUTIFY(response._vars)}}
+<table>
+    <tbody>
+        {{ for aula in mensagem:}}
+            <tr>
+                <td>{{=aula}}</td>
+            </tr>
+        {{pass}}
+    </tbody>
+</table>

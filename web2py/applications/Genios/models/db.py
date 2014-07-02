@@ -1,8 +1,18 @@
+# CONECCAO COM O BANCO:
 db = DAL('mysql://root:Ca_784595@localhost/mydb',migrate=False,lazy_tables=True) # Conecta com o banco
 
+#IMPORTS
 from gluon.tools import Auth, Crud, Service, PluginManager, prettydate
 auth = Auth(db)
 crud, service, plugins = Crud(db), Service(), PluginManager()
+
+#CONFIGURANDO O MAILER:
+from gluon.tools import Mail
+mail = auth.settings.mailer
+mail.settings.server = 'smtp.example.com:25'
+mail.settings.sender = 'leandroferreira@cjr.org.br'
+mail.settings.login = 'leandroferreira:Ca_784595'
+
 
 
 
@@ -131,12 +141,20 @@ db.define_table('ta_usuario_x_materia',
 db.define_table('tb_horario_livre',
                 Field('id_horario_livre','id'),
                 Field('fk_id_usuario','reference tb_usuario'),
+                Field('fk_id_dia_semana','reference tb_dia_semana'),
                 Field('horario_inicial', 'time'),
                 Field('horario_final', 'time'),
                 Field('data_horario_livre', 'date', requires=IS_DATE('%d/%m')),
                 Field('marcado', 'integer'),
                 Field('ativo','integer')
                 )
+
+
+# DIA SEMANA
+db.define_table('tb_dia_semana',
+                Field('id_dia_semana','id'),
+                Field('nome'),
+                format="%(nome)s")
 
 # PROFESSOR
 db.define_table('tb_professor',
@@ -162,6 +180,7 @@ db.define_table('tb_aula',
                 Field('fk_id_usuario_professor','reference tb_usuario'),
                 Field('fk_id_materia','reference tb_materia'),
                 Field('fk_id_horario_livre','reference tb_horario_livre'),
+                Field('fk_id_cidade',"reference tb_cidade"),
                 Field('horario_inicial', 'time'),
                 Field('horario_final', 'time'),
                 Field('data_aula','date', requires=IS_DATE('%d/%m')),
