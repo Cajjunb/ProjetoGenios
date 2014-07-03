@@ -1,6 +1,6 @@
 # coding: utf8
 # tente algo como
-from chimpy import *
+from applications.Genios.modules.chimpy import *
 
 def index(): return dict(message="hello from administrador.py")
 
@@ -15,7 +15,7 @@ def cadastrar_professor():
     
     if form.process().accepted:
         id = db.tb_usuario.insert(**db.tb_usuario._filter_fields(form.vars))
-        db.ta_usuario_x_curso.insert(id_usuario=id, id_curso = form.vars.id_curso)
+        db.ta_usuario_x_curso.insert(id_usuario=id, id_curso = form.vars.id_curso, semestre = form.vars.semestre)
 
         response.flash=(form.vars)
         form.vars.fk_id_usuario = id
@@ -128,3 +128,117 @@ def cadastro_produto():
                              csv=False,
                              formstyle="table3cols")
     return dict(form=form, grid=grid)
+
+def marcar_aulas():
+    if not session.id_user:
+        redirect(URL("default","index"))
+        response.flash = "Sessão Expirada, Logue-se novamente!"
+
+    #Testa se o Endereço esta na session
+    try:
+        cidadeUsuario = db((session.id_user==db.tb_endereco.fk_id_usuario)
+                           & (db.tb_cidade.id_cidade == db.tb_endereco.fk_id_cidade)
+                           &(db.tb_cidade.ativo == True)).select(db.tb_cidade.id_cidade)
+    except:
+        #SELECIONA A CIDADE DO USUARIO
+        cidadeUsuario = db(( session.id_user== db.tb_endereco.fk_id_usuario)
+                           & (db.tb_endereco.fk_id_cidade == db.tb_cidade.id_cidade)
+                           &(db.tb_cidade.ativo == True)).select(db.tb_cidade.id_cidade)
+        #cidadeUsuario = db.tb_cidade(db.tb_endereco.fk_id_usuario==session.id_user)
+        session.cidadeUsuario = cidadeUsuario
+
+
+    #SELECIONA PROFESSOR QUE ATUA NA REGIAO
+    professorCidadeIgual = db((cidadeUsuario.first().id == db.tb_endereco.fk_id_cidade) &
+                              (db.tb_usuario.id_usuario == db.tb_endereco.fk_id_usuario ) &
+                              (db.tb_usuario.ativo == True) &
+                              (db.tb_usuario.fk_id_perfil == 3 )
+                              ).select(db.tb_usuario.id_usuario).as_list()
+
+
+    horariosLivres = []
+
+    #for professorID in professorCidadeIgual:
+    #    horariosLivres.append( db( professorID.id_usuario == db.tb_horario_livre.fk_id_usuario))
+
+
+    # CRIA A PRIMEIRA PARTE da QUERY
+    query = ( professorCidadeIgual[0]['id_usuario']== db.tb_horario_livre.fk_id_usuario and db.tb_horario_livre.marcado  == False )
+
+    # CONCATENA INSTRUÇÕES PARA UMA QUERY DINAMICA
+    for professorID in professorCidadeIgual:
+        query = query | ( professorID['id_usuario'] == db.tb_horario_livre.fk_id_usuario and db.tb_horario_livre.marcado  == False)
+
+
+    links = [lambda row: A('Editar',_href=URL("responsavel","criar_aula",args=[row.id_horario_livre]))]
+
+    headers = {'tb_horario_livre.fk_id_usuario':   'Professor ','tb_materia.nome':   'Materia'}
+
+    #Creating SQLFORM.GRID
+    grid = SQLFORM.grid(query,searchable=True,
+                            fields=[db.tb_horario_livre.fk_id_usuario,
+                                    db.tb_horario_livre.horario_inicial,
+                                    db.tb_horario_livre.horario_final,
+                                    db.tb_horario_livre.data_horario_livre],
+                             sortable=True,
+                             deletable=True,
+                             editable=True,
+                             details=False,
+                             _class="info-table",
+                             create=False,
+                             links=links,
+                             csv=False,
+                             formstyle="table3cols")
+
+    #Headers para o GRID
+    headers = {'tb_aula.fk_id_usuario_aluno':"Aluno",'tb_aula.fk_id_materia':"Materia",'tb_aula.conteudo':"Conteúdo",'tb_aula.data_aula':"Data"}
+    #Fields do GRID
+    #Fields = [db.tb_aula.fk_id_usuario_aluno,db.tb_aula.fk_id_materia, db.tb_aula.conteudo ,db.tb_aula.data_aula]
+    #Lengths
+    #lengths={'tb_aula.fk_id_usuario_aluno':20,'tb_aula.fk_id_materia':30,'tb_aula.conteudo':30,'tb_aula.data_aula':20}
+
+
+    links = [lambda row:  A('Editar',_href=URL("responsavel","alterar_aula",args=[row.id_aula])),
+             lambda row:  A('Excluir', _href=URL("responsavel","excluir",args=[row.id_aula]))
+             ]
+
+    #REQUEST METHOD SET POST
+    request.env.request_method = 'POST'
+
+   # grid2 = SQLFORM.grid(setCidades,maxtextlength=20, details=False, csv=False, _class="info-table")
+
+    return dict(grid=grid)
+
+def criar_aulas():
+    
+    if not session.id_user:
+        redirect(URL("default","index"))
+        response.flash = "Sessão Expirada, Logue-se novamente!"
+    
+    form = SQLFORM(db.tb_aula,fields=['fk_id_materia','fk_id_usuario_aluno','data_aula','conteudo'], showid=False)
+
+    row = db( request.args[0] == db.tb_horario_livre.id_horario_livre).select(db.tb_horario_livre.ALL)
+
+    #PREPOPULA O FORMULARIO
+    form.vars.fk_id_usuario_pai = session.id_user
+    form.vars.horario_inicial = row.first().horario_inicial
+    form.vars.horario_final = row.first().horario_final
+    form.vars.data_aula = row.first().data_horario_livre
+    form.vars.fk_id_usuario_professor = row.first().fk_id_usuario
+
+
+    if form.process().accepted:
+        response.flash = " Marcada a aula"
+        #Update no horario!
+        row.first().marcado = True
+        row.first().update_record()
+
+
+    return dict(form=form)
+
+def busca_usuario():
+    
+    query = db.tb_usuario.fk_id_perfil == 1
+    grid=SQLFORM.grid(query,csv=False,details=False,fields=('nome','email'))
+    
+    return dict(grid=grid)

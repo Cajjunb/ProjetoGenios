@@ -1,4 +1,4 @@
-db = DAL('mysql://root:Ca_784595@localhost/mydb',migrate=False,lazy_tables=True) # Conecta com o banco
+db = DAL('mysql://admin:admin@localhost/mydb',migrate=False,lazy_tables=True) # Conecta com o banco
 
 from gluon.tools import Auth, Crud, Service, PluginManager, prettydate
 auth = Auth(db)
@@ -106,8 +106,8 @@ db.define_table('tb_curso',
                 )
 
 db.define_table('ta_usuario_x_curso',
-                Field('fk_id_usuario','reference tb_usuario'),
-                Field('fk_id_curso','reference tb_curso'),
+                Field('id_usuario','reference tb_usuario'),
+                Field('id_curso','reference tb_curso'),
                 Field('semestre', 'integer'),
                 Field('ativo','boolean')
                 )
@@ -154,10 +154,7 @@ db.define_table('tb_professor',
                 redefine=False,
                 format = '%(nome)s')
 
-<<<<<<< HEAD
 # AULAS
-
-
 db.define_table('tb_aula',
                 Field('id_aula','id'),
                 Field('fk_id_usuario_pai','reference tb_usuario'),
@@ -167,12 +164,11 @@ db.define_table('tb_aula',
                 Field('horario_inicial', 'time'),
                 Field('horario_final', 'time'),
                 Field('data_aula','date', requires=IS_DATE('%d/%m')),
-                Field('conteudo')
-=======
+                Field('conteudo'))
+
 #PRODUTO
 db.define_table('tb_produto',
                 Field('id_produto','id'),
                 Field('creditos','integer'),
                 Field('preco','float')
->>>>>>> e749fafae097723e68ade844e3ca31c0e16eedf3
                 )
